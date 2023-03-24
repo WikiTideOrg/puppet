@@ -1,6 +1,5 @@
 Unattended-Upgrade::Origins-Pattern {
 	"o=Debian,n=${distro_codename},l=Debian-Security";
-	"o=grafana,n=stable,l=grafana";
 };
 
 // List of packages to not update (regexp are supported)
@@ -18,7 +17,7 @@ Unattended-Upgrade::Package-Blacklist {
 	"varnish";
 };
 
-Unattended-Upgrade::Mail "sre-infrastructure@miraheze.org";
+Unattended-Upgrade::Mail "admin@wikiforge.net";
 Unattended-Upgrade::MailReport "only-on-error";
 
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
