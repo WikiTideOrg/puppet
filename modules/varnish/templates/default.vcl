@@ -440,11 +440,11 @@ sub vcl_backend_response {
 		return(pass(601s));
 	}
 
-	// hit-for-pass objects >= 8388608 size and if domain == static.miraheze.org or
-	// hit-for-pass objects >= 67108864 size and if domain != static.miraheze.org.
+	// hit-for-pass objects >= 8388608 size and if domain == static.wikiforge.net or
+	// hit-for-pass objects >= 67108864 size and if domain != static.wikiforge.net.
 	// Do cache if Content-Length is missing.
-	if (std.integer(beresp.http.Content-Length, 0) >= 8388608 && bereq.http.Host == "static.miraheze.org" ||
-		std.integer(beresp.http.Content-Length, 0) >= 67108864 && bereq.http.Host != "static.miraheze.org"
+	if (std.integer(beresp.http.Content-Length, 0) >= 8388608 && bereq.http.Host == "static.wikiforge.net" ||
+		std.integer(beresp.http.Content-Length, 0) >= 67108864 && bereq.http.Host != "static.wikiforge.net"
 	) {
 		// HFP
 		return(pass(beresp.ttl));
@@ -456,11 +456,11 @@ sub vcl_backend_response {
 # Last sub route activated, clean up of HTTP headers etc.
 sub vcl_deliver {
 	# We set Access-Control-Allow-Origin to * for all files hosted on
-	# static.miraheze.org. We also set this header for some images hosted
+	# static.wikiforge.net. We also set this header for some images hosted
 	# on the same site as the wiki (private).
 	if (
 		(
-	 	 	 req.http.Host == "static.miraheze.org" &&
+	 	 	 req.http.Host == "static.wikiforge.net" &&
 			 req.url ~ "(?i)\.(gif|jpg|jpeg|pdf|png|css|js|json|woff|woff2|svg|eot|ttf|otf|ico|sfnt|stl|STL)$"
 		) ||
 	 	req.url ~ "^(?i)\/w\/img_auth\.php\/(.*)\.(gif|jpg|jpeg|pdf|png|css|js|json|woff|woff2|svg|eot|ttf|otf|ico|sfnt|stl|STL)$"
