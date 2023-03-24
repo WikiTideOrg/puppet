@@ -6,6 +6,7 @@ jobrunner: false
 
 # to-do
 mediawiki::jobqueue::runner::redis_ip: false
+mediawiki::use_staging: true
 
 role::mediawiki::use_strict_firewall: true
 
@@ -27,10 +28,3 @@ nginx::keepalive_requests: 150
 nginx::logrotate_number: 2
 
 puppetserver_hostname: 'puppet1.wikiforge.net'
-
-# remove when we get common.yaml working
-puppetserver: false
-mediawiki::use_shellbox: false
-mediawiki::use_staging: true
-mediawiki::is_canary: false
-mediawiki::default_sync: 'all'
