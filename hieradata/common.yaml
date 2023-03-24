@@ -1,12 +1,10 @@
 jobrunner: false
 jobrunner::intensive: false
-mailserver: false
 puppetserver: false
 mediawiki::branch: 'REL1_39'
 mediawiki::branch_mw_config: 'master'
 puppetserver_hostname: puppet1.wikiforge.net
 role::salt::minions::salt_master: 'puppet1.wikiforge.net'
-dns: false
 mediawiki::use_staging: false
 mediawiki::is_canary: false
 mediawiki::default_sync: 'all'
@@ -14,7 +12,6 @@ mediawiki::use_shellbox: false
 
 # TO_DO
 mediawiki::jobqueue::wiki: false
-mediawiki::monitoring::host: false
 memcached_servers_1: []
 memcached_servers_3: []
 
@@ -25,10 +22,3 @@ varnish::backends: []
 # Logging
 base::syslog::syslog_daemon: syslog
 base::syslog::syslog_host: []
-
-## Swift
-# TODO: Add support for class based hiera
-rsync::server::address: '::'
-swift::storage::object_server_default_workers: 100
-
-role::swift::stats_reporter_host: false
