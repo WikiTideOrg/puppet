@@ -59,7 +59,7 @@ class mediawiki::jobqueue::runner {
             weekday => [ '6' ],
         }
 
-        if $wiki == 'loginwiki' {
+        if $wiki == 'metawiki' {
             cron { 'generate sitemap index':
                 ensure  => present,
                 command => "/usr/bin/python3 /srv/mediawiki/w/extensions/MirahezeMagic/py/generateSitemapIndex.py",
@@ -72,7 +72,7 @@ class mediawiki::jobqueue::runner {
 
             cron { 'purge_parsercache':
                 ensure  => present,
-                command => '/usr/bin/php /srv/mediawiki/w/maintenance/purgeParserCache.php --age 864000 --msleep 200 --wiki loginwiki',
+                command => '/usr/bin/php /srv/mediawiki/w/maintenance/purgeParserCache.php --age 864000 --msleep 200 --wiki metawiki',
                 user    => 'www-data',
                 special => 'daily',
             }
