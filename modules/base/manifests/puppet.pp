@@ -87,10 +87,6 @@ class base::puppet (
         }
     }
 
-    file { '/etc/puppet/puppet.conf':
-        ensure  => absent,
-    }
-
     service { 'puppet':
         ensure => stopped,
         enable => false,
