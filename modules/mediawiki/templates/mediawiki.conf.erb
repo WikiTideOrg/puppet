@@ -1,101 +1,142 @@
-map $http_upgrade $connection_upgrade {
-        default upgrade;
-        ''      close;
-}
-
 server {
-	listen 80 deferred;
-	listen [::]:80 deferred ipv6only=on;
+	# We can only set backlog once per port (so this will be applied to the others below)
+	listen 80 deferred backlog=4096;
+	listen [::]:80 deferred ipv6only=on backlog=4096;
+	listen 443 ssl deferred http2 backlog=4096;
+	listen [::]:443 deferred ssl http2 ipv6only=on backlog=4096;
 
-	server_name ~.;
+	server_name wikiforge.net;
+	root /srv/mediawiki/landing;
+	index index.php index.html;
 
-	location ~ ^/check$ {
-                proxy_pass http://127.0.0.1:81;
-		proxy_http_version 1.1;
-		proxy_set_header Connection close;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_buffering    off;
-		proxy_read_timeout 60s;
-		proxy_send_timeout 60s;
-		send_timeout       60s;
-	}
-
-	# no way you are legit - rhinosf1 T8832
-	if ($http_user_agent ~ "MJ12bot") {
+	if ($http_user_agent ~* "WordPress") {
 		return 403;
 	}
 
-	location / {
-                if ($request_uri !~ "^/check$") {
-			return 301 https://$host$request_uri;
+	ssl_certificate /etc/ssl/localcerts/wildcard.wikiforge.net.crt;
+	ssl_certificate_key /etc/ssl/private/wildcard.wikiforge.net.key;
+
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+
+	add_header X-Served-By '<%= scope.lookupvar('::fqdn') %>';
+
+	# XSS Protection
+	add_header x-xss-protection "1; mode=block" always;
+
+	add_header X-Frame-Options "ALLOW-FROM static.wikiforge.net";
+
+	location ~ ^/(\.git|config) {
+		deny all;
+	}
+
+	location ~ \.php {
+		include fastcgi_params;
+		fastcgi_index index.php;
+		fastcgi_split_path_info ^(.+\.php)(.*)$;
+		try_files $fastcgi_script_name =404;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_pass unix:/run/<%= @php_fpm_sock %>;
+		fastcgi_read_timeout 140;
+		send_timeout 140;
+	}
+
+	location /discord {
+		return 301 https://discord.gg/TVAJTE4CUn;
+	}
+
+	location ~ ^/((?!(css|discord|images)).)*$ {
+		# redirect query parameter to path
+		if ($arg_lang !~ '^$|en') {
+			return 301 /$arg_lang;
+		}
+
+		# redirect en (default) to /
+		if ($arg_lang = 'en') {
+			return 301 /;
+		}
+
+		rewrite ^/en(/.*)?$ / permanent;
+
+		# rewrite path to lang, so that, for example, /en will act the
+		# same as ?lang=en, but without the ?lang being needed 
+		rewrite ^/([a-z\-]+)(/.*)?$ /$2?lang=$1 break;
+
+		# if we aren't using a user selected language,
+		# use $http_accept_language
+		if ( $http_accept_language ~ ^(..) ) {
+			set $lang $1;
+		}
+
+		# rewrite to language if not default
+		if ($lang != 'en') {
+			rewrite ^(.*) $1?lang=$lang break;
 		}
 	}
 }
 
 server {
-	# We can only set backlog once per port (so this will be applied to the others below)
-	listen 443 ssl http2 deferred backlog=16384;
-	listen [::]:443 ssl http2 deferred  backlog=16384 ipv6only=on;
+	listen 80;
+	listen [::]:80;
 
-	server_name wikiforge.net *.wikiforge.net;
-	root /var/www/html;
+	server_name ~.;
 
-	ssl_certificate /etc/ssl/localcerts/wildcard.wikiforge.net.crt;
-	ssl_certificate_key /etc/ssl/private/wildcard.wikiforge.net.key;
-
-	ssl_stapling_verify on;
-	
-	# no way you are legit - rhinosf1 T8832
-	if ($http_user_agent ~ "MJ12bot") {
+	if ($http_user_agent ~* "WordPress") {
 		return 403;
 	}
 
+	location /php_status {
+		access_log off;
+		allow 127.0.0.1;
+		include fastcgi_params;
+		fastcgi_pass unix:/run/<%= @php_fpm_sock %>;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_buffers 32 32k;
+		fastcgi_buffer_size 64k;
+		fastcgi_read_timeout 20;
+ 		send_timeout 20s;
+	}
+
 	location / {
-		proxy_pass http://127.0.0.1:81;
-		proxy_http_version 1.1;
-		proxy_set_header Connection $connection_upgrade;
-		proxy_set_header Upgrade $http_upgrade;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_read_timeout 140s;
-		proxy_send_timeout 140s;
-		send_timeout       140s;
-		proxy_buffer_size       32k;
-		proxy_buffers         4 32k;
-		# Remove duplicate headers that is already added on the frontend
-		proxy_hide_header     X-XSS-Protection;
-		proxy_hide_header     X-Frame-Options;
-		proxy_buffering    off;
+		return 301 https://$host$request_uri;
 	}
 }
 
 server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
-	server_name m.wikiforge.net *.m.wikiforge.net;
 
-	root /var/www/html;
+	server_name *.wikiforge.net;
+	root /srv/mediawiki;
 
 	ssl_certificate /etc/ssl/localcerts/wildcard.wikiforge.net.crt;
 	ssl_certificate_key /etc/ssl/private/wildcard.wikiforge.net.key;
 
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
-	
-	# no way you are legit - rhinosf1 T8832
-	if ($http_user_agent ~ "MJ12bot") {
-		return 403;
+
+	add_header X-Served-By '<%= scope.lookupvar('::fqdn') %>';
+
+	# XSS Protection
+	add_header x-xss-protection "1; mode=block" always;
+
+	add_header X-Frame-Options "ALLOW-FROM static.wikiforge.net";
+
+	error_page 404 /ErrorPages/404.php;
+	error_page 502 /ErrorPages/502.html;
+	error_page 504 /ErrorPages/504.php;
+
+	include /etc/nginx/mediawiki-includes;
+
+	location = /robots.txt {
+		rewrite ^(.*)$ /robots.php;
 	}
 
-	if ($host ~ ^(\w+)\.m\.wikiforge\.net$) {
-		return 301 https://$1.wikiforge.net$request_uri;
+	location = /check {
+		rewrite ^(.*)$ /healthcheck.php;
 	}
 
-	return 301 https://wikiforge.net$request_uri;
+	location = /sitemap.xml {
+		rewrite ^(.*)$ /sitemap.php;
+	}
 }
 
 <%- @sslredirects.each_pair do | name, property | -%>
@@ -124,7 +165,6 @@ server {
 	<%- else -%>
 	add_header Strict-Transport-Security "max-age=604800";
 	<%- end -%>
-
 	<%- if property['path_redirects'] -%>
 	<%- property['path_redirects'].each_pair do | path, redirect | -%>
 	location ~* <%= path %>$ {
@@ -159,7 +199,7 @@ server {
 <%- else -%>
 	server_name <%= property['url'] %>;
 <%- end -%>
-	root /var/www/html;
+	root /srv/mediawiki;
 <%- if property['sslname'] -%>
 	ssl_certificate /etc/ssl/localcerts/<%= property['sslname'] %>.crt;
 	ssl_certificate_key /etc/ssl/private/<%= property['sslname'] %>.key;
@@ -168,43 +208,31 @@ server {
 	ssl_certificate_key /etc/ssl/private/<%= property['url'] %>.key;
 <%- end -%>
 
-	<% if property['hsts'] == "strict" %>
+<%- if property['hsts'] == "strict" -%>  
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
-	<% else %>
+<%- else -%>
 	add_header Strict-Transport-Security "max-age=604800";
-	<% end %>
+<%- end -%>
 
-	# Default headers
 	add_header X-Served-By '<%= scope.lookupvar('::fqdn') %>';
 
 	# XSS Protection
 	add_header x-xss-protection "1; mode=block" always;
 
 	add_header X-Frame-Options "ALLOW-FROM static.wikiforge.net";
-	
-	# no way you are legit - rhinosf1 T8832
-	if ($http_user_agent ~ "MJ12bot") {
-		return 403;
+
+	error_page 404 /ErrorPages/404.php;
+	error_page 502 /ErrorPages/502.html;
+	error_page 504 /ErrorPages/504.php;
+
+	include /etc/nginx/mediawiki-includes;
+
+	location = /robots.txt {
+		rewrite ^(.*)$ /robots.php;
 	}
 
-	location / {
-		proxy_pass http://127.0.0.1:81;
-		proxy_http_version 1.1;
-		proxy_set_header Connection $connection_upgrade;
-		proxy_set_header Upgrade $http_upgrade;
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $scheme;
-		proxy_read_timeout 140s;
-		proxy_send_timeout 140s;
-		send_timeout       140s;
-		proxy_buffer_size       32k;
-		proxy_buffers         4 32k;
-		# Remove duplicate headers that is already added on the frontend
-		proxy_hide_header     X-XSS-Protection;
-		proxy_hide_header     X-Frame-Options;
-		proxy_buffering    off;
+	location = /sitemap.xml {
+		rewrite ^(.*)$ /sitemap.php;
 	}
 }
 
