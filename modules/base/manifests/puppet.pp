@@ -85,6 +85,10 @@ class base::puppet (
             mode    => '0444',
             require => Package['puppet-agent'],
         }
+
+        file { '/etc/puppet/puppet.conf':
+            ensure  => absent,
+        }
     }
 
     service { 'puppet':
