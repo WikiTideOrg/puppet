@@ -1,20 +1,12 @@
-# frozen_string_literal: true
-
 #
 # is_ip_address.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:is_ip_address, type: :rvalue, doc: <<-DOC
-    @summary
-      **Deprecated:** Returns true if the string passed to this function is a valid IP address.
-
-    @return [Boolean]
-      Returns `true` or `false`
-
-    > **Note:* **Deprecated** Will be removed in a future version of stdlib. See
-    [`validate_legacy`](#validate_legacy).
+  newfunction(:is_ip_address, :type => :rvalue, :doc => <<-DOC
+    Returns true if the string passed to this function is a valid IP address.
     DOC
-  ) do |arguments|
+             ) do |arguments|
+
     require 'ipaddr'
 
     function_deprecation([:is_ip_address, 'This method is deprecated, please use the stdlib validate_legacy function,

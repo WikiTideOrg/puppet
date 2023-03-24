@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'pick_default' do
@@ -26,8 +24,7 @@ describe 'pick_default' do
     end
   end
 
-  if Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0 ||
-     Puppet::Util::Package.versioncmp(Puppet.version, '5.5.7') == 0
+  if Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0
     def mapped_value(v)
       v
     end

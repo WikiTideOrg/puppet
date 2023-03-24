@@ -1,16 +1,12 @@
-# frozen_string_literal: true
-
 #
 # dirname.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:dirname, type: :rvalue, doc: <<-DOC
-    @summary
-      Returns the dirname of a path.
-
-    @return [String] the given path's dirname
+  newfunction(:dirname, :type => :rvalue, :doc => <<-DOC
+    Returns the dirname of a path.
     DOC
-  ) do |arguments|
+             ) do |arguments|
+
     if arguments.empty?
       raise(Puppet::ParseError, 'dirname(): No arguments given')
     end

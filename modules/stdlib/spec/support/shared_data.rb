@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module SharedData
   IPV4_PATTERNS = [
     '0.0.0.0',

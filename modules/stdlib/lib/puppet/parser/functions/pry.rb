@@ -1,23 +1,15 @@
-# frozen_string_literal: true
-
 #
 # pry.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:pry, type: :statement, doc: <<-DOC
-    @summary
-      This function invokes a pry debugging session in the current scope object.
-    This is useful for debugging manifest code at specific points during a compilation.
+  newfunction(:pry, :type => :statement, :doc => <<-DOC
+    This function invokes a pry debugging session in the current scope object. This is useful for debugging manifest code at specific points during a compilation.
 
-    @return
-      debugging information
+    *Examples:*
 
-    @example **Usage**
-
-      `pry()`
-
+        pry()
     DOC
-  ) do |arguments|
+             ) do |arguments|
     begin
       require 'pry'
     rescue LoadError
@@ -31,7 +23,7 @@ module Puppet::Parser::Functions
     if $stdout.isatty
       binding.pry # rubocop:disable Lint/Debugger
     else
-      Puppet.warning 'pry(): cowardly refusing to start the debugger on a daemonized server'
+      Puppet.warning 'pry(): cowardly refusing to start the debugger on a daemonized master'
     end
   end
 end

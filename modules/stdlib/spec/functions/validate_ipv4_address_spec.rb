@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'validate_ipv4_address' do
@@ -8,7 +6,7 @@ describe 'validate_ipv4_address' do
     it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{wrong number of arguments}i) }
   end
 
-  context 'Checking for deprecation warning', if: Puppet.version.to_f < 4.0 do
+  context 'Checking for deprecation warning', :if => Puppet.version.to_f < 4.0 do
     after(:each) do
       ENV.delete('STDLIB_LOG_DEPRECATIONS')
     end
@@ -38,10 +36,5 @@ describe 'validate_ipv4_address' do
       it { is_expected.to run.with_params(invalid).and_raise_error(Puppet::ParseError, %r{is not a string}) }
       it { is_expected.to run.with_params(SharedData::IPV4_PATTERNS.first, invalid).and_raise_error(Puppet::ParseError, %r{is not a string}) }
     end
-  end
-
-  describe 'multiple inputs' do
-    it { is_expected.to run.with_params(SharedData::IPV4_PATTERNS[0], SharedData::IPV4_PATTERNS[1]) }
-    it { is_expected.to run.with_params(SharedData::IPV4_PATTERNS[0], 'invalid ip').and_raise_error(Puppet::ParseError, %r{is not a valid IPv4}) }
   end
 end

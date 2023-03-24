@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'is_numeric' do
@@ -28,7 +26,6 @@ describe 'is_numeric' do
   it { is_expected.to run.with_params(false).and_return(false) }
   it { is_expected.to run.with_params('0001234').and_return(false) }
   it { is_expected.to run.with_params(' - 1234').and_return(false) }
-  it { is_expected.to run.with_params(['aaa.com', 'bbb', 'ccc']).and_return(false) }
 
   context 'with deprecation warning' do
     after(:each) do

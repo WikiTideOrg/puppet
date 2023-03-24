@@ -1,26 +1,25 @@
-# frozen_string_literal: true
-
 #
 # round.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:round, type: :rvalue, doc: <<-DOC
-    @summary
-      Rounds a number to the nearest integer
+  newfunction(:round, :type => :rvalue, :doc => <<-DOC
+    Rounds a number to the nearest integer
 
-    @return
-      the rounded value as integer
+    *Examples:*
 
-    @example
+    round(2.9)
 
-    ```round(2.9)``` returns ```3```
+    returns: 3
 
-    ```round(2.4)``` returns ```2```
+    round(2.4)
 
-    > *Note:* from Puppet 6.0.0, the compatible function with the same name in Puppet core
-      will be used instead of this function.
+    returns: 2
+
+    Note: from Puppet 6.0.0, the compatible function with the same name in Puppet core
+    will be used instead of this function.
   DOC
-  ) do |args|
+             ) do |args|
+
     raise Puppet::ParseError, "round(): Wrong number of arguments given #{args.size} for 1" if args.size != 1
     raise Puppet::ParseError, "round(): Expected a Numeric, got #{args[0].class}" unless args[0].is_a? Numeric
 

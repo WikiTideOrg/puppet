@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'validate_bool' do
@@ -26,8 +24,6 @@ describe 'validate_bool' do
   end
 
   describe 'validation failures' do
-    it { is_expected.to run.with_params([]).and_raise_error(Puppet::ParseError, %r{is not a boolean}) }
-    it { is_expected.to run.with_params({}).and_raise_error(Puppet::ParseError, %r{is not a boolean}) }
     it { is_expected.to run.with_params('one').and_raise_error(Puppet::ParseError, %r{is not a boolean}) }
     it { is_expected.to run.with_params(true, 'one').and_raise_error(Puppet::ParseError, %r{is not a boolean}) }
     it { is_expected.to run.with_params('one', false).and_raise_error(Puppet::ParseError, %r{is not a boolean}) }

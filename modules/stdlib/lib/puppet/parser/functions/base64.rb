@@ -1,38 +1,27 @@
-# frozen_string_literal: true
-
 #  Please note: This function is an implementation of a Ruby class and as such may not be entirely UTF8 compatible. To ensure compatibility please use this function with Ruby 2.4.0 or greater - https://bugs.ruby-lang.org/issues/10085.
 module Puppet::Parser::Functions
-  newfunction(:base64, type: :rvalue, doc: <<-DOC) do |args|
-    @summary
-      Base64 encode or decode a string based on the command and the string submitted
+  newfunction(:base64, :type => :rvalue, :doc => <<-'DOC') do |args|
+    Base64 encode or decode a string based on the command and the string submitted
 
-    @example Example usage
+    Usage:
 
-      Encode and decode a string
+      $encodestring = base64('encode', 'thestring')
+      $decodestring = base64('decode', 'dGhlc3RyaW5n')
 
-        $encodestring = base64('encode', 'thestring')
-        $decodestring = base64('decode', 'dGhlc3RyaW5n')
+      # explicitly define encode/decode method: default, strict, urlsafe
+      $method = 'default'
+      $encodestring = base64('encode', 'thestring', $method)
+      $decodestring = base64('decode', 'dGhlc3RyaW5n', $method)
 
-      Explicitly define encode/decode method: default, strict, urlsafe
+    Note: Since Puppet 4.8.0, the Binary data type can be used to produce base 64 encoded strings.
+    See the `new()` function for the Binary and String types for documentation. Also see `binary_file()`
+    function for reading a file with binary (non UTF-8) content.
 
-        $method = 'default'
-        $encodestring = base64('encode', 'thestring', $method)
-        $decodestring = base64('decode', 'dGhlc3RyaW5n', $method)
-
-      Encode a string as if it was binary
-
+       # encode a string as if it was binary
        $encodestring = String(Binary('thestring', '%s'))
-
-      Decode a Binary assuming it is an UTF-8 String
-
+       # decode a Binary assuming it is an UTF-8 String
        $decodestring = String(Binary("dGhlc3RyaW5n"), "%s")
 
-    > **Note:*
-        Since Puppet 4.8.0, the Binary data type can be used to produce base 64 encoded strings.
-        See the `new()` function for the Binary and String types for documentation. Also see `binary_file()`
-        function for reading a file with binary (non UTF-8) content.
-
-    @return [String] The encoded/decoded value
     DOC
 
     require 'base64'

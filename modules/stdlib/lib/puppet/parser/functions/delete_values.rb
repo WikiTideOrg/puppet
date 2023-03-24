@@ -1,27 +1,24 @@
-# frozen_string_literal: true
-
 #
 # delete_values.rb
 #
 module Puppet::Parser::Functions
-  newfunction(:delete_values, type: :rvalue, doc: <<-DOC
-    @summary
-      Deletes all instances of a given value from a hash.
+  newfunction(:delete_values, :type => :rvalue, :doc => <<-DOC
+    Deletes all instances of a given value from a hash.
 
-    @example Example usage
+    *Examples:*
 
-      delete_values({'a'=>'A','b'=>'B','c'=>'C','B'=>'D'}, 'B')
-      Would return: {'a'=>'A','c'=>'C','B'=>'D'}
+        delete_values({'a'=>'A','b'=>'B','c'=>'C','B'=>'D'}, 'B')
 
-    > *Note:*
-    Since Puppet 4.0.0 the equivalent can be performed with the
-    built-in [`filter`](https://puppet.com/docs/puppet/latest/function.html#filter) function:
-    $array.filter |$val| { $val != 'B' }
-    $hash.filter |$key, $val| { $val != 'B' }
+    Would return: {'a'=>'A','c'=>'C','B'=>'D'}
 
-    @return [Hash] The given hash now missing all instances of the targeted value
-    DOC
-  ) do |arguments|
+    Note that since Puppet 4.0.0 the equivalent can be performed with the filter() function in Puppet:
+
+        $array.filter |$val| { $val != 'B' }
+        $hash.filter |$key, $val| { $val != 'B' }
+
+      DOC
+             ) do |arguments|
+
     raise(Puppet::ParseError, "delete_values(): Wrong number of arguments given (#{arguments.size} of 2)") if arguments.size != 2
 
     hash, item = arguments

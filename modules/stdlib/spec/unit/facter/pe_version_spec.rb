@@ -1,10 +1,18 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'PE Version specs' do
-  # we mock calls for the puppetversion fact, it is not normal to expect nil responses when mocking.
-  RSpec::Mocks.configuration.allow_message_expectations_on_nil = true
+  before :each do
+    # Explicitly load the pe_version.rb file which contains generated facts
+    # that cannot be automatically loaded.  Puppet 2.x implements
+    # Facter.collection.load while Facter 1.x markes Facter.collection.load as
+    # a private method.
+    if Facter.collection.respond_to? :load
+      Facter.collection.load(:pe_version)
+    else
+      Facter.collection.loader.load(:pe_version)
+    end
+  end
+
   context 'when puppetversion is nil' do
     before :each do
       allow(Facter.fact(:puppetversion)).to receive(:value).and_return(nil)
@@ -24,8 +32,7 @@ describe 'PE Version specs' do
       puppetversion = "2.7.19 (Puppet Enterprise #{version})"
       context "puppetversion => #{puppetversion}" do
         before :each do
-          allow(Facter).to receive(:value).with(anything).and_call_original
-          allow(Facter).to receive(:value).with('puppetversion').and_return(puppetversion)
+          allow(Facter.fact(:puppetversion)).to receive(:value).and_return(puppetversion)
         end
 
         (major, minor, patch) = version.split('.')
@@ -34,19 +41,19 @@ describe 'PE Version specs' do
           expect(Facter.fact(:is_pe).value).to eq(true)
         end
 
-        it "has a version of #{version}" do
+        it "Should have a version of #{version}" do
           expect(Facter.fact(:pe_version).value).to eq(version)
         end
 
-        it "has a major version of #{major}" do
+        it "Should have a major version of #{major}" do
           expect(Facter.fact(:pe_major_version).value).to eq(major)
         end
 
-        it "has a minor version of #{minor}" do
+        it "Should have a minor version of #{minor}" do
           expect(Facter.fact(:pe_minor_version).value).to eq(minor)
         end
 
-        it "has a patch version of #{patch}" do
+        it "Should have a patch version of #{patch}" do
           expect(Facter.fact(:pe_patch_version).value).to eq(patch)
         end
       end

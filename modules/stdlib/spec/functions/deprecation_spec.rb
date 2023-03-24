@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
@@ -13,7 +11,7 @@ if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
     it { is_expected.to run.with_params.and_raise_error(ArgumentError) }
 
     it 'displays a single warning' do
-      if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0 && Puppet::Util::Package.versioncmp(Puppet.version, '5.5.7') < 0
+      if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0 && Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0
         expect(Puppet).to receive(:deprecation_warning).with('heelo at :', 'key')
         expect(Puppet).to receive(:deprecation_warning).with("Modifying 'autosign' as a setting is deprecated.")
       else
@@ -23,7 +21,7 @@ if Puppet::Util::Package.versioncmp(Puppet.version, '4.5.0') >= 0
     end
 
     it 'displays a single warning, despite multiple calls' do
-      if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0 && Puppet::Util::Package.versioncmp(Puppet.version, '5.5.7') < 0
+      if Puppet::Util::Package.versioncmp(Puppet.version, '5.0.0') >= 0 && Puppet::Util::Package.versioncmp(Puppet.version, '6.0.0') < 0
         expect(Puppet).to receive(:deprecation_warning).with('heelo at :', 'key').twice
         expect(Puppet).to receive(:deprecation_warning).with("Modifying 'autosign' as a setting is deprecated.")
       else

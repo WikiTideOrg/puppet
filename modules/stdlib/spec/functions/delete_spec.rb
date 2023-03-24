@@ -1,14 +1,12 @@
-# frozen_string_literal: true
-
 require 'spec_helper'
 
 describe 'delete' do
   it { is_expected.not_to eq(nil) }
-  it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError, %r{Wrong number of arguments}) }
-  it { is_expected.to run.with_params([]).and_raise_error(Puppet::ParseError, %r{Wrong number of arguments}) }
+  it { is_expected.to run.with_params.and_raise_error(Puppet::ParseError) }
+  it { is_expected.to run.with_params([]).and_raise_error(Puppet::ParseError) }
   it { is_expected.to run.with_params([], 'two') }
-  it { is_expected.to run.with_params([], 'two', 'three').and_raise_error(Puppet::ParseError, %r{Wrong number of arguments}) }
-  it { is_expected.to run.with_params(1, 'two').and_raise_error(TypeError, %r{First argument must be an Array, String, or Hash}) }
+  it { is_expected.to run.with_params([], 'two', 'three').and_raise_error(Puppet::ParseError) }
+  it { is_expected.to run.with_params(1, 'two').and_raise_error(TypeError) }
 
   describe 'deleting from an array' do
     it { is_expected.to run.with_params([], '').and_return([]) }
