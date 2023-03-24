@@ -42,7 +42,7 @@ class role::memcached (
     }
 
     $firewall_rules_str = join(
-        query_facts('Class[Role::Mediawiki] or Class[Role::Icinga2]', ['ipaddress', 'ipaddress6'])
+        query_facts('Class[Role::Mediawiki]', ['ipaddress', 'ipaddress6'])
         .map |$key, $value| {
             "${value['ipaddress']} ${value['ipaddress6']}"
         }
