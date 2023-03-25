@@ -77,7 +77,7 @@ class mediawiki::deploy (
     git::clone { 'MediaWiki config':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/config',
-        origin    => 'https://github.com/miraheze/mw-config.git',
+        origin    => 'https://github.com/WikiForge/mw-config.git',
         branch    => $branch_mw_config,
         owner     => 'www-data',
         group     => 'www-data',
