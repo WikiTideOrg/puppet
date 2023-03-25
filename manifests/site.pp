@@ -10,6 +10,11 @@ node 'db1.wikiforge.net' {
     include role::db
 }
 
+node 'mw1.wikiforge.net' {
+    include base
+    include role::mediawiki
+}
+
 node 'puppet1.wikiforge.net' {
     include base
     include role::postgresql
@@ -17,11 +22,6 @@ node 'puppet1.wikiforge.net' {
     include role::puppetserver
     # include role::salt
     include role::ssl
-}
-
-node 'mw1.wikiforge.net' {
-    include base
-    include role::mediawiki
 }
 
 # ensures all servers have basic class if puppet runs
