@@ -12,6 +12,7 @@ class role::db {
         owner  => 'root',
         group  => 'mysql',
         mode   => '0750',
+        recurse => true,
     }
 
     class { 'mariadb::config':
