@@ -2,7 +2,7 @@ groups:
   sre:
     gid: 2000
     description: roots, sudo everywhere
-    members: []
+    members: [universalomega]
     privileges: ['ALL = (ALL) NOPASSWD: ALL']
   ssl-admins:
     gid: 2001
@@ -12,8 +12,8 @@ groups:
                  'ALL = (ALL) NOPASSWD: /var/lib/nagios/ssl-acme']
 
 users:
-  admin:
-    ensure: absent
+  universalomega:
+    ensure: present
     uid: 1000
     name: universalomega
     realname: Universal Omega
