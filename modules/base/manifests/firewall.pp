@@ -44,4 +44,9 @@ class base::firewall (
         rule => "NFLOG mod limit limit 1/second limit-burst 5 nflog-prefix \"[fw-in-drop]\";",
         prio => '98',
     }
+
+    ferm::service { 'ssh':
+        proto => 'tcp',
+        port  => '22',
+    }
 }
