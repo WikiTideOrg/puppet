@@ -2,10 +2,23 @@
 // This file is managed by Puppet
 {
     "groups": {
-        "hi": {
+        "basic": {
             // Number of runner processes in this group
             "runners": 1,
             // Job types to include ("*" means "all")
+            "include": [
+                "*"
+            ],
+            // Job types to exempt (useful when combined with "*")
+            "exclude": [
+                "DataDumpGenerateJob",
+                "RequestWikiAIJob",
+                "webVideoTranscode",
+                "webVideoTranscodePrioritized"
+            ]
+        },
+        "hi": {
+            "runners": 1,
             "include": [
                 "DataDumpGenerateJob",
                 "RequestWikiAIJob",
