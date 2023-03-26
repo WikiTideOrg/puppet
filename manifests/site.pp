@@ -10,6 +10,11 @@ node 'db1.wikiforge.net' {
     include role::db
 }
 
+node 'gluster1.wikiforge.net' {
+    include base
+    include role::gluster
+}
+
 node 'jobchron1.wikiforge.net' {
     include base
     include role::redis
