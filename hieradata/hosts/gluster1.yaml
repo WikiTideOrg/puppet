@@ -1,3 +1,4 @@
 gluster_volume: gluster1.wikiforge.net:/static
+gluster_client: true
 
 puppetserver_hostname: 'puppet1.wikiforge.net'
