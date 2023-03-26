@@ -52,13 +52,13 @@ class role::mediawiki (
     }
 
     file { '/usr/local/bin/remountGluster.sh':
-        ensure => 'absent',
+        ensure => present,
         mode   => '0755',
         source => 'puppet:///modules/role/mediawiki/bin/remountGluster.sh',
     }
 
     cron { 'check_mount':
-        ensure  => absent,
+        ensure  => present,
         command => '/bin/bash /usr/local/bin/remountGluster.sh',
         user    => 'root',
         minute  => '*/1',
