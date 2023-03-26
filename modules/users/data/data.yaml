@@ -17,4 +17,6 @@ users:
     uid: 1001
     name: universalomega
     realname: Universal Omega
-    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtt8ejBAxWiYHQw7VFMd/XITGiy0H6yL0YDHy6jUIjx]
+    ssh_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtt8ejBAxWiYHQw7VFMd/XITGiy0H6yL0YDHy6jUIjx
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjFNXqnu7gdALTWOWbhch32vsYmLS/xcfU9NepYXpFZ
