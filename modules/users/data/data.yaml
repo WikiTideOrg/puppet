@@ -2,7 +2,7 @@ groups:
   sre:
     gid: 2000
     description: roots, sudo everywhere
-    members: [admin]
+    members: [universalomega]
     privileges: ['ALL = (ALL) NOPASSWD: ALL']
   ssl-admins:
     gid: 2001
@@ -13,8 +13,8 @@ groups:
 
 users:
   admin:
-    ensure: present
+    ensure: absent
     uid: 1000
-    name: Admin
-    realname: Admin
+    name: universalomega
+    realname: Universal Omega
     ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtt8ejBAxWiYHQw7VFMd/XITGiy0H6yL0YDHy6jUIjx]
