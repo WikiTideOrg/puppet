@@ -157,16 +157,16 @@ class mediawiki(
         require => [ File['/srv/mediawiki/w'], File['/srv/mediawiki/config'] ],
     }
 
-    $wikiadmin_password         = lookup('passwords::db::wikiadmin', {'default_value' => ''})
-    $mediawiki_password         = lookup('passwords::db::mediawiki', {'default_value' => ''})
-    $redis_password             = lookup('passwords::redis::master', {'default_value' => ''})
-    $noreply_password           = lookup('passwords::mail::noreply', {'default_value' => ''})
-    $mediawiki_upgradekey       = lookup('passwords::mediawiki::upgradekey', {'default_value' => ''})
-    $mediawiki_secretkey        = lookup('passwords::mediawiki::secretkey', {'default_value' => ''})
-    $hcaptcha_secretkey         = lookup('passwords::hcaptcha::secretkey', {'default_value' => ''})
-    $shellbox_secretkey         = lookup('passwords::shellbox::secretkey', {'default_value' => ''})
-    $discord_experimental_webhook = lookup('mediawiki::discord_experimental_webhook', {'default_value' => ''})
-    $global_discord_webhook_url = lookup('mediawiki::global_discord_webhook_url', {'default_value' => ''})
+    $wikiadmin_password         = lookup('passwords::db::wikiadmin')
+    $mediawiki_password         = lookup('passwords::db::mediawiki')
+    $redis_password             = lookup('passwords::redis::master')
+    $noreply_password           = lookup('passwords::mail::noreply')
+    $mediawiki_upgradekey       = lookup('passwords::mediawiki::upgradekey')
+    $mediawiki_secretkey        = lookup('passwords::mediawiki::secretkey')
+    $hcaptcha_secretkey         = lookup('passwords::hcaptcha::secretkey')
+    $shellbox_secretkey         = lookup('passwords::shellbox::secretkey')
+    $discord_experimental_webhook = lookup('mediawiki::discord_experimental_webhook')
+    $global_discord_webhook_url = lookup('mediawiki::global_discord_webhook_url')
 
     file { '/srv/mediawiki/config/PrivateSettings.php':
         ensure  => 'present',
