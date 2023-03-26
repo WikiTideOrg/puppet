@@ -103,7 +103,7 @@ define gluster::mount (
     if !defined(File['glusterfs.ca']) {
         file { 'glusterfs.ca':
             ensure => 'present',
-            source => 'puppet:///ssl/ca/Sectigo.crt',
+            source => 'puppet:///ssl/ca/LetsEncrypt.crt',
             path   => '/usr/lib/ssl/glusterfs.ca',
             owner  => 'root',
             group  => 'root',
