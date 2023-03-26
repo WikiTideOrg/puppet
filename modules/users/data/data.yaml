@@ -14,7 +14,7 @@ groups:
 users:
   universalomega:
     ensure: present
-    uid: 1000
+    uid: 1001
     name: universalomega
     realname: Universal Omega
     ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtt8ejBAxWiYHQw7VFMd/XITGiy0H6yL0YDHy6jUIjx]
