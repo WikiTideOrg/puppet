@@ -122,7 +122,7 @@ class mediawiki::deploy (
     }
 
     exec { 'MediaWiki Config Sync':
-        command     => "/usr/local/bin/deploy-mediawiki --config --servers=${lookup(mediawiki::default_sync)} --force",
+        command     => "/usr/local/bin/deploy-mediawiki --config --servers=${lookup(mediawiki::default_sync)}",
         cwd         => '/srv/mediawiki-staging',
         refreshonly => true,
         user        => www-data,
@@ -131,7 +131,7 @@ class mediawiki::deploy (
     }
 
     exec { 'Landing Sync':
-        command     => "/usr/local/bin/deploy-mediawiki --landing --servers=${lookup(mediawiki::default_sync)} --force --no-log",
+        command     => "/usr/local/bin/deploy-mediawiki --landing --servers=${lookup(mediawiki::default_sync)} --no-log",
         cwd         => '/srv/mediawiki-staging',
         refreshonly => true,
         user        => www-data,
@@ -140,7 +140,7 @@ class mediawiki::deploy (
     }
 
     exec { 'ErrorPages Sync':
-        command     => "/usr/local/bin/deploy-mediawiki --errorpages --servers=${lookup(mediawiki::default_sync)} --force --no-log",
+        command     => "/usr/local/bin/deploy-mediawiki --errorpages --servers=${lookup(mediawiki::default_sync)} --no-log",
         cwd         => '/srv/mediawiki-staging',
         refreshonly => true,
         user        => www-data,
