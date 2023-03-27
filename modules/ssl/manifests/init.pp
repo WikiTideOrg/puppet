@@ -63,28 +63,38 @@ class ssl {
         mode   => '0770',
     }
 
-    file { '/var/lib/nagios/ssl-acme':
-        ensure => present,
-        source => 'puppet:///modules/ssl/ssl-acme',
+    file { '/var/lib/nagios':
+        ensure => directory,
         owner  => 'root',
         group  => 'root',
-        mode   => '0775',
+        mode   => '0770',
+    }
+
+    file { '/var/lib/nagios/ssl-acme':
+        ensure  => present,
+        source  => 'puppet:///modules/ssl/ssl-acme',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0775',
+        require => File['/var/lib/nagios'],
     }
 
 #    file { '/var/lib/nagios/id_ed25519':
-#        ensure => present,
-#        source => 'puppet:///private/acme/id_ed25519',
-#        owner  => 'root',
-#        group  => 'root',
-#        mode   => '0400',
+#        ensure  => present,
+#        source  => 'puppet:///private/acme/id_ed25519',
+#        owner   => 'root',
+#        group   => 'root',
+#        mode    => '0400',
+#        require => File['/var/lib/nagios'],
 #    }
 
 #    file { '/var/lib/nagios/id_ed25519.pub':
-#        ensure => present,
-#        source => 'puppet:///private/acme/id_ed25519.pub',
-#        owner  => 'root',
-#        group  => 'root',
-#        mode   => '0644',
+#        ensure  => present,
+#        source  => 'puppet:///private/acme/id_ed25519.pub',
+#        owner   => 'root',
+#        group   => 'root',
+#        mode    => '0644',
+#        require => File['/var/lib/nagios'],
 #    }
 
     # We do not need to run the ssl renewal cron,
