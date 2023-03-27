@@ -28,4 +28,4 @@ nginx::logrotate_number: 2
 
 puppetserver_hostname: 'puppet1.wikiforge.net'
 
-gluster_volume: gluster1.wikiforge.net:/static
+gluster_volume: 172.31.10.85:/static
