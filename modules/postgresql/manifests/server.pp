@@ -29,7 +29,7 @@ class postgresql::server(
     String $port             = '5432',
     String $root_dir         = '/var/lib/postgresql',
     Boolean $use_ssl          = false,
-    String $pgversion        = '9.6',
+    String $pgversion        = '13',
 ) {
 
     ensure_packages(
@@ -37,7 +37,6 @@ class postgresql::server(
             "postgresql-${pgversion}",
             "postgresql-${pgversion}-debversion",
             "postgresql-client-${pgversion}",
-            "postgresql-contrib-${pgversion}",
             'check-postgres',
             'libdbd-pg-perl',
             'libdbi-perl',
