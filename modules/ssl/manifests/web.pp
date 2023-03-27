@@ -5,14 +5,14 @@ class ssl::web {
     ensure_packages(['python3-flask', 'python3-filelock'])
 
     file { '/usr/local/bin/wikiforgerenewssl.py':
-        ensure => present,
+        ensure => absent,
         source => 'puppet:///modules/ssl/wikiforgerenewssl.py',
         mode   => '0755',
         notify => Service['wikiforgerenewssl'],
     }
 
     systemd::service { 'wikiforgerenewssl':
-        ensure  => present,
+        ensure  => absent,
         content => systemd_template('wikiforgerenewssl'),
         restart => true,
     }
