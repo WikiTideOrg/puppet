@@ -59,8 +59,8 @@ location /sitemaps/ {
 	rewrite ^/sitemaps/(.+)/sitemaps/(.+)$ https://static.wikiforge.net/$1/sitemaps/$2 permanent;
 }
 
-location /static/ {
-	rewrite ^/static/(.+)$ https://static.wikiforge.net/$1 permanent;
+location ~ ^/static/((?!(private))(.+))$ {
+	alias /mnt/mediawiki-static/$1;
 }
 
 # Redirect /entity/* to /wiki/Special:EntityData/*
