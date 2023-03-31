@@ -49,6 +49,7 @@ class role::mediawiki (
         source => 'puppet:///modules/role/mediawiki/packages/amazon-efs-utils-1.35.0-1_all.deb',
     }
 
+   ensure_packages(['nfs-common', 'stunnel4'])
    package { 'amazon-efs-utils':
         ensure   => installed,
         provider => dpkg,
