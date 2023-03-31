@@ -44,10 +44,13 @@ class role::mediawiki (
         }
     }
 
-    if !defined(Gluster::Mount['/mnt/mediawiki-static']) {
-        gluster::mount { '/mnt/mediawiki-static':
-          ensure => mounted,
-          volume => lookup('gluster_volume', {'default_value' => 'gluster1.wikiforge.net:/static'}),
+    if !defined(Mount['/mnt/mediawiki-static']) {
+        mount { '/mnt/mediawiki-static':
+            ensure   => mounted,
+            fstype   => 'efs',
+            remounts => true,
+            device   => 'fs-0a9cb0b1a9bf84b4a:/',
+            options  => 'tls',
         }
     }
 
