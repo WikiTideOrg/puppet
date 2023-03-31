@@ -56,10 +56,6 @@ class role::mediawiki (
         require  => File['/opt/amazon-efs-utils-1.35.0-1_all.deb'],
     }
 
-    exec { 'fix-broken-dependencies':
-        command     => '/usr/bin/apt --fix-broken install',
-    }
-
     if !defined(Mount['/mnt/mediawiki-static']) {
         mount { '/mnt/mediawiki-static':
             ensure   => mounted,
