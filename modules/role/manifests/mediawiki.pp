@@ -57,7 +57,7 @@ class role::mediawiki (
     }
 
     exec { 'fix-broken-dependencies':
-        command     => 'apt --fix-broken install',
+        command     => '/usr/bin/apt --fix-broken install',
         refreshonly => true,
         subscribe   => Package['amazon-efs-utils'],
     }
