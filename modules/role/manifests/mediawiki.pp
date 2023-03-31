@@ -58,8 +58,6 @@ class role::mediawiki (
 
     exec { 'fix-broken-dependencies':
         command     => '/usr/bin/apt --fix-broken install',
-        refreshonly => true,
-        subscribe   => Package['amazon-efs-utils'],
     }
 
     if !defined(Mount['/mnt/mediawiki-static']) {
