@@ -49,11 +49,26 @@ class role::mediawiki (
         source => 'puppet:///modules/role/mediawiki/packages/amazon-efs-utils-1.35.0-1_all.deb',
     }
 
+   ensure_packages([
+       'keyutils',
+       'libnfsidmap2',
+       'nfs-common',
+       'rpcbind',
+       'stunnel4',
+   ])
+
    package { 'amazon-efs-utils':
         ensure   => installed,
         provider => dpkg,
         source   => '/opt/amazon-efs-utils-1.35.0-1_all.deb',
         require  => File['/opt/amazon-efs-utils-1.35.0-1_all.deb'],
+    }
+
+    file { '/mnt/mediawiki-static':
+        ensure => directory,
+        mode   => '0755',
+        owner  => 'root',
+        group  => 'root',
     }
 
     if !defined(Mount['/mnt/mediawiki-static']) {
