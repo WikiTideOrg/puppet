@@ -63,13 +63,6 @@ class ssl {
         mode   => '0770',
     }
 
-    git::clone { 'srv-ssl':
-        ensure    => latest,
-        directory => '/srv/ssl/ssl',
-        origin    => 'https://github.com/WikiForge/ssl.git',
-        require   => File['/srv/ssl'],
-    }
-
     file { '/var/lib/nagios':
         ensure => directory,
         owner  => 'root',
@@ -102,6 +95,17 @@ class ssl {
         group   => 'root',
         mode    => '0644',
         require => File['/var/lib/nagios'],
+    }
+
+    git::clone { 'srv-ssl':
+        ensure    => latest,
+        directory => '/srv/ssl/ssl',
+        origin    => 'git@github.com:WikiForge/ssl.git',
+        require   => [
+            File['/var/lib/nagios/id_ed25519'],
+            File['/var/lib/nagios/id_ed25519.pub'],
+            File['/srv/ssl'],
+        ],
     }
 
     # We do not need to run the ssl renewal cron,
