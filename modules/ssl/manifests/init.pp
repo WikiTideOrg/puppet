@@ -63,6 +63,13 @@ class ssl {
         mode   => '0770',
     }
 
+    git::clone { 'ssl':
+        ensure    => latest,
+        directory => '/srv/ssl/ssl',
+        origin    => 'https://github.com/WikiForge/ssl.git',
+        require   => File['/srv/ssl'],
+    }
+
     file { '/var/lib/nagios':
         ensure => directory,
         owner  => 'root',
