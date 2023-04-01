@@ -63,7 +63,7 @@ class ssl {
         mode   => '0770',
     }
 
-    git::clone { 'ssl':
+    git::clone { 'srv-ssl':
         ensure    => latest,
         directory => '/srv/ssl/ssl',
         origin    => 'https://github.com/WikiForge/ssl.git',
