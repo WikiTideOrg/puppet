@@ -138,7 +138,7 @@ class SslCertificate:
             if not self.quiet:
                 print('Pushing LetsEncrypt SSL certificate to GitHub')
 
-            os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null -o"')
+            os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null"')
             os.system('git -C /srv/ssl/ssl/ config user.name "WikiForgeSSLBot"')
             os.system('git -C /srv/ssl/ssl/ config user.email "universalomega@wikiforge.net"')
             os.system('git -C /srv/ssl/ssl/ reset --hard origin/master')
@@ -209,7 +209,7 @@ class SslCertificate:
         if not self.quiet:
             print('Pushing LetsEncrypt SSL certificate to GitHub')
 
-        os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null -o"')
+        os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null"')
         os.system('git -C /srv/ssl/ssl/ config user.name "WikiForgeSSLBot"')
         os.system('git -C /srv/ssl/ssl/ config user.email "universalomega@wikiforge.net"')
         os.system('git -C /srv/ssl/ssl/ reset --hard origin/master')
