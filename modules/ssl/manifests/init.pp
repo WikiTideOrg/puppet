@@ -101,6 +101,7 @@ class ssl {
         ensure    => latest,
         directory => '/srv/ssl/ssl',
         origin    => 'git@github.com:WikiForge/ssl.git',
+        ssh       => '/usr/bin/ssh -i /var/lib/nagios/id_ed25519',
         require   => [
             File['/var/lib/nagios/id_ed25519'],
             File['/var/lib/nagios/id_ed25519.pub'],
