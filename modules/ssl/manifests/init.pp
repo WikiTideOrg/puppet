@@ -86,23 +86,23 @@ class ssl {
         require => File['/var/lib/nagios'],
     }
 
-#    file { '/var/lib/nagios/id_ed25519':
-#        ensure  => present,
-#        source  => 'puppet:///private/acme/id_ed25519',
-#        owner   => 'root',
-#        group   => 'root',
-#        mode    => '0400',
-#        require => File['/var/lib/nagios'],
-#    }
+    file { '/var/lib/nagios/id_ed25519':
+        ensure  => present,
+        source  => 'puppet:///private/acme/id_ed25519',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0400',
+        require => File['/var/lib/nagios'],
+    }
 
-#    file { '/var/lib/nagios/id_ed25519.pub':
-#        ensure  => present,
-#        source  => 'puppet:///private/acme/id_ed25519.pub',
-#        owner   => 'root',
-#        group   => 'root',
-#        mode    => '0644',
-#        require => File['/var/lib/nagios'],
-#    }
+    file { '/var/lib/nagios/id_ed25519.pub':
+        ensure  => present,
+        source  => 'puppet:///private/acme/id_ed25519.pub',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        require => File['/var/lib/nagios'],
+    }
 
     # We do not need to run the ssl renewal cron,
     # we run our own service.
