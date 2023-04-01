@@ -157,9 +157,8 @@ class SslCertificate:
             os.system('git -C /srv/ssl/ssl/ push origin master')
 
         if self.private:
-            print('Private key is being copied and pushed to /home/ssl-admins/ssl-keys')
-            os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /home/ssl-admins/ssl-keys/{self.domain}.key')
-            os.system(f"cd /home/ssl-admins/ssl-keys/ && git add . && git commit -m 'add {self.domain} key' && git push origin master")
+            print('Private key is being copied to /etc/puppetlabs/puppet/ssl-keys')
+            os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /etc/puppetlabs/puppet/ssl-keys/{self.domain}.key')
 
     def renew_letsencrypt_certificate(self):
         self.newprivate = False
@@ -220,9 +219,8 @@ class SslCertificate:
         os.system('git -C /srv/ssl/ssl/ push origin master')
 
         if self.private and self.newprivate is True:
-            print('New private key is being copied and pushed to /home/ssl-admins/ssl-keys')
-            os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /home/ssl-admins/ssl-keys/{self.domain}.key')
-            os.system(f"cd /home/ssl-admins/ssl-keys/ && git add . && git commit -m 'add {self.domain} key' && git push origin master")
+            print('New private key is being copied to /etc/puppetlabs/puppet/ssl-keys')
+            os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /etc/puppetlabs/puppet/ssl-keys/{self.domain}.key')
 
     def revoke_letsencrypt_certificate(self):
         if not self.quiet:
@@ -238,8 +236,7 @@ class SslCertificate:
         if not self.quiet:
             print('Removing key from private git')
 
-        os.system(f'rm -rf /home/ssl-admins/ssl-keys/{self.domain}.key')
-        os.system(f"cd /home/ssl-admins/ssl-keys/ && git add . && git commit -m 'remove {self.domain} key' && git push origin master")
+        os.system(f'rm -rf /etc/puppetlabs/puppet/ssl-keys/{self.domain}.key')
 
 
 cert = SslCertificate()
