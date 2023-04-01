@@ -51,7 +51,7 @@ define git::clone(
             }
 
             if !empty($ssh) {
-                $env = "GIT_SSH=${ssh}"
+                $env = "GIT_SSH_COMMAND=${ssh}"
             } else {
                 $env = undef
             }
