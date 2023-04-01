@@ -137,6 +137,7 @@ define git::clone(
                     command   => "${git} pull ${recurse_submodules_arg}--quiet${deptharg} ${allow_unrelated_histories_arg}",
                     provider  => shell,
                     logoutput => on_failure,
+                    environment => $env,
                     # git diff --quiet will exit 1 (return false)
                     #  if there are differences
                     unless    => "${git} fetch && /usr/bin/git diff --quiet ${remote_to_check}",
