@@ -67,8 +67,8 @@ class role::mediawiki (
     file { '/mnt/mediawiki-static':
         ensure => directory,
         mode   => '0755',
-        owner  => 'root',
-        group  => 'root',
+        owner  => 'www-data',
+        group  => 'www-data',
     }
 
     if !defined(Mount['/mnt/mediawiki-static']) {
