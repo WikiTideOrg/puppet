@@ -67,7 +67,7 @@ wiki_connection = "meta.wikiforge.net"
 wiki_path = "/w/"
 
 # Username of wiki bot user
-wiki_user = "WikiForgeLogbot"
+wiki_user = "WikiForgeLogBot"
 
 # Password of wiki bot user
 wiki_pass = "<%= @wikiforgelogbot_password %>"
