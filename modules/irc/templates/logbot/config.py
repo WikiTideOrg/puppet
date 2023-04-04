@@ -53,7 +53,7 @@ ssl = True
 
 # Map irc nick to real name
 author_map = {
-    "WikoForgeLSBot_": "WikiForgeLSBot",
+    "WikiForgeLSBot_": "WikiForgeLSBot",
     "CosmicAlpha": "Universal Omega"
 }
 
