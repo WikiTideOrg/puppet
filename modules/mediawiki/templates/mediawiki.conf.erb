@@ -192,6 +192,10 @@ server {
 	location /dumps/ {
 		autoindex on;
 	}
+
+	location = / {
+		return 301 https://commons.wikiforge.net;
+	}
 }
 
 server {
