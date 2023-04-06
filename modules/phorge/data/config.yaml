@@ -12,6 +12,7 @@ mysql.host: 'db1.wikiforge.net'
 # Needs to match php.ini upload_max_filesize
 # Needs to match php.ini post_max_size for conduit
 storage.mysql-engine.max-size: 10000000
+storage.default-namespace: 'phorge'
 
 metamta.default-address: 'noreply@wikiforge.net'
 metamta.single-reply-handler-prefix: 'phorge'
