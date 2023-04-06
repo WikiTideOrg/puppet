@@ -165,7 +165,7 @@ class phorge (
                 'options'      => {
                     'host'     => 'email-smtp.us-east-1.amazonaws.com',
                     'port'     => 587,
-                    'user'     => 'noreply',
+                    'user'     => 'AKIAZEMY5IR4RPZVGLVT',
                     'password' => lookup('passwords::mail::noreply'),
                     'protocol' => 'tls',
                 },
