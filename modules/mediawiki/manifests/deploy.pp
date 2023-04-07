@@ -2,8 +2,8 @@
 #
 # MediaWiki deploy files
 class mediawiki::deploy (
-    Optional[String] $branch = undef,
-    Optional[String] $branch_mw_config = undef,
+    String $branch,
+    String $branch_mw_config,
 ) {
     include mediawiki::extensionsetup
 
@@ -65,6 +65,13 @@ class mediawiki::deploy (
         mode    => '0755',
         source  => 'puppet:///modules/mediawiki/bin/deploy-mediawiki.py',
         require => [ File['/srv/mediawiki'], File['/srv/mediawiki-staging'] ],
+    }
+
+    file { '/usr/local/bin/mwdeploy':
+        ensure  => 'link',
+        target  => '/usr/local/bin/deploy-mediawiki',
+        mode    => '0755',
+        require => File['/usr/local/bin/deploy-mediawiki'],
     }
 
     file { '/usr/local/bin/mwupgradetool':
