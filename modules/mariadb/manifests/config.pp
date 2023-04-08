@@ -4,7 +4,7 @@ class mariadb::config(
     String            $password                     = undef,
     String            $datadir                      = '/srv/mariadb',
     String            $tmpdir                       = '/tmp',
-    String            $innodb_buffer_pool_size      = '5G',
+    String            $innodb_buffer_pool_size      = '500M',
     Integer           $max_connections              = 500,
     Enum['10.5']      $version                      = lookup('mariadb::version', {'default_value' => '10.5'}),
     Optional[Integer] $server_id                    = undef,
