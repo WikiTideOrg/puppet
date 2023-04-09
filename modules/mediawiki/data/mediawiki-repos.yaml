@@ -675,11 +675,6 @@ LinkTarget:
   branch: _branch_
   path: extensions/LinkTarget
   repo_url: https://github.com/wikimedia/mediawiki-extensions-LinkTarget
-MatomoAnalytics:
-  branch: master
-  path: extensions/MatomoAnalytics
-  repo_url: https://github.com/miraheze/MatomoAnalytics
-  removed: true
 WikidataPageBanner:
   branch: _branch_
   path: extensions/WikidataPageBanner
@@ -760,10 +755,6 @@ PortableInfobox:
   branch: master
   path: extensions/PortableInfobox
   repo_url: https://github.com/Universal-Omega/PortableInfobox
-UserMerge:
-  branch: _branch_
-  path: extensions/UserMerge
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-UserMerge
 MobileDetect:
   branch: master
   path: extensions/MobileDetect
@@ -848,11 +839,6 @@ ForcePreview:
   branch: _branch_
   path: extensions/ForcePreview
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ForcePreview
-SlackNotifications:
-  branch: master
-  path: extensions/SlackNotifications
-  repo_url: https://github.com/kulttuuri/SlackNotifications
-  removed: true
 RegexFunctions:
   branch: _branch_
   path: extensions/RegexFunctions
@@ -941,11 +927,6 @@ Linter:
   branch: _branch_
   path: extensions/Linter
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Linter
-LdapAuthentication:
-  branch: _branch_
-  path: extensions/LdapAuthentication
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-LdapAuthentication
-  removed: true
 Cosmos:
   branch: master
   path: skins/Cosmos
@@ -1066,11 +1047,6 @@ Video:
   branch: master
   path: extensions/Video
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Video
-SecureLinkFixer:
-  branch: _branch_
-  path: extensions/SecureLinkFixer
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-SecureLinkFixer
-  removed: true
 PageAssessments:
   branch: _branch_
   path: extensions/PageAssessments
@@ -1111,11 +1087,6 @@ TabberNeue:
   branch: main
   path: extensions/TabberNeue
   repo_url: https://github.com/StarCitizenTools/mediawiki-extensions-TabberNeue
-snapwikiskin:
-  branch: stable
-  path: skins/snapwikiskin
-  repo_url: https://github.com/snapwiki/snapwikiskin
-  removed: true
 chameleon:
   branch: master
   path: skins/chameleon
@@ -1156,20 +1127,10 @@ EmbedSpotify:
   branch: master
   path: extensions/EmbedSpotify
   repo_url: https://github.com/NessunKim/mediawiki-embed-spotify
-Evelution:
-  branch: main
-  path: skins/Evelution
-  repo_url: https://github.com/AWikia/SkinEvelution
-  removed: true
 RatePage:
   branch: master
   path: extensions/RatePage
   repo_url: https://gitlab.com/nonsensopedia/extensions/ratepage
-Flatbox:
-  branch: master
-  path: skins/Flatbox
-  repo_url: https://github.com/enginbyram/mediawiki-flatbox
-  removed: true
 ArticleCreationWorkflow:
   branch: _branch_
   path: extensions/ArticleCreationWorkflow
