@@ -19,7 +19,10 @@ class mediawiki::extensionsetup {
 
     $repos.each |$name, $params| {
         git::clone { "MediaWiki ${name}":
-            ensure             => present,
+            ensure             => $params['removed'] ? {
+                true    => absent,
+                default => present,
+            },
             directory          => "${mwpath}/${params['path']}",
             origin             => $params['repo_url'],
             branch             => $params['branch'] ? {
