@@ -679,6 +679,7 @@ MatomoAnalytics:
   branch: master
   path: extensions/MatomoAnalytics
   repo_url: https://github.com/miraheze/MatomoAnalytics
+  removed: true
 WikidataPageBanner:
   branch: _branch_
   path: extensions/WikidataPageBanner
@@ -851,6 +852,7 @@ SlackNotifications:
   branch: master
   path: extensions/SlackNotifications
   repo_url: https://github.com/kulttuuri/SlackNotifications
+  removed: true
 RegexFunctions:
   branch: _branch_
   path: extensions/RegexFunctions
@@ -943,6 +945,7 @@ LdapAuthentication:
   branch: _branch_
   path: extensions/LdapAuthentication
   repo_url: https://github.com/wikimedia/mediawiki-extensions-LdapAuthentication
+  removed: true
 Cosmos:
   branch: master
   path: skins/Cosmos
@@ -1067,6 +1070,7 @@ SecureLinkFixer:
   branch: _branch_
   path: extensions/SecureLinkFixer
   repo_url: https://github.com/wikimedia/mediawiki-extensions-SecureLinkFixer
+  removed: true
 PageAssessments:
   branch: _branch_
   path: extensions/PageAssessments
@@ -1111,6 +1115,7 @@ snapwikiskin:
   branch: stable
   path: skins/snapwikiskin
   repo_url: https://github.com/snapwiki/snapwikiskin
+  removed: true
 chameleon:
   branch: master
   path: skins/chameleon
@@ -1155,6 +1160,7 @@ Evelution:
   branch: main
   path: skins/Evelution
   repo_url: https://github.com/AWikia/SkinEvelution
+  removed: true
 RatePage:
   branch: master
   path: extensions/RatePage
@@ -1163,6 +1169,7 @@ Flatbox:
   branch: master
   path: skins/Flatbox
   repo_url: https://github.com/enginbyram/mediawiki-flatbox
+  removed: true
 ArticleCreationWorkflow:
   branch: _branch_
   path: extensions/ArticleCreationWorkflow
