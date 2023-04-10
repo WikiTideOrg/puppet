@@ -108,7 +108,7 @@ class mediawiki::deploy (
     git::clone { 'landing':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/landing',
-        origin    => 'https://github.com/miraheze/landing.git',
+        origin    => 'https://github.com/WikiForge/landing.git',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
