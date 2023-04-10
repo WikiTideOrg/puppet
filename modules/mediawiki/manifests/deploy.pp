@@ -119,7 +119,7 @@ class mediawiki::deploy (
     git::clone { 'ErrorPages':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/ErrorPages',
-        origin    => 'https://github.com/miraheze/ErrorPages.git',
+        origin    => 'https://github.com/WikiForge/ErrorPages.git',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
