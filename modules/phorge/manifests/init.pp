@@ -1,6 +1,6 @@
 # class: phorge
 class phorge (
-  Integer $request_timeout = lookup('phorge::php::request_timeout', {'default_value' => 60}),
+    Integer $request_timeout = lookup('phorge::php::request_timeout', {'default_value' => 60}),
 ) {
     ensure_packages(['python3-pygments', 'subversion'])
 
@@ -118,21 +118,21 @@ class phorge (
     git::clone { 'arcanist':
         ensure    => present,
         directory => '/srv/phorge/arcanist',
-        origin    => 'https://we.phorge.it/source/arcanist.git',
+        origin    => 'https://we.phorge.it/source/arcanist',
         require   => File['/srv/phorge'],
     }
 
     git::clone { 'phorge':
         ensure    => present,
         directory => '/srv/phorge/phorge',
-        origin    => 'https://we.phorge.it/source/phorge.git',
+        origin    => 'https://we.phorge.it/source/phorge',
         require   => File['/srv/phorge'],
     }
 
     git::clone { 'phorge-extensions':
         ensure    => latest,
         directory => '/srv/phorge/phorge/src/extensions',
-        origin    => 'https://github.com/WikiForge/phorge-extensions.git',
+        origin    => 'https://github.com/WikiForge/phorge-extensions',
         require   => File['/srv/phorge'],
     }
 
