@@ -14,10 +14,6 @@ class base (
     include ssh
     include users
 
-    #if !lookup('dns') {
-    #    include base::dns
-    #}
-
     file { '/usr/local/bin/gen_fingerprints':
         ensure => present,
         source => 'puppet:///modules/base/environment/gen_fingerprints',
