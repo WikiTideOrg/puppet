@@ -84,7 +84,7 @@ class mediawiki::deploy (
     git::clone { 'MediaWiki config':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/config',
-        origin    => 'https://github.com/WikiForge/mw-config.git',
+        origin    => 'https://github.com/WikiForge/mw-config',
         branch    => $branch_mw_config,
         owner     => 'www-data',
         group     => 'www-data',
@@ -95,7 +95,7 @@ class mediawiki::deploy (
     git::clone { 'MediaWiki core':
         ensure    => 'present',
         directory => '/srv/mediawiki-staging/w',
-        origin    => 'https://github.com/wikimedia/mediawiki.git',
+        origin    => 'https://github.com/wikimedia/mediawiki',
         branch    => $branch,
         owner     => 'www-data',
         group     => 'www-data',
@@ -108,7 +108,7 @@ class mediawiki::deploy (
     git::clone { 'landing':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/landing',
-        origin    => 'https://github.com/WikiForge/landing.git',
+        origin    => 'https://github.com/WikiForge/landing',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
@@ -119,7 +119,7 @@ class mediawiki::deploy (
     git::clone { 'ErrorPages':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/ErrorPages',
-        origin    => 'https://github.com/WikiForge/ErrorPages.git',
+        origin    => 'https://github.com/WikiForge/ErrorPages',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
