@@ -5,7 +5,7 @@
 # = Example
 # git::clone { 'example':
 #     directory => '/path/to/location/on/server',
-#     origin => 'http://example/example.git',
+#     origin => 'http://example/example',
 #     branch => 'example2',
 # }
 #
