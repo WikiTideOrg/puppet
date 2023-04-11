@@ -68,14 +68,14 @@ class puppetserver(
     git::clone { 'puppet':
         ensure    => latest,
         directory => '/etc/puppetlabs/puppet/git',
-        origin    => 'https://github.com/WikiForge/puppet.git',
+        origin    => 'https://github.com/WikiForge/puppet',
         require   => Package['puppet-agent'],
     }
 
     git::clone { 'ssl':
         ensure    => latest,
         directory => '/etc/puppetlabs/puppet/ssl-cert',
-        origin    => 'https://github.com/WikiForge/ssl.git',
+        origin    => 'https://github.com/WikiForge/ssl',
         require   => Package['puppet-agent'],
     }
 
