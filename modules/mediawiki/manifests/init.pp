@@ -67,7 +67,7 @@ class mediawiki(
     git::clone { 'mathoid':
         ensure             => 'latest',
         directory          => '/srv/mathoid',
-        origin             => 'https://github.com/miraheze/mathoid-deploy.git',
+        origin             => 'https://github.com/miraheze/mathoid-deploy',
         branch             => 'master',
         owner              => 'www-data',
         group              => 'www-data',
@@ -79,7 +79,7 @@ class mediawiki(
     git::clone { '3d2png':
         ensure             => 'latest',
         directory          => '/srv/3d2png',
-        origin             => 'https://github.com/miraheze/3d2png-deploy.git',
+        origin             => 'https://github.com/miraheze/3d2png-deploy',
         branch             => 'master',
         owner              => 'www-data',
         group              => 'www-data',
@@ -91,7 +91,7 @@ class mediawiki(
     git::clone { 'femiwiki-deploy':
         ensure    => 'latest',
         directory => '/srv/mediawiki/femiwiki-deploy',
-        origin    => 'https://github.com/miraheze/femiwiki-deploy.git',
+        origin    => 'https://github.com/miraheze/femiwiki-deploy',
         branch    => $branch,
         owner     => 'www-data',
         group     => 'www-data',
