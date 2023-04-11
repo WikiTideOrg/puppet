@@ -5,7 +5,7 @@ class mediawiki::jobqueue::shared {
     git::clone { 'JobRunner':
         ensure    => latest,
         directory => '/srv/jobrunner',
-        origin    => 'https://github.com/miraheze/jobrunner-service',
+        origin    => 'https://github.com/WikiForge/jobrunner-service',
     }
 
     $redis_password = lookup('passwords::redis::master')
