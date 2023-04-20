@@ -287,6 +287,21 @@ sub vcl_recv {
 		return (pass);
 	}
 
+ 	if (req.http.Host == "test1.wikiforge.net") {
+                set req.backend_hint = test1;
+                return (pass);
+        }
+
+	# Do not cache requests from this domain
+	if (
+		req.http.Host == "support.wikiforge.net" ||
+		req.http.Host == "phorge-storage.wikiforge.net" ||
+		req.http.Host == "blog.miraheze.org"
+	) {
+		set req.backend_hint = phorge1;
+		return (pass);
+	}
+
 	# MediaWiki specific
 	call mw_request;
 
