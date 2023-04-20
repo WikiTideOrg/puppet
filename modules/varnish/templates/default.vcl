@@ -296,7 +296,7 @@ sub vcl_recv {
 	if (
 		req.http.Host == "support.wikiforge.net" ||
 		req.http.Host == "phorge-storage.wikiforge.net" ||
-		req.http.Host == "blog.miraheze.org"
+		req.http.Host == "blog.wikiforge.net"
 	) {
 		set req.backend_hint = phorge1;
 		return (pass);
