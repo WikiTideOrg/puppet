@@ -1,12 +1,7 @@
 # === Class mediawiki::deploy
 #
 # MediaWiki deploy files
-class mediawiki::deploy (
-    String $branch,
-    String $branch_mw_config,
-) {
-    include mediawiki::extensionsetup
-
+class mediawiki::deploy {
     if lookup(mediawiki::is_canary) {
         file { '/srv/mediawiki-staging/deploykey.pub':
             ensure  => present,
@@ -85,23 +80,10 @@ class mediawiki::deploy (
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/config',
         origin    => 'https://github.com/WikiForge/mw-config',
-        branch    => $branch_mw_config,
+        branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
         mode      => '0755',
-        require   => File['/srv/mediawiki-staging'],
-    }
-
-    git::clone { 'MediaWiki core':
-        ensure    => 'present',
-        directory => '/srv/mediawiki-staging/w',
-        origin    => 'https://github.com/wikimedia/mediawiki',
-        branch    => $branch,
-        owner     => 'www-data',
-        group     => 'www-data',
-        mode      => '0755',
-        timeout   => '1500',
-        depth     => '5',
         require   => File['/srv/mediawiki-staging'],
     }
 

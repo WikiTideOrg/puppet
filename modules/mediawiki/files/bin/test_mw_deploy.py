@@ -41,11 +41,11 @@ def test_check_up_debug_fail() -> None:
 
 
 def test_get_staging_path() -> None:
-    assert mwd._get_staging_path('world') == '/srv/mediawiki-staging/w/'
+    assert mwd._get_staging_path('version') == '/srv/mediawiki-staging/version/'
 
 
 def test_get_deployed_path() -> None:
-    assert mwd._get_deployed_path('world') == '/srv/mediawiki/w/'
+    assert mwd._get_deployed_path('version') == '/srv/mediawiki/version/'
 
 
 def test_construct_rsync_no_location_local() -> None:
@@ -129,7 +129,7 @@ def test_construct_git_pull_branch() -> None:
 
 
 def test_construct_upgrade_mediawiki_rm_staging() -> None:
-    assert mwd._construct_upgrade_mediawiki_rm_staging() == 'sudo -u www-data rm -rf /srv/mediawiki-staging/w/'
+    assert mwd._construct_upgrade_mediawiki_rm_staging('version') == 'sudo -u www-data rm -rf /srv/mediawiki-staging/version/'
 
 
 def test_construct_upgrade_mediawiki_run_puppet() -> None:
