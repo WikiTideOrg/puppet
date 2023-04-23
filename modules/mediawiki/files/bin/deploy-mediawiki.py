@@ -235,7 +235,7 @@ def run(args: argparse.Namespace, start: float) -> None:
                 rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{folder}/*', dest=f'/srv/mediawiki/{folder}/'))
 
         if args.extensionlist:  # when adding skins/exts
-            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{args.version}/extensions/CreateWiki/maintenance/rebuildExtensionListCache.php --wiki={envinfo["wikidbname"]}')
+            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{args.version}/extensions/CreateWiki/maintenance/rebuildExtensionListCache.php --wiki={envinfo["wikidbname"]} --cachedir=/srv/mediawiki/cache/{args.version}')
 
         for cmd in rsync:  # move staged content to live
             exitcodes.append(run_command(cmd))
