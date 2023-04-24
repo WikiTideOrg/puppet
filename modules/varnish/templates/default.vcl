@@ -609,11 +609,6 @@ sub vcl_backend_error {
 					font-size: 21px;
 					padding: 14px 24px;
 				}
-				/* Fade-in */
-				@keyframes fadein {
-					from { opacity: 0; }
-					to   { opacity: 1; }
-				}
 				/* Dark mode */
 				@media (prefers-color-scheme: dark) {
 					body {
@@ -629,10 +624,9 @@ sub vcl_backend_error {
 		<div class="container">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
-				<p style="font-align: center; animation: fadein 1s;"></p>
+				<img src="https://static.wikiforge.net/metawiki/8/88/WikiForge_Logo.svg" width="130" height="130" alt="WikiForge Logo" />
 				<h1>"} + beresp.status + " " + beresp.reason + {"</h1>
-				<p class="lead">Try again later or click the button below to refresh.</p>
-				<p style="font-size: 70%; margin: -1em;">If you were trying to import something and encountered this error, use <a href="https://meta.wikiforge.net/wiki/Special:RequestImportDump">ImportDump</a> instead.</p><br />
+				<p class="lead">Try again later or click the button below to refresh.</p><br />
 				<a href="javascript:document.location.reload(true);" class="btn btn-lg btn-outline-success" role="button">Refresh page</a>
 			</div>
 		</div>
