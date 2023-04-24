@@ -24,7 +24,7 @@ def run(args: argparse.Namespace) -> None:
             long = True
 
     wiki = args.wiki
-    validDBLists = ('active', 'beta')
+    validDBLists = ('active')
     if wiki == 'all':
         long = True
         command = f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases.json {script}'
