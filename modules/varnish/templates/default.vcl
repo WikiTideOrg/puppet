@@ -244,7 +244,7 @@ sub mw_request {
 	}
 
 	# We can rewrite those to one domain name to increase cache hits
-	if (req.url ~ "^/w/(skins|resources|extensions)/" ) {
+	if (req.url ~ "^/(1\.\d{2,})/(skins|resources|extensions)/" ) {
 		set req.http.Host = "meta.wikiforge.net";
 	}
 
