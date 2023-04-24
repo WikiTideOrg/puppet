@@ -210,7 +210,7 @@ sub mw_request {
 			return (synth(200, "CORS Preflight"));
 		}
 		# From Wikimedia: https://gerrit.wikimedia.org/r/c/operations/puppet/+/120617/7/templates/varnish/upload-frontend.inc.vcl.erb
-		# required for Extension:MultiMediaViewer: T10285
+		# required for Extension:MultiMediaViewer
 		if (req.url ~ "(?i)(\?|&)download(=|&|$)") {
 			/* Pretend that the parameter wasn't there for caching purposes */
 			set req.url = regsub(req.url, "(?i)(\?|&)download(=[^&]+)?$", "");
