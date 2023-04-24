@@ -4,12 +4,12 @@ location ~ ^/(\.git|config|landing|cache|stopforumspam|geoip) {
         deny all;
 }
 
-location ~ ^/w/(cache|maintenance|mw-config|vendor) {
+location ~ ^/(\d\.\d{2,})/(cache|maintenance|mw-config|vendor) {
 	deny all;
 }
 
 # Cache certain non-static.wikiforge.net static resources
-location ~ ^/w/((skins|resources)|extensions/[A-Za-z0-9]+.*)/.*\.(gif|jpe?g|png|css|js|json|woff|woff2|svg|eot|ttf|ico)(\?[0-9a-z]+\=)?$ {
+location ~ ^/(\d\.\d{2,})/((skins|resources)|extensions/[A-Za-z0-9]+.*)/.*\.(gif|jpe?g|png|css|js|json|woff|woff2|svg|eot|ttf|ico)(\?[0-9a-z]+\=)?$ {
 	expires 1d;
 }
 
@@ -64,7 +64,6 @@ location ~ ^/static/((?!(private))(.+))$ {
 }
 
 # Redirect /entity/* to /wiki/Special:EntityData/*
-# Fixes T7174
 location ~ ^/entity/(.*) {
 	return 301 /wiki/Special:EntityData/$1;
 }
