@@ -36,14 +36,6 @@ class mediawiki::jobqueue::runner (
             hour    => '18',
         }
 
-        cron { 'managewikis':
-            ensure  => present,
-            command => "/usr/bin/php /srv/mediawiki/${version}/extensions/CreateWiki/maintenance/manageInactiveWikis.php --wiki ${wiki} --write >> /var/log/mediawiki/cron/managewikis.log",
-            user    => 'www-data',
-            minute  => '5',
-            hour    => '12',
-        }
-
         cron { 'update rottenlinks on all wikis':
             ensure   => present,
             command  => "/usr/local/bin/fileLockScript.sh /tmp/rotten_links_file_lock \"/usr/bin/nice -n 15 /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases.json /srv/mediawiki/${version}/extensions/RottenLinks/maintenance/updateExternalLinks.php\"",
