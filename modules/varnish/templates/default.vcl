@@ -52,7 +52,23 @@ sub vcl_init {
 
 # Purge ACL
 acl purge {
+	# localhost
 	"127.0.0.1";
+
+	# mw1
+	"3.145.73.77";
+
+	# mw2
+	"18.224.51.21";
+
+	# test1
+	"52.14.195.40";
+
+	# phorge1
+	"3.135.195.194";
+
+	# puppet1
+	"18.117.56.175";
 }
 
 # Cookie handling logic
