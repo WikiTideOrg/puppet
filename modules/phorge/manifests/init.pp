@@ -2,7 +2,7 @@
 class phorge (
     Integer $request_timeout = lookup('phorge::php::request_timeout', {'default_value' => 60}),
 ) {
-    ensure_packages(['python3-pygments', 'subversion'])
+    ensure_packages(['mariadb-client', 'python3-pygments', 'subversion'])
 
     $fpm_config = {
         'include_path'                    => '".:/usr/share/php"',
@@ -187,5 +187,14 @@ class phorge (
         content => systemd_template('phd'),
         restart => true,
         require => File['/srv/phorge/phorge/conf/local/local.json'],
+    }
+
+    cron { 'backups-phorge':
+        ensure   => present,
+        command  => '/usr/local/bin/wikiforge-backup backup phorge > /var/log/phorge-backup.log',
+        user     => 'root',
+        minute   => '0',
+        hour     => '1',
+        monthday => ['1', '15'],
     }
 }
