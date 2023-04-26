@@ -54,13 +54,30 @@ class role::db (
     }
 
     # Create a user to allow db transfers between servers
-    /*users::user { 'dbcopy':
+    file { '/home/dbcopy/.ssh':
+        ensure  => directory,
+        mode    => '0700',
+        owner   => 'dbcopy',
+        group   => 'dbcopy',
+        require => User['dbcopy'],
+    }
+
+    file { '/home/dbcopy/.ssh/id_ed25519':
+        source    => 'puppet:///private/mariadb/dbcopy-ssh-key',
+        owner     => 'dbcopy',
+        group     => 'dbcopy',
+        mode      => '0400',
+        show_diff => false,
+        require   => File['/home/dbcopy/.ssh'],
+    }
+
+    users::user { 'dbcopy':
         ensure   => present,
         uid      => 3000,
         ssh_keys => [
-            ''
+            'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIaNnvqGzsVpXQr9jWHmdjJfnSyZYFVWMzdAh2VwFdSD dbcopy'
         ],
-    }*/
+    }
 
     motd::role { 'role::db':
         description => 'general database server',
