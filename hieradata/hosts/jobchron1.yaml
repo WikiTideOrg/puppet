@@ -1,5 +1,3 @@
-users::groups: []
-
 redis::heap: '1GB'
 
 mediawiki::jobqueue::runner::redis_ip: '18.217.191.48:6379'
