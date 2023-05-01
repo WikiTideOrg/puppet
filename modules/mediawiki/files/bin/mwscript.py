@@ -27,7 +27,8 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
 
     del mw_versions
 
-    validDBLists = ('active',) + tuple([f'{key}-wikis' for key in versions.keys()])
+    versionLists = tuple([f'{key}-wikis' for key in versions.keys()])
+    validDBLists = ('active',) + versionLists
 
     longscripts = ('compressOld.php', 'deleteBatch.php', 'importDump.php', 'importImages.php', 'nukeNS.php', 'rebuildall.php', 'rebuildImages.php', 'refreshLinks.php', 'runJobs.php', 'purgeList.php', 'cargoRecreateData.php')
     long = False
@@ -53,6 +54,8 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
         if not dbname:
             dbname = 'default'
         args.version = os.popen(f'getMWVersion {dbname}').read().strip()
+        if wiki and wiki in versionLists:
+            args.version = versions.get(wiki[:-6])
 
     script = args.script
     if not script.endswith('.php'):
