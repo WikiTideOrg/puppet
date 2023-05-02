@@ -25,7 +25,7 @@ script-src:
   - 'www.google.com'
   - 'platform.twitter.com'
   - 'hcaptcha.com'
-  - '*.hcaptcha.com
+  - '*.hcaptcha.com'
 
 style-src:
   - "'self'"
