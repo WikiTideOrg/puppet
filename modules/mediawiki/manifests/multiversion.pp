@@ -52,6 +52,12 @@ class mediawiki::multiversion (
             group  => 'www-data',
         }
 
+        file { "/srv/mediawiki/cache/${version}":
+            ensure => 'directory',
+            owner  => 'www-data',
+            group  => 'www-data',
+        }
+
         git::clone { "femiwiki-deploy-${version}":
             ensure    => 'latest',
             directory => "/srv/mediawiki/femiwiki-deploy/${version}",
