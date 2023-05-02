@@ -1281,3 +1281,7 @@ PWA:
   branch: main
   path: extensions/PWA
   repo_url: https://github.com/Wikimedica/MediaWiki-extensions-PWA
+OOJSPlus:
+  branch: _branch_
+  path: extensions/OOJSPlus
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-OOJSPlus
