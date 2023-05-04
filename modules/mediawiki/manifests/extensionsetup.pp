@@ -6,7 +6,6 @@ define mediawiki::extensionsetup (
     ensure_packages('composer')
 
     $mwpath = "/srv/mediawiki-staging/${version}"
-    $composer = 'composer install --no-dev'
 
     file { [
         "/srv/mediawiki/${version}/extensions/OAuth/.composer/cache",
@@ -57,7 +56,7 @@ define mediawiki::extensionsetup (
 
         if $params['composer'] {
             exec { "${name}-${branch} composer":
-                command     => $composer,
+                command     => 'composer install --no-dev',
                 creates     => "${mwpath}/${params['path']}/vendor",
                 cwd         => "${mwpath}/${params['path']}",
                 path        => '/usr/bin',
