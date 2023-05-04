@@ -88,16 +88,6 @@ define mediawiki::extensionsetup (
         require => Git::Clone["MediaWiki-${branch} core"],
     }
 
-    exec { "oauth_lcobucci_composer_${branch}":
-        command     => 'composer require "lcobucci/jwt:4.1.5" --update-no-dev',
-        unless      => 'composer show --installed lcobucci/jwt 4.1.5',
-        cwd         => "${mwpath}/extensions/OAuth",
-        path        => '/usr/bin',
-        environment => "HOME=${mwpath}/extensions/OAuth",
-        user        => 'www-data',
-        require     => Exec["OAuth-${branch} composer"],
-    }
-
     exec { "DataTransfer-${branch} composer":
         command     => 'composer require phpoffice/phpspreadsheet',
         creates     => "${mwpath}/extensions/DataTransfer/vendor",
