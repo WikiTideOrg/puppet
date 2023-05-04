@@ -18,7 +18,7 @@ class mediawiki::multiversion (
     if lookup(mediawiki::use_staging) {
         file { '/srv/mediawiki-staging/w':
             ensure  => 'link',
-            target  => "/srv/mediawiki-staging/config/initialise/entrypoints",
+            target  => '/srv/mediawiki-staging/config/initialise/entrypoints',
             owner   => 'www-data',
             group   => 'www-data',
             require => File['/srv/mediawiki-staging/config'],
@@ -82,7 +82,7 @@ class mediawiki::multiversion (
 
         file { "/srv/mediawiki/${version}/LocalSettings.php":
             ensure  => 'link',
-            target  => "/srv/mediawiki/config/LocalSettings.php",
+            target  => '/srv/mediawiki/config/LocalSettings.php',
             owner   => 'www-data',
             group   => 'www-data',
             require => [
