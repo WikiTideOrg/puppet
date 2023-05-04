@@ -9,7 +9,7 @@ class mediawiki::multiversion (
 
     file { '/srv/mediawiki/w':
         ensure  => 'link',
-        target  => "/srv/mediawiki/config/initialise/entrypoints",
+        target  => '/srv/mediawiki/config/initialise/entrypoints',
         owner   => 'www-data',
         group   => 'www-data',
         require => File['/srv/mediawiki/config'],
