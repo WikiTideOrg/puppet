@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import argparse
-from typing import Optional, TypedDict
+from typing import Optional, Union, TypedDict
 import os
 import time
 import requests
@@ -57,10 +57,42 @@ def get_environment_info() -> Environment:
     return ENVIRONMENTS['prod']
 
 
-def get_server_list(envinfo: Environment, servers: str) -> list[str]:
-    if servers == 'all':
-        return envinfo['servers']
-    return servers.split(',')
+def get_valid_extensions(versions: list[str]) -> list:
+    valid_extensions = []
+    for version in versions:
+        extensions_path = f'/srv/mediawiki-staging/{version}/extensions/'
+        with os.scandir(extensions_path) as extensions:
+            valid_extensions += [extension.name for extension in extensions if extension.is_dir()]
+    return valid_extensions
+
+
+def get_valid_skins(versions: list[str]) -> list:
+    valid_skins = []
+    for version in versions:
+        skins_path = f'/srv/mediawiki-staging/{version}/skins/'
+        with os.scandir(skins_path) as skins:
+            valid_skins += [skin.name for skin in skins if skin.is_dir()]
+    return valid_skins
+
+
+def get_extensions_in_pack(pack_name: str) -> list[str]:
+    packs = {
+        'bundled': ['AbuseFilter', 'CategoryTree', 'Cite', 'CiteThisPage', 'CodeEditor', 'ConfirmEdit', 'DiscussionTools', 'Echo', 'Gadgets', 'ImageMap', 'InputBox', 'Interwiki', 'Linter', 'LoginNotify', 'Math', 'MultimediaViewer', 'Nuke', 'OATHAuth', 'PageImages', 'ParserFunctions', 'PdfHandler', 'Poem', 'ReplaceText', 'Scribunto', 'SpamBlacklist', 'SyntaxHighlight_GeSHi', 'TemplateData', 'TextExtracts', 'Thanks', 'TitleBlacklist', 'VisualEditor', 'WikiEditor'],
+        'miraheze': ['CreateWiki', 'DataDump', 'GlobalNewFiles', 'ImportDump', 'IncidentReporting', 'ManageWiki', 'PDFEmbed', 'RemovePII', 'RottenLinks', 'SpriteSheet', 'WikiDiscover', 'YouTube'],
+        'mleb': ['Babel', 'cldr', 'CleanChanges', 'Translate', 'UniversalLanguageSelector'],
+        'socialtools': ['AJAXPoll', 'BlogPage', 'Comments', 'ContributionScores', 'HAWelcome', 'ImageRating', 'MediaWikiChat', 'NewSignupPage', 'PollNY', 'QuizGame', 'RandomGameUnit', 'SocialProfile', 'Video', 'VoteNY', 'WikiForum', 'WikiTextLoggedInOut'],
+        'universalomega': ['AutoCreatePage', 'DiscordNotifications', 'DynamicPageList3', 'PortableInfobox', 'Preloader', 'SimpleBlogPage', 'SimpleTooltip'],
+        'wikiforge': ['WikiForgeMagic'],
+    }
+    return packs.get(pack_name, [])
+
+
+def get_skins_in_pack(pack_name: str) -> list[str]:
+    packs = {
+        'bundled': ['MinervaNeue', 'MonoBook', 'Timeless', 'Vector'],
+        'universalomega': ['Cosmos', 'Monaco'],
+    }
+    return packs.get(pack_name, [])
 
 
 def run_command(cmd: str) -> int:
@@ -138,7 +170,10 @@ def remote_sync_file(time: str, serverlist: list[str], path: str, envinfo: Envir
     return ec
 
 
-def _get_staging_path(repo: str) -> str:
+def _get_staging_path(repo: str, version: str = '') -> str:
+    if version and ('extensions/' in repo or 'skins/' in repo):
+        return f'/srv/mediawiki-staging/{version}/{repo}'
+
     return f'/srv/mediawiki-staging/{repos[repo]}/'
 
 
@@ -146,7 +181,7 @@ def _get_deployed_path(repo: str) -> str:
     return f'/srv/mediawiki/{repos[repo]}/'
 
 
-def _construct_rsync_command(time: str, dest: str, recursive: bool = True, local: bool = True, location: Optional[str] = None, server: Optional[str] = None) -> str:
+def _construct_rsync_command(time: Union[bool, str], dest: str, recursive: bool = True, local: bool = True, location: Optional[str] = None, server: Optional[str] = None) -> str:
     if time:
         params = '--inplace'
     else:
@@ -165,26 +200,40 @@ def _construct_rsync_command(time: str, dest: str, recursive: bool = True, local
     raise Exception(f'Error constructing command. Either server was missing or {location} != {dest}')
 
 
-def _construct_git_pull(repo: str, branch: Optional[str] = None) -> str:
+def _construct_git_pull(repo: str, submodules: bool = False, branch: Optional[str] = None, version: str = '') -> str:
     extrap = ' '
+    if submodules:
+        extrap += '--recurse-submodules '
+
     if branch:
         extrap += f'origin {branch} '
 
-    return f'sudo -u {DEPLOYUSER} git -C {_get_staging_path(repo)} pull{extrap}--quiet'
+    return f'sudo -u {DEPLOYUSER} git -C {_get_staging_path(repo, version)} pull{extrap}--quiet'
 
 
-def _construct_upgrade_mediawiki_rm_staging(version: str) -> str:
+def _construct_reset_mediawiki_rm_staging(version: str) -> str:
     return f'sudo -u {DEPLOYUSER} rm -rf {_get_staging_path(version)}'
 
 
-def _construct_upgrade_mediawiki_run_puppet() -> str:
+def _construct_reset_mediawiki_run_puppet() -> str:
     return 'sudo puppet agent -tv'
 
 
 def run(args: argparse.Namespace, start: float) -> None:
+    if args.upgrade_world and not args.reset_world:
+        args.world = True
+        args.pull = 'world'
+        args.upgrade_extensions = get_valid_extensions(args.versions)
+        args.upgrade_skins = get_valid_skins(args.versions)
+    run_process(args=args, start=start)
+    if args.world or args.l10n or args.extension_list or args.reset_world or args.upgrade_extensions or args.upgrade_skins:
+        for version in args.versions:
+            run_process(args=args, start=start, version=version)
+
+
+def run_process(args: argparse.Namespace, start: float, version: str = '') -> None:
     envinfo = get_environment_info()
-    servers = get_server_list(envinfo, args.servers)
-    options = {'config': args.config, 'world': args.world, 'landing': args.landing, 'errorpages': args.errorpages}
+    options = {'config': args.config and not version, 'world': args.world and version, 'landing': args.landing and not version, 'errorpages': args.errorpages and not version}
     exitcodes = []
     loginfo = {}
     rsyncpaths = []
@@ -194,14 +243,11 @@ def run(args: argparse.Namespace, start: float) -> None:
     postinstall = []
     stage = []
 
-    if not args.version:
-        args.version = os.popen(f'getMWVersion {envinfo["wikidbname"]}').read().strip()
-
     for arg in vars(args).items():
         if arg[1] is not None and arg[1] is not False:
             loginfo[arg[0]] = arg[1]
     synced = loginfo['servers']
-    if HOSTNAME in servers:
+    if HOSTNAME in args.servers:
         del loginfo['servers']
         text = f'starting deploy of "{str(loginfo)}" to {synced}'
         if not args.nolog:
@@ -209,9 +255,9 @@ def run(args: argparse.Namespace, start: float) -> None:
         else:
             print(text)
 
-        if args.upgrade:
-            stage.append(_construct_upgrade_mediawiki_rm_staging(args.version))
-            stage.append(_construct_upgrade_mediawiki_run_puppet())
+        if version and args.reset_world:
+            stage.append(_construct_reset_mediawiki_rm_staging(version))
+            stage.append(_construct_reset_mediawiki_run_puppet())
 
         pull = []
         if args.pull:
@@ -219,9 +265,27 @@ def run(args: argparse.Namespace, start: float) -> None:
         if pull:
             for repo in pull:
                 try:
+                    if repo == 'world':
+                        if version:
+                            repo = version
+                        else:
+                            continue
                     stage.append(_construct_git_pull(repo, branch=args.branch))
                 except KeyError:
                     print(f'Failed to pull {repo} due to invalid name')
+
+        if version:
+            if args.upgrade_extensions:
+                for extension in args.upgrade_extensions:
+                    stage.append(_construct_git_pull(f'extensions/{extension}', submodules=True, version=version))
+                    rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{version}/extensions/{extension}/*', dest=f'/srv/mediawiki/{version}/extensions/{extension}/'))
+                    rsyncpaths.append(f'/srv/mediawiki/{version}/extensions/{extension}/')
+
+            if args.upgrade_skins:
+                for skin in args.upgrade_skins:
+                    stage.append(_construct_git_pull(f'skins/{skin}', version=version))
+                    rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{version}/skins/{skin}/*', dest=f'/srv/mediawiki/{version}/skins/{skin}/'))
+                    rsyncpaths.append(f'/srv/mediawiki/{version}/skins/{skin}/')
 
         for cmd in stage:  # setup env, git pull etc
             exitcodes.append(run_command(cmd))
@@ -229,40 +293,36 @@ def run(args: argparse.Namespace, start: float) -> None:
         for option in options:  # configure rsync & custom data for repos
             if options[option]:
                 if option == 'world':  # install steps for world
-                    option = args.version
-                    os.chdir(_get_staging_path(args.version))
+                    option = version
+                    os.chdir(_get_staging_path(version))
                     exitcodes.append(run_command(f'sudo -u {DEPLOYUSER} composer install --no-dev --quiet'))
-                    rebuild.append(f'sudo -u {DEPLOYUSER} MW_INSTALL_PATH=/srv/mediawiki-staging/{args.version} php /srv/mediawiki-staging/{args.version}/extensions/WikiForgeMagic/maintenance/rebuildVersionCache.php --save-gitinfo --version={args.version} --wiki={envinfo["wikidbname"]} --conf=/srv/mediawiki-staging/config/LocalSettings.php')
-                    rsyncpaths.append(f'/srv/mediawiki/cache/{args.version}/gitinfo/')
+                    rebuild.append(f'sudo -u {DEPLOYUSER} MW_INSTALL_PATH=/srv/mediawiki-staging/{version} php /srv/mediawiki-staging/{version}/extensions/WikiForgeMagic/maintenance/rebuildVersionCache.php --save-gitinfo --version={version} --wiki={envinfo["wikidbname"]} --conf=/srv/mediawiki-staging/config/LocalSettings.php')
+                    rsyncpaths.append(f'/srv/mediawiki/cache/{version}/gitinfo/')
                 rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'{_get_staging_path(option)}*', dest=_get_deployed_path(option)))
         non_zero_code(exitcodes, nolog=args.nolog)
-        if args.files:  # specfic extra files
+        if args.files and not version:  # specfic extra files
             files = str(args.files).split(',')
             for file in files:
                 rsync.append(_construct_rsync_command(time=args.ignoretime, recursive=False, location=f'/srv/mediawiki-staging/{file}', dest=f'/srv/mediawiki/{file}'))
-        if args.folders:  # specfic extra folders
+        if args.folders and not version:  # specfic extra folders
             folders = str(args.folders).split(',')
             for folder in folders:
                 rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{folder}/*', dest=f'/srv/mediawiki/{folder}/'))
 
-        if args.extensionlist:  # when adding skins/exts
-            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{args.version}/extensions/CreateWiki/maintenance/rebuildExtensionListCache.php --wiki={envinfo["wikidbname"]} --cachedir=/srv/mediawiki/cache/{args.version}')
+        if args.extension_list and version:  # when adding skins/exts
+            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{version}/extensions/CreateWiki/maintenance/rebuildExtensionListCache.php --wiki={envinfo["wikidbname"]} --cachedir=/srv/mediawiki/cache/{version}')
 
         for cmd in rsync:  # move staged content to live
             exitcodes.append(run_command(cmd))
         non_zero_code(exitcodes)
-        if args.l10n:  # setup l10n
+        if args.l10n and version:  # setup l10n
             if args.lang:
-                for language in str(args.lang).split(','):
-                    if not tag_is_valid(language):
-                        raise ValueError(f'{language} is not a valid language.')
-
                 lang = f'--lang={args.lang}'
             else:
                 lang = ''
 
-            postinstall.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{args.version}/maintenance/mergeMessageFileList.php --quiet --wiki={envinfo["wikidbname"]} --output /srv/mediawiki/config/ExtensionMessageFiles.php')
-            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{args.version}/maintenance/rebuildLocalisationCache.php {lang} --quiet --wiki={envinfo["wikidbname"]}')
+            postinstall.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{version}/maintenance/mergeMessageFileList.php --quiet --wiki={envinfo["wikidbname"]} --output /srv/mediawiki/config/ExtensionMessageFiles.php')
+            rebuild.append(f'sudo -u {DEPLOYUSER} php /srv/mediawiki/{version}/maintenance/rebuildLocalisationCache.php {lang} --quiet --wiki={envinfo["wikidbname"]}')
 
         for cmd in postinstall:  # cmds to run after rsync & install (like mergemessage)
             exitcodes.append(run_command(cmd))
@@ -281,23 +341,23 @@ def run(args: argparse.Namespace, start: float) -> None:
     for option in options:
         if options[option]:
             if option == 'world':
-                option = args.version
+                option = version
             rsyncpaths.append(_get_deployed_path(option))
-    if args.files:
+    if args.files and not version:
         for file in str(args.files).split(','):
             rsyncfiles.append(f'/srv/mediawiki/{file}')
-    if args.folders:
+    if args.folders and not version:
         for folder in str(args.folders).split(','):
             rsyncpaths.append(f'/srv/mediawiki/{folder}/')
-    if args.extensionlist:
-        rsyncfiles.append(f'/srv/mediawiki/cache/{args.version}/extension-list.json')
-    if args.l10n:
-        rsyncpaths.append(f'/srv/mediawiki/cache/{args.version}/l10n/')
+    if args.extension_list and version:
+        rsyncfiles.append(f'/srv/mediawiki/cache/{version}/extension-list.json')
+    if args.l10n and version:
+        rsyncpaths.append(f'/srv/mediawiki/cache/{version}/l10n/')
 
     for path in rsyncpaths:
-        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=servers, path=path, force=args.force, envinfo=envinfo, nolog=args.nolog))
+        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=args.servers, path=path, force=args.force, envinfo=envinfo, nolog=args.nolog))
     for file in rsyncfiles:
-        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=servers, path=file, recursive=False, force=args.force, envinfo=envinfo, nolog=args.nolog))
+        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=args.servers, path=file, recursive=False, force=args.force, envinfo=envinfo, nolog=args.nolog))
 
     fintext = f'finished deploy of "{str(loginfo)}" to {synced}'
 
@@ -315,25 +375,104 @@ def run(args: argparse.Namespace, start: float) -> None:
         exit(1)
 
 
+class UpgradeExtensionsAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):  # noqa: U100
+        versions = getattr(namespace, 'versions', None)
+        if not versions:
+            parser.error('--versions is required when using --upgrade-extensions (--versions must come before --upgrade-extensions)')
+        input_extensions = values.split(',')
+        valid_extensions = get_valid_extensions(versions)
+        if 'all' in input_extensions:
+            input_extensions = valid_extensions
+        invalid_extensions = set(input_extensions) - set(valid_extensions)
+        if invalid_extensions:
+            parser.error(f'invalid extension choice(s): {", ".join(invalid_extensions)}')
+        setattr(namespace, self.dest, input_extensions)
+
+
+class UpgradeSkinsAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):  # noqa: U100
+        versions = getattr(namespace, 'versions', None)
+        if not versions:
+            parser.error('--versions is required when using --upgrade-skins (--versions must come before --upgrade-skins)')
+        input_skins = values.split(',')
+        valid_skins = get_valid_skins(versions)
+        if 'all' in input_skins:
+            input_skins = valid_skins
+        invalid_skins = set(input_skins) - set(valid_skins)
+        if invalid_skins:
+            parser.error(f'invalid skin choice(s): {", ".join(invalid_skins)}')
+        setattr(namespace, self.dest, input_skins)
+
+
+class UpgradePackAction(argparse.Action):
+    def __call__(self, parser, namespace, value, option_string=None):  # noqa: U100
+        extensions_in_pack = get_extensions_in_pack(value)
+        skins_in_pack = get_skins_in_pack(value)
+        setattr(namespace, 'upgrade_extensions', extensions_in_pack)
+        setattr(namespace, 'upgrade_skins', skins_in_pack)
+
+
+class LangAction(argparse.Action):
+    def __call__(self, parser, namespace, value, option_string=None):  # noqa: U100
+        if not getattr(namespace, 'l10n', False):
+            parser.error('--lang can not be used without --l10n (--l10n must come before --lang)')
+        invalid_langs = []
+        for language in value.split(','):
+            if not tag_is_valid(language):
+                invalid_langs.append(language)
+        if invalid_langs:
+            parser.error(f'invalid language choice(s): {", ".join(invalid_langs)}')
+        setattr(namespace, 'lang', value)
+
+
+class VersionsAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):  # noqa: U100
+        input_versions = values.split(',')
+        valid_versions = [version for version in versions.values() if os.path.exists(f'/srv/mediawiki-staging/{version}')]
+        if 'all' in input_versions:
+            input_versions = valid_versions
+        invalid_versions = set(input_versions) - set(valid_versions)
+        if invalid_versions:
+            parser.error(f'invalid version choice(s): {", ".join(invalid_versions)}')
+        setattr(namespace, self.dest, input_versions)
+
+
+class ServersAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):  # noqa: U100
+        input_servers = values.split(',')
+        valid_servers = get_environment_info()['servers']
+        if 'all' in input_servers:
+            input_servers = valid_servers
+        invalid_servers = set(input_servers) - set(valid_servers)
+        if invalid_servers:
+            parser.error(f'invalid server choice(s): {", ".join(invalid_servers)}')
+        setattr(namespace, self.dest, input_servers)
+
+
 if __name__ == '__main__':
     start = time.time()
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--pull', dest='pull')
     parser.add_argument('--branch', dest='branch')
-    parser.add_argument('--upgrade-world', dest='upgrade', action='store_true')
+    parser.add_argument('--reset-world', dest='reset_world', action='store_true')
+    parser.add_argument('--upgrade-world', dest='upgrade_world', action='store_true')
     parser.add_argument('--config', dest='config', action='store_true')
     parser.add_argument('--world', dest='world', action='store_true')
     parser.add_argument('--landing', dest='landing', action='store_true')
     parser.add_argument('--errorpages', dest='errorpages', action='store_true')
     parser.add_argument('--l10n', dest='l10n', action='store_true')
-    parser.add_argument('--extension-list', dest='extensionlist', action='store_true')
+    parser.add_argument('--extension-list', dest='extension_list', action='store_true')
     parser.add_argument('--no-log', dest='nolog', action='store_true')
     parser.add_argument('--force', dest='force', action='store_true')
     parser.add_argument('--files', dest='files')
     parser.add_argument('--folders', dest='folders')
-    parser.add_argument('--lang', dest='lang')
-    parser.add_argument('--version', dest='version', choices=list(versions.values()))
-    parser.add_argument('--servers', dest='servers', required=True)
+    parser.add_argument('--lang', dest='lang', action=LangAction, help='l10n language(s) to rebuild, defaults to all')
+    parser.add_argument('--versions', dest='versions', action=VersionsAction, default=[os.popen(f'getMWVersion {get_environment_info()["wikidbname"]}').read().strip()], help='version(s) to deploy')
+    parser.add_argument('--upgrade-extensions', dest='upgrade_extensions', action=UpgradeExtensionsAction, help='extension(s) to upgrade')
+    parser.add_argument('--upgrade-skins', dest='upgrade_skins', action=UpgradeSkinsAction, help='skin(s) to upgrade')
+    parser.add_argument('--upgrade-pack', dest='upgrade_pack', action=UpgradePackAction, choices=['bundled', 'miraheze', 'mleb', 'socialtools', 'universalomega', 'wikiforge'], help='pack of extensions/skins to upgrade')
+    parser.add_argument('--servers', dest='servers', action=ServersAction, required=True, help='server(s) to deploy to')
     parser.add_argument('--ignore-time', dest='ignoretime', action='store_true')
     parser.add_argument('--port', dest='port')
 
