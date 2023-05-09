@@ -1,6 +1,6 @@
 import os
 import mwscript
-import pytest
+from unittest.mock import patch
 
 
 def test_get_command_simple():
@@ -19,21 +19,21 @@ def test_get_command_extension():
     assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/extensions/CheckUser/maintenance/test.php --wiki=metawiki', 'generate': None, 'long': False, 'nolog': False}
 
 
-def test_get_command_extension_list():
+@patch.dict(os.environ, {'LOGNAME': 'test'})
+@patch('os.getlogin')
+def test_get_command_extension_list(mock_getlogin):
+    mock_getlogin.return_value = 'test'
     args = mwscript.get_args()
     args.script = 'test.php'
     args.extension = 'CheckUser'
     args.version = '1.39'
-    try:
-        assert mwscript.get_commands(args) == {
-            'confirm': False,
-            'command': f'sudo -u www-data /usr/local/bin/foreachwikiindblist /home/{os.environ["LOGNAME"]}/CheckUser.json /srv/mediawiki/1.39/maintenance/test.php',
-            'generate': 'php /srv/mediawiki/1.39/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension=CheckUser',
-            'long': True,
-            'nolog': False,
-        }
-    except OSError:
-        pytest.skip('You have a stupid environment')
+    assert mwscript.get_commands(args) == {
+        'confirm': False,
+        'command': f'sudo -u www-data /usr/local/bin/foreachwikiindblist /home/{os.environ["LOGNAME"]}/CheckUser.json /srv/mediawiki/1.39/maintenance/test.php',
+        'generate': 'php /srv/mediawiki/1.39/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension=CheckUser',
+        'long': True,
+        'nolog': False,
+    }
 
 
 def test_get_command_all():
@@ -76,21 +76,21 @@ def test_get_command_extension_runner():
     assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/extensions/CheckUser/maintenance/test.php --wiki=metawiki', 'generate': None, 'long': False, 'nolog': False}
 
 
-def test_get_command_extension_list_runner():
+@patch.dict(os.environ, {'LOGNAME': 'test'})
+@patch('os.getlogin')
+def test_get_command_extension_list_runner(mock_getlogin):
+    mock_getlogin.return_value = 'test'
     args = mwscript.get_args()
     args.script = 'test.php'
     args.extension = 'CheckUser'
     args.version = '1.40'
-    try:
-        assert mwscript.get_commands(args) == {
-            'confirm': False,
-            'command': f'sudo -u www-data /usr/local/bin/foreachwikiindblist /home/{os.environ["LOGNAME"]}/CheckUser.json /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/maintenance/test.php',
-            'generate': 'php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension=CheckUser',
-            'long': True,
-            'nolog': False,
-        }
-    except OSError:
-        pytest.skip('You have a stupid environment')
+    assert mwscript.get_commands(args) == {
+        'confirm': False,
+        'command': f'sudo -u www-data /usr/local/bin/foreachwikiindblist /home/{os.environ["LOGNAME"]}/CheckUser.json /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/maintenance/test.php',
+        'generate': 'php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension=CheckUser',
+        'long': True,
+        'nolog': False,
+    }
 
 
 def test_get_command_all_runner():
