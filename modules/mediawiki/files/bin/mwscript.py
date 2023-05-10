@@ -141,5 +141,4 @@ def get_args() -> argparse.Namespace:
 
 
 if __name__ == '__main__':
-
     run(get_commands(get_args()))
