@@ -282,7 +282,9 @@ def run(args: argparse.Namespace, start: float) -> None:  # pragma: no cover
     if args.upgrade_world and not args.reset_world:
         args.world = True
         args.pull = 'world'
-        args.ignoretime = True
+        args.l10n = True
+        args.ignore_time = True
+        args.extension_list = True
         args.upgrade_extensions = get_valid_extensions(args.versions)
         args.upgrade_skins = get_valid_skins(args.versions)
     run_process(args=args, start=start)
@@ -387,7 +389,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                             if tags:
                                 tagsinfo.append(f'Tags for {extension}: {", ".join(sorted(tags))}')
                         if not args.world:
-                            rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{version}/extensions/{extension}/*', dest=f'/srv/mediawiki/{version}/extensions/{extension}/'))
+                            rsync.append(_construct_rsync_command(time=args.ignore_time, location=f'/srv/mediawiki-staging/{version}/extensions/{extension}/*', dest=f'/srv/mediawiki/{version}/extensions/{extension}/'))
                             rsyncpaths.append(f'/srv/mediawiki/{version}/extensions/{extension}/')
                     elif exitcode == 0:
                         print(f'{extension} already up to date. Skipping...')
@@ -436,7 +438,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                             if tags:
                                 tagsinfo.append(f'Tags for {skin}: {", ".join(sorted(tags))}')
                         if not args.world:
-                            rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{version}/skins/{skin}/*', dest=f'/srv/mediawiki/{version}/skins/{skin}/'))
+                            rsync.append(_construct_rsync_command(time=args.ignore_time, location=f'/srv/mediawiki-staging/{version}/skins/{skin}/*', dest=f'/srv/mediawiki/{version}/skins/{skin}/'))
                             rsyncpaths.append(f'/srv/mediawiki/{version}/skins/{skin}/')
                     elif exitcode == 0:
                         print(f'{skin} already up to date. Skipping...')
@@ -454,16 +456,16 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                     exitcodes.append(run_command(f'sudo -u {DEPLOYUSER} composer update --no-dev --quiet'))
                     rebuild.append(f'sudo -u {DEPLOYUSER} MW_INSTALL_PATH=/srv/mediawiki-staging/{version} php {runner_staging}/srv/mediawiki-staging/{version}/extensions/WikiForgeMagic/maintenance/rebuildVersionCache.php --save-gitinfo --version={version} --wiki={envinfo["wikidbname"]} --conf=/srv/mediawiki-staging/config/LocalSettings.php')
                     rsyncpaths.append(f'/srv/mediawiki/cache/{version}/gitinfo/')
-                rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'{_get_staging_path(option)}*', dest=_get_deployed_path(option)))
+                rsync.append(_construct_rsync_command(time=args.ignore_time, location=f'{_get_staging_path(option)}*', dest=_get_deployed_path(option)))
         non_zero_code(exitcodes, nolog=args.nolog)
         if args.files and not version:  # specfic extra files
             files = str(args.files).split(',')
             for file in files:
-                rsync.append(_construct_rsync_command(time=args.ignoretime, recursive=False, location=f'/srv/mediawiki-staging/{file}', dest=f'/srv/mediawiki/{file}'))
+                rsync.append(_construct_rsync_command(time=args.ignore_time, recursive=False, location=f'/srv/mediawiki-staging/{file}', dest=f'/srv/mediawiki/{file}'))
         if args.folders and not version:  # specfic extra folders
             folders = str(args.folders).split(',')
             for folder in folders:
-                rsync.append(_construct_rsync_command(time=args.ignoretime, location=f'/srv/mediawiki-staging/{folder}/*', dest=f'/srv/mediawiki/{folder}/'))
+                rsync.append(_construct_rsync_command(time=args.ignore_time, location=f'/srv/mediawiki-staging/{folder}/*', dest=f'/srv/mediawiki/{folder}/'))
 
         if args.extension_list and version:  # when adding skins/exts
             rebuild.append(f'sudo -u {DEPLOYUSER} php {runner}/srv/mediawiki/{version}/extensions/CreateWiki/maintenance/rebuildExtensionListCache.php --wiki={envinfo["wikidbname"]} --cachedir=/srv/mediawiki/cache/{version}')
@@ -510,9 +512,9 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
         rsyncpaths.append(f'/srv/mediawiki/cache/{version}/l10n/')
 
     for path in rsyncpaths:
-        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=args.servers, path=path, force=args.force, envinfo=envinfo, nolog=args.nolog))
+        exitcodes.append(remote_sync_file(time=args.ignore_time, serverlist=args.servers, path=path, force=args.force, envinfo=envinfo, nolog=args.nolog))
     for file in rsyncfiles:
-        exitcodes.append(remote_sync_file(time=args.ignoretime, serverlist=args.servers, path=file, recursive=False, force=args.force, envinfo=envinfo, nolog=args.nolog))
+        exitcodes.append(remote_sync_file(time=args.ignore_time, serverlist=args.servers, path=file, recursive=False, force=args.force, envinfo=envinfo, nolog=args.nolog))
 
     fintext = f'finished deploy of "{str(loginfo)}" to {synced}'
 
@@ -638,7 +640,7 @@ if __name__ == '__main__':
     parser.add_argument('--upgrade-skins', dest='upgrade_skins', action=UpgradeSkinsAction, help='skin(s) to upgrade')
     parser.add_argument('--upgrade-pack', dest='upgrade_pack', action=UpgradePackAction, choices=['bundled', 'miraheze', 'mleb', 'socialtools', 'universalomega', 'wikiforge'], help='pack of extensions/skins to upgrade')
     parser.add_argument('--servers', dest='servers', action=ServersAction, required=True, help='server(s) to deploy to')
-    parser.add_argument('--ignore-time', dest='ignoretime', action='store_true')
+    parser.add_argument('--ignore-time', dest='ignore_time', action='store_true')
     parser.add_argument('--port', dest='port')
 
     run(parser.parse_args(), start)
