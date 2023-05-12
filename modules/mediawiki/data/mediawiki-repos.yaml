@@ -1175,7 +1175,7 @@ TemplateStylesExtender:
   path: extensions/TemplateStylesExtender
   repo_url: https://github.com/octfx/mediawiki-extensions-TemplateStylesExtender
 StandardDialogs:
-  branch: master
+  branch: _branch_
   path: extensions/StandardDialogs
   repo_url: https://github.com/wikimedia/mediawiki-extensions-StandardDialogs
 StructuredNavigation:
