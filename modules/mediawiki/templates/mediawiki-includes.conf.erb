@@ -65,6 +65,10 @@ location ~ ^/(wiki/)? {
 		return 301 $1;
 	}
 
+	if ($request_uri ~ ^(.*)\?&(.*)$) {
+		return 301 $1?$2;
+	}
+
 	try_files $uri $uri/ @wiki;
 }
 
