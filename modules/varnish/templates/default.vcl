@@ -329,8 +329,8 @@ sub vcl_recv {
 
 # Defines the uniqueness of a request
 sub vcl_hash {
-	# FIXME: try if we can make this ^/wiki/ only?
-	if (req.url ~ "^/wiki/" || req.url ~ "^/w/load.php") {
+	# FIXME: try if we can make this ^/(wiki/)? only?
+	if (req.url ~ "^/(wiki/)?" || req.url ~ "^/w/load.php") {
 		hash_data(req.http.X-Device);
 	}
 }
@@ -346,7 +346,7 @@ sub vcl_pipe {
 # Initiate a backend fetch
 sub vcl_backend_fetch {
 	# Modify the end of the URL if mobile device
-	if ((bereq.url ~ "^/wiki/[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1") {
+	if ((bereq.url ~ "^/(wiki/)?[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1") {
 		if (bereq.url ~ "\?") {
 			set bereq.url = bereq.url + "&useformat=mobile";
 		} else {
@@ -502,9 +502,9 @@ sub vcl_deliver {
 		set resp.http.Access-Control-Allow-Origin = "*";
 	}
 
-	if (req.url ~ "^/wiki/" || req.url ~ "^/w/index\.php") {
+	if (req.url ~ "^/(wiki/)?" || req.url ~ "^/w/index\.php") {
 		// ...but exempt CentralNotice banner special pages
-		if (req.url !~ "^/(wiki/|w/index\.php\?title=)Special:Banner") {
+		if (req.url !~ "^/(wiki/|w/index\.php\?title=)?Special:Banner") {
 			set resp.http.Cache-Control = "private, s-maxage=0, max-age=0, must-revalidate";
 		}
 	}
@@ -515,7 +515,7 @@ sub vcl_deliver {
 	}
 
 	# Do not index certain URLs
-	if (req.url ~ "^(/w/(api|index|rest)\.php*|/wiki/Special(\:|%3A)(?!WikiForum)).+$") {
+	if (req.url ~ "^(/w/(api|index|rest)\.php*|/(wiki/)?Special(\:|%3A)(?!WikiForum)).+$") {
 		set resp.http.X-Robots-Tag = "noindex";
 	}
 
