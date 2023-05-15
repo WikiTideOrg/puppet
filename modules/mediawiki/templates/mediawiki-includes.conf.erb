@@ -42,8 +42,9 @@ location ^~ /w/index.php {
 	fastcgi_buffer_size 64k;
 	fastcgi_pass unix:/run/<%= @php_fpm_sock %>;
 
-	if ($arg_action = "submit") {
-		# Skip if action=submit
+	if ($request_method = POST) {
+		# Skip if it is a POST request,
+		# as it can cause issues otherwise
 		break;
 	}
 
