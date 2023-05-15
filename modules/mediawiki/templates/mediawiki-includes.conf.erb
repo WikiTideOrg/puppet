@@ -48,7 +48,7 @@ location ^~ /w/index.php {
 		break;
 	}
 
-	if ($args ~* "(.*)(?:^|&)title=([^&]*)(?:&|$)(.*)") {
+	if ($args ~* "(.*)(?:^|&)title=([^&]*)(.*)") {
 		set $new_args $1$3;
 		return 301 /wiki/$arg_title?$new_args;
 	}
