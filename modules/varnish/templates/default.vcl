@@ -116,10 +116,10 @@ sub rate_limit {
 		# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
 		# T6283: remove rate limit for IABot (temporarily?)
 		if (
-			(req.url ~ "^/wiki" || req.url ~ "^/w/(api|index)\.php")
+			(req.url ~ "^/(wiki)?" || req.url ~ "^/(w/)?(api|index)\.php")
 			&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
 		) {
-			if (req.url ~ "^/w/index\.php\?title=\S+\:MathShowImage&hash=[0-9a-z]+&mode=mathml") {
+			if (req.url ~ "^/(wiki/)?\S+\:MathShowImage?hash=[0-9a-z]+&mode=mathml" || req.url ~ "^/(w/)?index\.php\?title=\S+\:MathShowImage&hash=[0-9a-z]+&mode=mathml") {
 				# The Math extension at Special:MathShowImage may cause lots of requests, which should not fail
 				if (vsthrottle.is_denied("math:" + req.http.X-Real-IP, 120, 10s)) {
 					return (synth(429, "Varnish Rate Limit Exceeded"));
@@ -346,7 +346,7 @@ sub vcl_pipe {
 # Initiate a backend fetch
 sub vcl_backend_fetch {
 	# Modify the end of the URL if mobile device
-	if ((bereq.url ~ "^/(wiki/)?[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1") {
+	if ((bereq.url ~ "^/(wiki/)?[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1" && bereq.url !~ "(.*)(?:\?|&)useformat=mobile(?:&|$)") {
 		if (bereq.url ~ "\?") {
 			set bereq.url = bereq.url + "&useformat=mobile";
 		} else {
@@ -502,7 +502,7 @@ sub vcl_deliver {
 		set resp.http.Access-Control-Allow-Origin = "*";
 	}
 
-	if (req.url ~ "^/(wiki/)?" || req.url ~ "^/w/index\.php") {
+	if (req.url ~ "^/(wiki/)?" || req.url ~ "^/(w/)?index\.php") {
 		// ...but exempt CentralNotice banner special pages
 		if (req.url !~ "^/(wiki/|w/index\.php\?title=)?Special:Banner") {
 			set resp.http.Cache-Control = "private, s-maxage=0, max-age=0, must-revalidate";
@@ -515,7 +515,7 @@ sub vcl_deliver {
 	}
 
 	# Do not index certain URLs
-	if (req.url ~ "^(/w/(api|index|rest)\.php*|/(wiki/)?Special(\:|%3A)(?!WikiForum)).+$") {
+	if (req.url ~ "^(/(w/)?(api|index|rest)\.php*|/(wiki/)?Special(\:|%3A)(?!WikiForum)).+$") {
 		set resp.http.X-Robots-Tag = "noindex";
 	}
 
