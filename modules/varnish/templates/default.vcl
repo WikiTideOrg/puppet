@@ -116,7 +116,7 @@ sub rate_limit {
 		# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
 		# T6283: remove rate limit for IABot (temporarily?)
 		if (
-			(req.url ~ "^/(wiki)?" || req.url ~ "^/(w/)?(api|index)\.php")
+			((req.url ~ "^/(wiki)?" && req.url !~ "^/w/") || req.url ~ "^/(w/)?(api|index)\.php")
 			&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
 		) {
 			if (req.url ~ "^/(wiki/)?\S+\:MathShowImage?hash=[0-9a-z]+&mode=mathml" || req.url ~ "^/(w/)?index\.php\?title=\S+\:MathShowImage&hash=[0-9a-z]+&mode=mathml") {
