@@ -87,7 +87,7 @@ location ~ ^/static/((?!(private))(.+))$ {
 	alias /mnt/mediawiki-static/$1;
 }
 
-# Redirect /entity/* to /wiki/Special:EntityData/*
+# Redirect /entity/* to /Special:EntityData/*
 location ~ ^/entity/(.*) {
 	return 301 /Special:EntityData/$1;
 }
