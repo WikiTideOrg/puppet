@@ -27,8 +27,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
 
     del mw_versions
 
-    versionLists = tuple([f'{key}-wikis' for key in versions.keys()])
-    validDBLists = ('active',) + versionLists
+    validDBLists = tuple([f'{key}-wikis' for key in versions.keys()])
 
     longscripts = ('compressOld.php', 'deleteBatch.php', 'importDump.php', 'importImages.php', 'nukeNS.php', 'rebuildall.php', 'rebuildImages.php', 'refreshLinks.php', 'runJobs.php', 'purgeList.php', 'cargoRecreateData.php')
     long = False
