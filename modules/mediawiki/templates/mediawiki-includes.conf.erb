@@ -54,27 +54,14 @@ location ^~ /w/index.php {
 		break;
 	}
 
-	if ($args ~* "(.*)(?:^|&)title=([^&]*)(.*)") {
-		set $new_args $1$3;
-		rewrite ^ /w/decode.php?title=$arg_title&$new_args last;
-	}
-
-	rewrite /w/index.php /wiki/ permanent;
+	rewrite ^ /w/decode.php$is_args$args last;
 }
 
 location = /wiki {
 	return 301 /wiki/;
 }
 
-location ~ ^/(wiki/)? {
-	if ($request_uri ~ ^(.*)\?$) {
-		return 301 $1;
-	}
-
-	if ($request_uri ~ ^(.*)\?&(.*)$) {
-		return 301 $1?$2;
-	}
-
+location / {
 	try_files $uri $uri/ @wiki;
 }
 
