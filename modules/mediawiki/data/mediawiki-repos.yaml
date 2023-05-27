@@ -1279,6 +1279,7 @@ NearbyPages:
   branch: _branch_
   path: extensions/NearbyPages
   repo_url: https://github.com/wikimedia/mediawiki-extensions-NearbyPages
+  composer: true
 PWA:
   branch: main
   path: extensions/PWA
