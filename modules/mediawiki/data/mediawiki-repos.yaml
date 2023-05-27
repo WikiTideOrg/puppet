@@ -1288,3 +1288,8 @@ OOJSPlus:
   path: extensions/OOJSPlus
   repo_url: https://github.com/wikimedia/mediawiki-extensions-OOJSPlus
   versions: '1.41'
+WebAuthn:
+  branch: _branch_
+  path: extensions/WebAuthn
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-WebAuthn
+  composer: true
