@@ -258,6 +258,7 @@ DiscourseSsoConsumer:
   branch: main
   path: extensions/DiscourseSsoConsumer
   repo_url: https://github.com/centertap/DiscourseSsoConsumer
+  removed: true
 DiscussionTools:
   branch: _branch_
   path: extensions/DiscussionTools
