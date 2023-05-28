@@ -306,6 +306,10 @@ Editcount:
   branch: _branch_
   path: extensions/Editcount
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Editcount
+EmailAuthorization:
+  branch: _branch_
+  path: extensions/EmailAuthorization
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-EmailAuthorization
 EmbedSpotify:
   branch: master
   path: extensions/EmbedSpotify
