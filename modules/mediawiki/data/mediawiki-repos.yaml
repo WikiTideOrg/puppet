@@ -1294,3 +1294,7 @@ WebAuthn:
   path: extensions/WebAuthn
   repo_url: https://github.com/wikimedia/mediawiki-extensions-WebAuthn
   composer: true
+PluggableAuth:
+  branch: _branch_
+  path: extensions/PluggableAuth
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-PluggableAuth
