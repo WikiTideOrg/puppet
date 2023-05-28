@@ -1298,3 +1298,12 @@ PluggableAuth:
   branch: _branch_
   path: extensions/PluggableAuth
   repo_url: https://github.com/wikimedia/mediawiki-extensions-PluggableAuth
+OpenIDConnect:
+  branch: _branch_
+  path: extensions/OpenIDConnect
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-OpenIDConnect
+  composer: true
+DiscourseSsoConsumer:
+  branch: main
+  path: extensions/DiscourseSsoConsumer
+  repo_url: https://github.com/centertap/DiscourseSsoConsumer
