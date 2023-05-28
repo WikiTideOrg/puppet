@@ -1200,6 +1200,11 @@ WMAU:
   branch: master
   path: skins/WMAU
   repo_url: https://github.com/wikimedia/mediawiki-skins-WMAU
+WSOAuth:
+  branch: _branch_
+  path: extensions/WSOAuth
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-WSOAuth
+  composer: true
 WebAuthn:
   branch: _branch_
   path: extensions/WebAuthn
