@@ -975,6 +975,10 @@ SimpleChanges:
   branch: _branch_
   path: extensions/SimpleChanges
   repo_url: https://github.com/wikimedia/mediawiki-extensions-SimpleChanges
+SimpleSAMLphp:
+  branch: _branch_
+  path: extensions/SimpleSAMLphp
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-SimpleSAMLphp
 SimpleTooltip:
   branch: master
   path: extensions/SimpleTooltip
