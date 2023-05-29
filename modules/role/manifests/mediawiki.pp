@@ -45,17 +45,22 @@ class role::mediawiki (
     }
 
     file { '/opt/amazon-efs-utils-1.35.0-1_all.deb':
-        ensure => present,
+        ensure => absent,
         source => 'puppet:///modules/role/mediawiki/packages/amazon-efs-utils-1.35.0-1_all.deb',
     }
 
-   ensure_packages([
-       'keyutils',
-       'libnfsidmap2',
-       'nfs-common',
-       'rpcbind',
-       'stunnel4',
-   ])
+   ensure_packages(
+            [
+                'keyutils',
+                'libnfsidmap2',
+                'nfs-common',
+                'rpcbind',
+                'stunnel4',
+            ],
+            {
+                ensure => purged,
+            },
+        )
 
    package { 'amazon-efs-utils':
         ensure   => purged,
