@@ -752,7 +752,6 @@ OOJSPlus:
   branch: _branch_
   path: extensions/OOJSPlus
   repo_url: https://github.com/wikimedia/mediawiki-extensions-OOJSPlus
-  versions: '1.41'
 OpenGraphMeta:
   branch: _branch_
   path: extensions/OpenGraphMeta
@@ -1021,7 +1020,7 @@ SpriteSheet:
   path: extensions/SpriteSheet
   repo_url: https://github.com/miraheze/SpriteSheet
 StandardDialogs:
-  branch: _branch_
+  branch: master
   path: extensions/StandardDialogs
   repo_url: https://github.com/wikimedia/mediawiki-extensions-StandardDialogs
 StopForumSpam:
@@ -1239,7 +1238,6 @@ WikiForgeMagic:
   branch: master
   path: extensions/WikiForgeMagic
   repo_url: https://github.com/WikiForge/WikiForgeMagic
-  latest: true
 WikiForum:
   branch: master
   path: extensions/WikiForum
