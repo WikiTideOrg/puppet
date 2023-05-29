@@ -132,6 +132,11 @@ CheckUser:
   branch: _branch_
   path: extensions/CheckUser
   repo_url: https://github.com/wikimedia/mediawiki-extensions-CheckUser
+CirrusSearch:
+  branch: _branch_
+  path: extensions/CirrusSearch
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-CirrusSearch
+  composer: true
 Cite:
   branch: _branch_
   path: extensions/Cite
@@ -311,6 +316,11 @@ Editcount:
   branch: _branch_
   path: extensions/Editcount
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Editcount
+Elastica:
+  branch: _branch_
+  path: extensions/Elastica
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-Elastica
+  composer: true
 EmailAuthorization:
   branch: _branch_
   path: extensions/EmailAuthorization
