@@ -22,6 +22,10 @@ AdminLinks:
   branch: _branch_
   path: extensions/AdminLinks
   repo_url: https://github.com/wikimedia/mediawiki-extensions-AdminLinks
+AdvancedSearch:
+  branch: _branch_
+  path: extensions/AdvancedSearch
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-AdvancedSearch
 Anisa:
   branch: _branch_
   path: skins/Anisa
