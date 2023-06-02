@@ -615,6 +615,10 @@ Math:
   branch: _branch_
   path: extensions/Math
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Math
+MediaSearch:
+  branch: _branch_
+  path: extensions/MediaSearch
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-MediaSearch
 MediaWikiChat:
   branch: _branch_
   path: extensions/MediaWikiChat
@@ -916,6 +920,10 @@ RatePage:
   branch: master
   path: extensions/RatePage
   repo_url: https://gitlab.com/nonsensopedia/extensions/ratepage
+RealMe:
+  branch: _branch_
+  path: extensions/RealMe
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-RealMe
 Refreshed:
   branch: _branch_
   path: skins/Refreshed
@@ -972,6 +980,10 @@ Scribunto:
   branch: _branch_
   path: extensions/Scribunto
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Scribunto
+SearchVue:
+  branch: _branch_
+  path: extensions/SearchVue
+  repo_url: https://github.com/WikiForge/mediawiki-extensions-SearchVue
 SemanticFormsSelect:
   branch: master
   path: extensions/SemanticFormsSelect
@@ -1277,6 +1289,10 @@ Wikibase:
   path: extensions/Wikibase
   repo_url: https://github.com/wikimedia/Wikibase
   composer: true
+WikibaseCirrusSearch:
+  branch: _branch_
+  path: extensions/WikibaseCirrusSearch
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-WikibaseCirrusSearch
 WikibaseEdtf:
   branch: master
   path: extensions/WikibaseEdtf
@@ -1287,10 +1303,19 @@ WikibaseLexeme:
   path: extensions/WikibaseLexeme
   repo_url: https://github.com/wikimedia/mediawiki-extensions-WikibaseLexeme
   composer: true
+WikibaseLexemeCirrusSearch:
+  branch: _branch_
+  path: extensions/WikibaseLexemeCirrusSearch
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-WikibaseLexemeCirrusSearch
 WikibaseLocalMedia:
   branch: master
   path: extensions/WikibaseLocalMedia
   repo_url: https://github.com/ProfessionalWiki/WikibaseLocalMedia
+WikibaseMediaInfo:
+  branch: _branch_
+  path: extensions/WikibaseMediaInfo
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-WikibaseMediaInfo
+  composer: true
 WikibaseQualityConstraints:
   branch: _branch_
   path: extensions/WikibaseQualityConstraints
