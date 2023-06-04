@@ -774,6 +774,7 @@ OOJSPlus:
   branch: _branch_
   path: extensions/OOJSPlus
   repo_url: https://github.com/wikimedia/mediawiki-extensions-OOJSPlus
+  composer: true
 OpenGraphMeta:
   branch: _branch_
   path: extensions/OpenGraphMeta
