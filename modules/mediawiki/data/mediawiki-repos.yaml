@@ -354,6 +354,11 @@ Femiwiki:
   path: skins/Femiwiki
   repo_url: https://github.com/femiwiki/FemiwikiSkin
   alpha_branch: main
+FileStorageMonitor:
+  branch: master
+  path: extensions/FileStorageMonitor
+  repo_url: https://github.com/WikiForge/FileStorageMonitor
+  composer: true
 FlaggedRevs:
   branch: _branch_
   path: extensions/FlaggedRevs
