@@ -45,7 +45,7 @@ class services::restbase {
         ]
     }
 
-    include ssl::wildcard
+    ssl::wildcard { 'services wildcard': }
 
     nginx::site { 'restbase':
         ensure  => present,
