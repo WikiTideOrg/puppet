@@ -50,7 +50,6 @@ class services::restbase {
     nginx::site { 'restbase':
         ensure  => present,
         source  => 'puppet:///modules/services/nginx/restbase',
-        monitor => false,
     }
 
     file { '/etc/mediawiki/restbase':
