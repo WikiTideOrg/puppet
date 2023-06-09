@@ -12,7 +12,7 @@ groups:
   mediawiki-admins:
     gid: 2002
     description: sudo on MediaWiki servers
-    members: []
+    members: [agent]
     privileges: ['ALL = (www-data) NOPASSWD: ALL',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service nginx *',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service php7.4-fpm *',
@@ -22,7 +22,7 @@ groups:
   mediawiki-test-admins:
     gid: 2010
     description: sudo on the MediaWiki test server
-    members: [agent]
+    members: []
     privileges: ['ALL = (www-data) NOPASSWD: ALL',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service nginx *',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service php7.4-fpm *',
