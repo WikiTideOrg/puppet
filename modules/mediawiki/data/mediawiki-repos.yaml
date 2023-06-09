@@ -1290,6 +1290,10 @@ WikiTextLoggedInOut:
   branch: _branch_
   path: extensions/WikiTextLoggedInOut
   repo_url: https://github.com/wikimedia/mediawiki-extensions-WikiTextLoggedInOut
+WikiTideMagic:
+  branch: master
+  path: extensions/WikiTideMagic
+  repo_url: https://github.com/WikiForge/WikiTideMagic
 Wikibase:
   branch: _branch_
   path: extensions/Wikibase
