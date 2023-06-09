@@ -40,11 +40,11 @@ users:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKtt8ejBAxWiYHQw7VFMd/XITGiy0H6yL0YDHy6jUIjx
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjFNXqnu7gdALTWOWbhch32vsYmLS/xcfU9NepYXpFZ
   rman41:
-    ensure: present
+    ensure: absent
     uid: 1002
     name: rman41
     realname: Rman41
-    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyiMRpKS/pOT4VRdJ1aT9/YeO16FinmSqPjocT+B77f]
+    ssh_keys: []
   agent:
     ensure: present
     uid: 1010
