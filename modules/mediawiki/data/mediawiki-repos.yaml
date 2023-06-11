@@ -153,6 +153,10 @@ Citizen:
   branch: main
   path: skins/Citizen
   repo_url: https://github.com/StarCitizenTools/mediawiki-skins-Citizen
+Citoid:
+  branch: _branch_
+  path: extensions/Citoid
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-Citoid
 CleanChanges:
   branch: _branch_
   path: extensions/CleanChanges
@@ -169,6 +173,10 @@ CollapsibleVector:
   branch: _branch_
   path: extensions/CollapsibleVector
   repo_url: https://github.com/wikimedia/mediawiki-extensions-CollapsibleVector
+Collection:
+  branch: _branch_
+  path: extensions/Collection
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-Collection
 CologneBlue:
   branch: _branch_
   path: skins/CologneBlue
@@ -325,6 +333,10 @@ Elastica:
   path: extensions/Elastica
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Elastica
   composer: true
+ElectronPdfService:
+  branch: _branch_
+  path: extensions/ElectronPdfService
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-ElectronPdfService
 EmailAuthorization:
   branch: _branch_
   path: extensions/EmailAuthorization
