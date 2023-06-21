@@ -55,38 +55,13 @@ acl purge {
 	# localhost
 	"127.0.0.1";
 
-	# jobrunner1
-	"13.58.205.57";
+<%- @backends.each_pair.with_index do |(name, property), index| -%>
+	# <%= name %>
+	"<%= property['ip_address'] %>";
+<%- if index != @backends.size - 1 -%>
 
-	# jobrunner2
-	"3.128.255.135";
-
-	# mw1
-	"18.221.121.203";
-
-	# mw2
-	"18.224.51.21";
-
-	# mw3
-	"3.145.164.236";
-
-	# mw4
-	"3.139.80.48";
-
-	# mw5
-	"3.145.18.108";
-
-	# mw6
-	"18.118.93.80";
-
-	# test1
-	"52.14.195.40";
-
-	# phorge1
-	"3.135.195.194";
-
-	# puppet1
-	"18.117.56.175";
+<%- end -%>
+<%- end -%>
 }
 
 # Cookie handling logic
