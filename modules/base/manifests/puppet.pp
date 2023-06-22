@@ -6,36 +6,36 @@ class base::puppet (
 ) {
     $crontime = fqdn_rand(60, 'puppet-params-crontime')
 
+    file { '/etc/apt/trusted.gpg.d/puppetlabs.gpg':
+        ensure => present,
+        source => 'puppet:///modules/base/puppet/puppetlabs.gpg',
+    }
+
+    apt::source { 'puppetlabs':
+        location => 'http://apt.puppetlabs.com',
+        repos    => "puppet${puppet_major_version}",
+        require  => File['/etc/apt/trusted.gpg.d/puppetlabs.gpg'],
+        notify   => Exec['apt_update_puppetlabs'],
+    }
+
+    exec {'apt_update_puppetlabs':
+        command     => '/usr/bin/apt-get update',
+        refreshonly => true,
+        logoutput   => true,
+    }
+
     $architecture = $facts['os']['architecture']
 
     if $architecture == 'aarch64' {
         # ARM64 architecture, use Puppet
         package { 'puppet':
             ensure  => present,
+            require => Apt::Source['puppetlabs'],
         }
 
         $puppet_package = 'puppet'
     } else {
         # Other architecture, use Puppet agent
-
-        file { '/etc/apt/trusted.gpg.d/puppetlabs.gpg':
-            ensure => present,
-            source => 'puppet:///modules/base/puppet/puppetlabs.gpg',
-        }
-
-        apt::source { 'puppetlabs':
-            location => 'http://apt.puppetlabs.com',
-            repos    => "puppet${puppet_major_version}",
-            require  => File['/etc/apt/trusted.gpg.d/puppetlabs.gpg'],
-            notify   => Exec['apt_update_puppetlabs'],
-        }
-
-        exec {'apt_update_puppetlabs':
-            command     => '/usr/bin/apt-get update',
-            refreshonly => true,
-            logoutput   => true,
-        }
-
         package { 'puppet-agent':
             ensure  => present,
             require => Apt::Source['puppetlabs'],
