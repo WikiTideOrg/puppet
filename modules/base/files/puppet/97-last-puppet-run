@@ -6,7 +6,7 @@
 
 set -e
 
-PUPPET_STATE_DIR=/var/lib/puppet/state
+PUPPET_STATE_DIR=/opt/puppetlabs/server/data/puppetserver/state
 PUPPET_LAST_RUN_PATH="${PUPPET_STATE_DIR}/last_run_report.yaml"
 PATH=/bin:/usr/bin:/usr/local/bin
 LANG=C
