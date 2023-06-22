@@ -33,7 +33,7 @@ varnish::backends:
     port: 8101
     probe: mwhealth
     pool: true
-    ip_address: 18.224.51.21
+    ip_address: 3.137.156.210
   mw3:
     port: 8102
     probe: mwhealth
