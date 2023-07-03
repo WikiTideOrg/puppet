@@ -91,6 +91,17 @@ class mediawiki::deploy {
         require   => File['/srv/mediawiki-staging'],
     }
 
+    git::clone { 'wikitide-landing':
+        ensure    => 'latest',
+        directory => '/srv/mediawiki-staging/wikitide-landing',
+        origin    => 'https://github.com/WikiForge/wikitide-landing',
+        branch    => 'master',
+        owner     => 'www-data',
+        group     => 'www-data',
+        mode      => '0755',
+        require   => File['/srv/mediawiki-staging'],
+    }
+
     git::clone { 'ErrorPages':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/ErrorPages',
@@ -117,6 +128,15 @@ class mediawiki::deploy {
         refreshonly => true,
         user        => www-data,
         subscribe   => Git::Clone['landing'],
+        require     => File['/usr/local/bin/mwdeploy'],
+    }
+
+    exec { 'WikiTide Landing Sync':
+        command     => "/usr/local/bin/mwdeploy --wikitide-landing --servers=${lookup(mediawiki::default_sync)} --no-log",
+        cwd         => '/srv/mediawiki-staging',
+        refreshonly => true,
+        user        => www-data,
+        subscribe   => Git::Clone['wikitide-landing'],
         require     => File['/usr/local/bin/mwdeploy'],
     }
 
