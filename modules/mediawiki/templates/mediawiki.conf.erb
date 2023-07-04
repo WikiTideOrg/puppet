@@ -232,7 +232,7 @@ server {
 	ssl_certificate_key /etc/ssl/private/<%= property['url'] %>.key;
 <%- end -%>
 
-<%- if property['hsts'] == "strict" -%>  
+<%- if property['hsts'] == "strict" -%>
 	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
 <%- else -%>
 	add_header Strict-Transport-Security "max-age=604800";
@@ -258,8 +258,8 @@ server {
 	location = /sitemap.xml {
 		rewrite ^(.*)$ /sitemap.php;
 	}
+<%- if name == "wikitide" -%>
 
-<%- if name == "wikitide" -%> 
 	location = /sitemap-index.xml {
 		rewrite ^(.*)$ /wikitide-sitemap-index.php;
 	}
