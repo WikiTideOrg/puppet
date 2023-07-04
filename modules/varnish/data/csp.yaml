@@ -28,6 +28,8 @@ script-src:
   - 'platform.twitter.com'
   - 'hcaptcha.com'
   - '*.hcaptcha.com'
+  - 'code.jquery.com'
+  - 'cdn.jsdelivr.net'
 
 style-src:
   - "'self'"
@@ -55,6 +57,7 @@ style-src:
   - 'ton.twimg.com'
   - 'hcaptcha.com'
   - '*.hcaptcha.com'
+  - 'cdnjs.cloudflare.com'
 
 img-src:
   - 'blob:'
