@@ -100,7 +100,7 @@ sub rate_limit {
 	# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
 	# Exempts rate limit for IABot
 	if (
-		((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikiforge.net") || req.url ~ "^/(w/)?(api|index)\.php")
+		((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikiforge.net" && req.http.Host != "wikitide.com") || req.url ~ "^/(w/)?(api|index)\.php")
 		&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
 	) {
 		if (req.url ~ "^/(wiki/)?\S+\:MathShowImage?hash=[0-9a-z]+&mode=mathml") {
@@ -247,7 +247,7 @@ sub vcl_recv {
 # Defines the uniqueness of a request
 sub vcl_hash {
 	# FIXME: try if we can make this ^/(wiki/)? only?
-	if ((req.http.Host != "wikiforge.net" && req.url ~ "^/(wiki/)?") || req.url ~ "^/w/load.php") {
+	if ((req.http.Host != "wikiforge.net" && req.http.Host != "wikitide.com" && req.url ~ "^/(wiki/)?") || req.url ~ "^/w/load.php") {
 		hash_data(req.http.X-Device);
 	}
 }
@@ -263,7 +263,7 @@ sub vcl_pipe {
 # Initiate a backend fetch
 sub vcl_backend_fetch {
 	# Modify the end of the URL if mobile device
-	if ((bereq.url ~ "^/(wiki/)?[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1" && bereq.url !~ "(.*)(?:\?|&)useformat=mobile(?:&|$)" && bereq.http.Host != "wikiforge.net") {
+	if ((bereq.url ~ "^/(wiki/)?[^$]" || bereq.url ~ "^/w/index.php(.*)title=[^$]") && bereq.http.X-Device == "phone-tablet" && bereq.http.X-Use-Mobile == "1" && bereq.url !~ "(.*)(?:\?|&)useformat=mobile(?:&|$)" && bereq.http.Host != "wikiforge.net" && bereq.http.Host != "wikitide.com") {
 		if (bereq.url ~ "\?") {
 			set bereq.url = bereq.url + "&useformat=mobile";
 		} else {
