@@ -1006,6 +1006,11 @@ SearchVue:
   branch: _branch_
   path: extensions/SearchVue
   repo_url: https://github.com/WikiForge/mediawiki-extensions-SearchVue
+SecureLinkFixer:
+  branch: _branch_
+  path: extensions/SecureLinkFixer
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-SecureLinkFixer
+  removed: true
 SecurePoll:
   branch: _branch_
   path: extensions/SecurePoll
