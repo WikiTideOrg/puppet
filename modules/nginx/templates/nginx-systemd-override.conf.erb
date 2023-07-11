@@ -3,3 +3,4 @@ LimitNOFILE=16192
 ExecReload=
 ExecReload=/usr/sbin/nginx -t
 ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
+Restart=always
