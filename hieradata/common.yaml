@@ -29,13 +29,13 @@ varnish::backends:
     probe: mwhealth
     pool: true
     thumb: true
-    ip_address: 18.221.121.203
+    ip_address: 18.191.12.113
   mw2:
     port: 8101
     probe: mwhealth
     pool: true
     thumb: true
-    ip_address: 3.137.156.210
+    ip_address: 18.191.144.8
   mw3:
     port: 8102
     probe: mwhealth
