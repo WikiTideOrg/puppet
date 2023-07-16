@@ -61,7 +61,7 @@ author_map = {
 title_map = {"example": "Master"}
 
 # Scheme and wiki hostname to connect to
-wiki_connection = "meta.wikiforge.net"
+wiki_connection = "meta.wikitide.com"
 
 # Url path
 wiki_path = "/w/"
