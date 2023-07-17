@@ -53,7 +53,8 @@ ssl = True
 
 # Map irc nick to real name
 author_map = {
-    "WikiForgeLSBot_": "WikiForgeLSBot",
+    "WikiForgeLSBot": "WikiTideLSBot",
+    "WikiForgeLSBot_": "WikiTideLSBot",
     "CosmicAlpha": "Universal Omega"
 }
 
@@ -67,7 +68,7 @@ wiki_connection = "meta.wikitide.com"
 wiki_path = "/w/"
 
 # Username of wiki bot user
-wiki_user = "WikiForgeLogBot"
+wiki_user = "WikiTideLogBot"
 
 # Password of wiki bot user
 wiki_pass = "<%= @wikiforgelogbot_password %>"
