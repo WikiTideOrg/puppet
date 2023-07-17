@@ -18,5 +18,5 @@ wikis=`/usr/bin/jq ".combi | keys | .[]" $1 | sed 's/.//;s/.$//'`
 for wiki in $wikis
 do
         echo "Running ${*:2} for $wiki"
-        /usr/bin/php $2 --wiki $wiki ${*:3}
+        /usr/bin/php ${*:2} --wiki $wiki
 done
