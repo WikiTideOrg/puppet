@@ -97,11 +97,18 @@ class mediawiki::php (
         'apcu',
         'msgpack',
         'redis',
-        'luasandbox',
-        'wikidiff2',
         'yaml',
     ]:
         ensure => present
+    }
+
+    if $php_version == '7.4' {
+        php::extension { [
+            'luasandbox',
+            'wikidiff2',
+        ]:
+            ensure => present
+        }
     }
 
     # Extensions that require configuration.
