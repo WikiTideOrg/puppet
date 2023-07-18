@@ -19,7 +19,6 @@ class php::default_extensions {
         'ftp',
         'gettext',
         'iconv',
-        'json',
         'phar',
         'posix',
         'readline',
@@ -36,6 +35,13 @@ class php::default_extensions {
     php::extension { $base_extensions:
         package_name => '',
         priority     => 20,
+    }
+
+    if lookup('php::php_version') == '7.4' {
+        php::extension { 'json':
+            package_name => '',
+            priority     => 20,
+        }
     }
 
     # Hi-priority extensions
