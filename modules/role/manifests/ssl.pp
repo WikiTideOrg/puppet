@@ -3,9 +3,9 @@ class role::ssl {
     include ::ssl
 
     $firewall_srange = join(
-        query_facts('Class[Role::Varnish]', ['networking']['ip'], ['networking']['ip6'])
+        query_facts('Class[Role::Varnish]', ['ipaddress', 'ipaddress6'])
         .map |$key, $value| {
-            "${value['networking']['ip']} ${value['networking']['ip6']}"
+            "${value['ipaddress']} ${value['ipaddress6']}"
         }
         .flatten()
         .unique()
