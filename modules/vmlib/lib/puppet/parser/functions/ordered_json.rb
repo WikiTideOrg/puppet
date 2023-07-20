@@ -23,7 +23,7 @@ def ordered_json(o)
   when Array
     '[' + o.map { |x| ordered_json(x) }.join(', ') + ']'
   when Hash
-    '{' + o.sort.map { |k, v| k.to_pson + ': ' + ordered_json(v) }.join(', ') + '}'
+    '{' + o.sort.map { |k, v| k.to_json + ': ' + ordered_json(v) }.join(', ') + '}'
   else
     begin
       o.include?('.') ? Float(o).to_s : Integer(o).to_s
