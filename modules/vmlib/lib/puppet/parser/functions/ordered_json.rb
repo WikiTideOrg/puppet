@@ -2,7 +2,7 @@
 #
 # Serialize a hash into JSON with lexicographically sorted keys.
 #
-# Because the order of keys in Ruby 1.8 hashes is undefined, 'to_pson'
+# Because the order of keys in Ruby 1.8 hashes is undefined, 'to_json'
 # is not idempotent: i.e., the serialized form of the same hash object
 # can vary from one invocation to the next. This causes problems
 # whenever a JSON-serialized hash is included in a file template,
@@ -28,7 +28,7 @@ def ordered_json(o)
     begin
       o.include?('.') ? Float(o).to_s : Integer(o).to_s
     rescue
-      o.to_pson
+      o.to_json
     end
   end
 end
