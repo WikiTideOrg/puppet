@@ -15,7 +15,7 @@ function streamAppleTouch() {
 
 	$touch = $wgAppleTouchIcon;
 	if ( $touch === '/apple-touch-icon.png' || $touch === false ) {
-		if ( $wi->wikifarm === 'wikitide' ) {
+		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
 			$touch = '/favicons/apple-touch-icon-default-wikitide.png';
 		} else {
 			$touch = '/favicons/apple-touch-icon-default-wikiforge.png';
@@ -36,7 +36,7 @@ function streamAppleTouch() {
 
 	$status = $client->execute();
 	if ( !$status->isOK() ) {
-		if ( $wi->wikifarm === 'wikitide' ) {
+		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
 			$touch = '/favicons/apple-touch-icon-default-wikitide.png';
 		} else {
 			$touch = '/favicons/apple-touch-icon-default-wikiforge.png';
