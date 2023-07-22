@@ -6,6 +6,7 @@ define users::hashuser(
     $uinfo = $phash['users'][$name]
 
     if 'gid' in $uinfo {
+    if ('gid' in $uinfo) {
         $group_id = $uinfo['gid']
     } else {
         $group_id = $uinfo['uid']
