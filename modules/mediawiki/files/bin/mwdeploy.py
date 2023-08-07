@@ -39,10 +39,6 @@ prod: Environment = {
     'servers': [
         'mw1',
         'mw2',
-        'mw3',
-        'mw4',
-        'mw5',
-        'mw6',
         'jobrunner1',
         'jobrunner2',
     ],
