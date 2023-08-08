@@ -492,10 +492,11 @@ sub vcl_backend_error {
 		<head>
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<meta name="description" content="Backend Fetch Failed" />
-			<title>"} + beresp.status + " " + beresp.reason + {"</title>
+			<meta name="description" content="Something went wrong, try again in a few seconds." />
+			<title>Something went wrong</title>
 			<!-- Bootstrap core CSS -->
-			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"/>
+			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit">
 			<style>
 				/* Error Page Inline Styles */
 				body {
@@ -531,29 +532,21 @@ sub vcl_backend_error {
 						color: white;
 					}
 				}
+				body {
+					font-family: 'Outfit', sans-serif;
+				}
 			</style>
 		</head>
-		<div class="container">
+		<div class="container" style="padding: 70px 0; text-align: center;">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
 				<img src="https://static.wikiforge.net/metawiki/8/88/WikiForge_Logo.svg" width="130" height="130" alt="WikiForge Logo" />
-				<h1>"} + beresp.status + " " + beresp.reason + {"</h1>
-				<p class="lead">Try again later or click the button below to refresh.</p><br />
-				<a href="javascript:document.location.reload(true);" class="btn btn-lg btn-outline-success" role="button">Refresh page</a>
+				<h1>Something went wrong</h1>
+				<p class="lead">If this keeps happening, <a href="https://wikiforge.github.io/503.html">let us know</a>.</p>
+				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>
 			</div>
 		</div>
-		<div class="container">
-			<div class="body-content">
-				<div class="row">
-					<div class="col-md-6">
-						<h2>What can I do?</h2>
-						<p>Please try again in a few minutes. If the problem persists, you may join our <a href="https://discord.gg/ND5Arhght2">Discord server</a> or IRC channel (<a href="https://web.libera.chat/?channel=#wikiforge-sre">#wikiforge-sre</a>) for additional updates. We apologise for the inconvenience. Our Site Reliability Engineers should be working to correct the issue.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="footer">
+		<div class="footer" style="position: fixed; left:0px; bottom: 125px; height:30px; width:100%;">
 			<div class="text-center">
 				<p class="lead">When reporting this, please include the information below:</p>
 
