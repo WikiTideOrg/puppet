@@ -4,13 +4,17 @@
 class mediawiki::jobqueue::runner (
     String $version,
 ) {
+    $runner = ''
+    if versioncmp($version, '1.40') >= 0 {
+        $runner = "/srv/mediawiki/${version}/maintenance/run.php "
+    }
+
     class { 'mediawiki::jobqueue::shared':
         version => $version,
     }
 
     $wiki = lookup('mediawiki::jobqueue::wiki')
     ensure_packages('python3-xmltodict')
-
 
     systemd::service { 'jobrunner':
         ensure    => present,
@@ -22,7 +26,7 @@ class mediawiki::jobqueue::runner (
     if lookup('mediawiki::jobqueue::runner::cron', {'default_value' => false}) {
         cron { 'purge_checkuser':
             ensure  => present,
-            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json /srv/mediawiki/${version}/extensions/CheckUser/maintenance/purgeOldData.php >> /var/log/mediawiki/cron/purge_checkuser.log",
+            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json ${runner}/srv/mediawiki/${version}/extensions/CheckUser/maintenance/purgeOldData.php >> /var/log/mediawiki/cron/purge_checkuser.log",
             user    => 'www-data',
             minute  => '5',
             hour    => '6',
@@ -30,7 +34,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'purge_abusefilter':
             ensure  => present,
-            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json /srv/mediawiki/${version}/extensions/AbuseFilter/maintenance/PurgeOldLogIPData.php >> /var/log/mediawiki/cron/purge_abusefilter.log",
+            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json ${runner}/srv/mediawiki/${version}/extensions/AbuseFilter/maintenance/PurgeOldLogIPData.php >> /var/log/mediawiki/cron/purge_abusefilter.log",
             user    => 'www-data',
             minute  => '5',
             hour    => '18',
@@ -38,7 +42,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'managewikis':
             ensure  => present,
-            command => "/usr/bin/php /srv/mediawiki/${version}/extensions/CreateWiki/maintenance/manageInactiveWikis.php --wiki metawikitide --write >> /var/log/mediawiki/cron/managewikis.log",
+            command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/extensions/CreateWiki/maintenance/manageInactiveWikis.php --wiki metawikitide --write >> /var/log/mediawiki/cron/managewikis.log",
             user    => 'www-data',
             minute  => '5',
             hour    => '12',
@@ -46,7 +50,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'update rottenlinks on all wikis':
             ensure   => present,
-            command  => "/usr/local/bin/fileLockScript.sh /tmp/rotten_links_file_lock \"/usr/bin/nice -n 15 /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json /srv/mediawiki/${version}/extensions/RottenLinks/maintenance/updateExternalLinks.php\"",
+            command  => "/usr/local/bin/fileLockScript.sh /tmp/rotten_links_file_lock \"/usr/bin/nice -n 15 /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json ${runner}/srv/mediawiki/${version}/extensions/RottenLinks/maintenance/updateExternalLinks.php\"",
             user     => 'www-data',
             minute   => '0',
             hour     => '0',
@@ -56,7 +60,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'generate sitemaps for all WikiForge wikis':
             ensure  => present,
-            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json /srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/generateWikiForgeSitemap.php",
+            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json ${runner}/srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/generateWikiForgeSitemap.php",
             user    => 'www-data',
             minute  => '0',
             hour    => '0',
@@ -67,7 +71,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'generate sitemaps for all WikiTide wikis':
             ensure  => present,
-            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json /srv/mediawiki/${version}/extensions/WikiTideMagic/maintenance/generateWikiTideSitemap.php",
+            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json ${runner}/srv/mediawiki/${version}/extensions/WikiTideMagic/maintenance/generateWikiTideSitemap.php",
             user    => 'www-data',
             minute  => '0',
             hour    => '0',
@@ -109,7 +113,7 @@ class mediawiki::jobqueue::runner (
 
             cron { 'purge_parsercache':
                 ensure  => present,
-                command => "/usr/bin/php /srv/mediawiki/${version}/maintenance/purgeParserCache.php --age 432000 --msleep 200 --wiki metawiki",
+                command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/maintenance/purgeParserCache.php --age 432000 --msleep 200 --wiki metawiki",
                 user    => 'www-data',
                 special => 'daily',
             }
@@ -132,7 +136,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'update_statistics':
             ensure   => present,
-            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json /srv/mediawiki/${version}/maintenance/initSiteStats.php --update --active > /dev/null",
+            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json ${runner}/srv/mediawiki/${version}/maintenance/initSiteStats.php --update --active > /dev/null",
             user     => 'www-data',
             minute   => '0',
             hour     => '5',
@@ -141,7 +145,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'update_sites_wikiforge':
             ensure   => present,
-            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json /srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/populateWikibaseSitesTable.php > /dev/null",
+            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json ${runner}/srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/populateWikibaseSitesTable.php > /dev/null",
             user     => 'www-data',
             minute   => '0',
             hour     => '5',
@@ -150,7 +154,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'update_sites_wikitide':
             ensure   => present,
-            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json /srv/mediawiki/${version}/extensions/WikiTideMagic/maintenance/populateWikibaseSitesTable.php > /dev/null",
+            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json ${runner}/srv/mediawiki/${version}/extensions/WikiTideMagic/maintenance/populateWikibaseSitesTable.php > /dev/null",
             user     => 'www-data',
             minute   => '0',
             hour     => '5',
@@ -159,7 +163,7 @@ class mediawiki::jobqueue::runner (
 
         cron { 'clean_gu_cache':
             ensure   => present,
-            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json /srv/mediawiki/${version}/extensions/GlobalUsage/maintenance/refreshGlobalimagelinks.php --pages=existing,nonexisting > /dev/null",
+            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json ${runner}/srv/mediawiki/${version}/extensions/GlobalUsage/maintenance/refreshGlobalimagelinks.php --pages=existing,nonexisting > /dev/null",
             user     => 'www-data',
             minute   => '0',
             hour     => '5',
