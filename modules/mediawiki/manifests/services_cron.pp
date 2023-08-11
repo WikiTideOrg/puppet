@@ -2,9 +2,10 @@
 class mediawiki::services_cron (
     String $version,
 ) {
-    $runner = ''
     if versioncmp($version, '1.40') >= 0 {
         $runner = "/srv/mediawiki/${version}/maintenance/run.php "
+    } else {
+        $runner = ''
     }
 
     file { '/srv/services':
