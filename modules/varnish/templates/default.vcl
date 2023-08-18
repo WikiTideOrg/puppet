@@ -556,7 +556,7 @@ sub vcl_backend_error {
 			<div class="jumbotron">
 				<img src="https://static.wikiforge.net/metawiki/8/88/WikiForge_Logo.svg" width="130" height="130" alt="WikiForge Logo" />
 				<h1>Something went wrong</h1>
-				<p class="lead">If this keeps happening, <a href="https://wikiforge.github.io/503.html">let us know</a>.</p>
+				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikiforge.net/docs/errors/503">Learn more</a>.</p>
 				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>
 			</div>
 		</div>
