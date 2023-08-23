@@ -1,6 +1,6 @@
 # Amazon S3
 amazon-s3.endpoint: 'phorge-storage.wikiforge.net'
-amazon-s3.region: 'us-east-2',
+amazon-s3.region: 'us-east-2'
 storage.s3.bucket: 'phorge-storage.wikiforge.net'
 
 # Logo/Wordmark
