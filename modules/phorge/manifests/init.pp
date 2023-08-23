@@ -153,6 +153,8 @@ class phorge (
     $module_path = get_module_path($module_name)
     $phorge_yaml = loadyaml("${module_path}/data/config.yaml")
     $phorge_private = {
+        'amazon-s3.access-key' => lookup('passwords::s3::accesskey'),
+        'amazon-s3.secret-key' => lookup('passwords::s3::privatekey'),
         'mysql.pass' => lookup('passwords::db::phorge'),
     }
 
