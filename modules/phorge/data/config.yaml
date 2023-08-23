@@ -1,3 +1,8 @@
+# Amazon S3
+amazon-s3.endpoint: 'phorge-storage.wikiforge.net'
+amazon-s3.region: 'us-east-2',
+storage.s3.bucket: 'phorge-storage.wikiforge.net'
+
 # Logo/Wordmark
 ui.logo:
   'logoImagePHID': 'PHID-FILE-mth7fuhx5l42v5qupryl'
