@@ -133,6 +133,13 @@ class phorge (
         require   => File['/srv/phorge'],
     }
 
+    git::clone { 'errorpages':
+        ensure    => present,
+        directory => '/srv/phorge/ErrorPages',
+        origin    => 'https://github.com/WikiForge/ErrorPages',
+        require   => File['/srv/phorge'],
+    }
+
     git::clone { 'phorge':
         ensure    => present,
         directory => '/srv/phorge/phorge',
