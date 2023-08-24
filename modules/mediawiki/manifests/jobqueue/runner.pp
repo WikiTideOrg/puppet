@@ -80,7 +80,7 @@ class mediawiki::jobqueue::runner (
             weekday => [ '6' ],
         }
 
-        if $wiki == 'metawiki' {
+        if $wiki == 'hubwiki' {
             $aws_s3_access_key = lookup('mediawiki::aws_s3_access_key')
             $aws_s3_access_secret_key = lookup('mediawiki::aws_s3_access_secret_key')
             ensure_packages(
@@ -114,7 +114,7 @@ class mediawiki::jobqueue::runner (
 
             cron { 'purge_parsercache':
                 ensure  => present,
-                command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/maintenance/purgeParserCache.php --age 432000 --msleep 200 --wiki metawiki",
+                command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/maintenance/purgeParserCache.php --age 432000 --msleep 200 --wiki hubwiki",
                 user    => 'www-data',
                 special => 'daily',
             }
