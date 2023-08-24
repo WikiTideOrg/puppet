@@ -34,8 +34,8 @@ class EnvironmentList(TypedDict):
 
 
 prod: Environment = {
-    'wikidbname': 'metawiki',
-    'wikiurl': 'meta.wikiforge.net',
+    'wikidbname': 'hubwiki',
+    'wikiurl': 'hub.wikiforge.net',
     'servers': [
         'mw1',
         'mw2',
@@ -170,7 +170,7 @@ def non_zero_code(ec: list[int], nolog: bool = True, leave: bool = True) -> bool
     return False
 
 
-def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = None, domain: str = 'meta.wikiforge.net', verify: bool = True, force: bool = False, port: int = 443) -> bool:
+def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = None, domain: str = 'hub.wikiforge.net', verify: bool = True, force: bool = False, port: int = 443) -> bool:
     if verify is False:
         os.environ['PYTHONWARNINGS'] = 'ignore:Unverified HTTPS request'
     if not Debug and not Host:
