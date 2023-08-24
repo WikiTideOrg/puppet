@@ -197,7 +197,7 @@ sub mw_request {
 
 	# We can rewrite those to one domain name to increase cache hits
 	if (req.url ~ "^/(1\.\d{2,})/(skins|resources|extensions)/" ) {
-		set req.http.Host = "meta.wikiforge.net";
+		set req.http.Host = "hub.wikiforge.net";
 	}
 
 	# api & rest.php are not safe when cached
