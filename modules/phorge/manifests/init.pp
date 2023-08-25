@@ -220,7 +220,7 @@ class phorge (
 
     file { '/srv/phorge/phorge/conf/custom/wikiforge.conf.php':
         ensure  => present,
-        source => 'puppet:///modules/phorge/data/wikiforge.conf.php',
+        source => 'puppet:///modules/phorge/wikiforge.conf.php',
         notify  => [
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
@@ -230,7 +230,7 @@ class phorge (
 
     file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
         ensure  => present,
-        source => 'puppet:///modules/phorge/data/wikitide.conf.php',
+        source => 'puppet:///modules/phorge/wikitide.conf.php',
         notify  => [
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
