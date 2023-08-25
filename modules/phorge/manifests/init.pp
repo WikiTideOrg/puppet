@@ -129,6 +129,14 @@ class phorge (
 
     file { '/srv/phorge':
         ensure => directory,
+        owner  => 'www-data',
+        group  => 'www-data',
+    }
+
+    file { '/srv/phorge/phorge/conf/custom':
+        ensure => directory,
+        owner  => 'www-data',
+        group  => 'www-data',
     }
 
     git::clone { 'arcanist':
