@@ -252,9 +252,11 @@ sub vcl_recv {
 
 	# Do not cache requests from this domain
 	if (
+		req.http.Host == "issue-tracker.wikitide.com" ||
+		req.http.Host == "phorge-static.wikitide.com" ||
 		req.http.Host == "phorge.wikitide.com" ||
 		req.http.Host == "support.wikiforge.net" ||
-		req.http.Host == "phorge-storage.wikiforge.net" ||
+		req.http.Host == "phorge-static.wikiforge.net" ||
 		req.http.Host == "blog.wikiforge.net"
 	) {
 		set req.backend_hint = phorge1;
