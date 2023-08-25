@@ -110,9 +110,14 @@ class phorge (
         }
     }
 
-    nginx::site { 'phorge-storage.wikiforge.net':
+    nginx::site { 'issue-tracker.wikitide.com':
         ensure => present,
-        source => 'puppet:///modules/phorge/phorge-storage.wikiforge.net.conf',
+        source => 'puppet:///modules/phorge/issue-tracker.wikitide.com.conf',
+    }
+
+    nginx::site { 'phorge-static.wikiforge.net':
+        ensure => present,
+        source => 'puppet:///modules/phorge/phorge-static.wikiforge.net.conf',
     }
 
     nginx::site { 'support.wikiforge.net':
@@ -202,9 +207,30 @@ class phorge (
         require => Git::Clone['phorge'],
     }
 
-    systemd::service { 'phd':
+    file { '/srv/phorge/phorge/conf/custom/wikiforge.conf.php':
         ensure  => present,
-        content => systemd_template('phd'),
+        content => 'puppet:///modules/phorge/data/wikiforge.conf.php',
+        notify  => Service['phd'],
+        require => Git::Clone['phorge'],
+    }
+
+    file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
+        ensure  => present,
+        content => 'puppet:///modules/phorge/data/wikitide.conf.php',
+        notify  => Service['phd'],
+        require => Git::Clone['phorge'],
+    }
+
+    systemd::service { 'phd-wikiforge':
+        ensure  => present,
+        content => systemd_template('phd-wikiforge'),
+        restart => true,
+        require => File['/srv/phorge/phorge/conf/local/local.json'],
+    }
+
+    systemd::service { 'phd-wikitide':
+        ensure  => present,
+        content => systemd_template('phd-wikitide'),
         restart => true,
         require => File['/srv/phorge/phorge/conf/local/local.json'],
     }
