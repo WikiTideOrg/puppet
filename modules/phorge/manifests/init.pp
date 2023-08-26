@@ -115,9 +115,9 @@ class phorge (
         source => 'puppet:///modules/phorge/issue-tracker.wikitide.com.conf',
     }
 
-    nginx::site { 'phorge-static.wikiforge.net':
+    nginx::site { 'support-archive.wikiforge.net':
         ensure => present,
-        source => 'puppet:///modules/phorge/phorge-static.wikiforge.net.conf',
+        source => 'puppet:///modules/phorge/support-archive.wikiforge.net.conf',
     }
 
     nginx::site { 'support.wikiforge.net':
@@ -137,6 +137,7 @@ class phorge (
         ensure => directory,
         owner  => 'www-data',
         group  => 'www-data',
+        require   => File['/srv/phorge'],
     }
 
     git::clone { 'arcanist':
@@ -172,6 +173,20 @@ class phorge (
         mode   => '0755',
         owner  => 'www-data',
         group  => 'www-data',
+    }
+
+    file { '/srv/phorge/repos/wikiforge':
+        ensure => directory,
+        owner  => 'www-data',
+        group  => 'www-data',
+        require   => File['/srv/phorge/repos'],
+    }
+
+    file { '/srv/phorge/repos/wikitide':
+        ensure => directory,
+        owner  => 'www-data',
+        group  => 'www-data',
+        require   => File['/srv/phorge/repos'],
     }
 
     file { '/srv/phorge/images':
@@ -215,6 +230,12 @@ class phorge (
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
         ],
+        require => Git::Clone['phorge'],
+    }
+
+   file { '/srv/phorge/phorge/conf/custom/archive.conf.php':
+        ensure  => present,
+        source => 'puppet:///modules/phorge/archive.conf.php',
         require => Git::Clone['phorge'],
     }
 

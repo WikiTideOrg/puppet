@@ -34,7 +34,6 @@ phabricator.show-prototypes: true
 phabricator.timezone: 'UTC'
 security.require-https: true
 security.strict-transport-security: true
-repository.default-local-path: "/srv/phorge/repos/"
 policy.allow-public: true
 user.require-real-name: false
 
