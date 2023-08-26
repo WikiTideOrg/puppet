@@ -254,7 +254,7 @@ sub vcl_recv {
 	if (
 		req.http.Host == "issue-tracker.wikitide.com" ||
 		req.http.Host == "phorge-static.wikitide.com" ||
-		req.http.Host == "phorge.wikitide.com" ||
+		req.http.Host == "support-archive.wikiforge.net" ||
 		req.http.Host == "support.wikiforge.net" ||
 		req.http.Host == "phorge-static.wikiforge.net" ||
 		req.http.Host == "blog.wikiforge.net"
