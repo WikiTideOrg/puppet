@@ -64,10 +64,10 @@ varnish::backends:
     thumb: true
     ip_address: 52.14.195.40
   misc1:
-    port: 8290
+    port: 8190
     probe: false
     pool: false
-    ip_address: 3.145.115.235
+    ip_address: 52.14.81.213
   phorge1:
     port: 8200
     probe: false
