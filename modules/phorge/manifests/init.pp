@@ -233,7 +233,7 @@ class phorge (
         require => Git::Clone['phorge'],
     }
 
-   file { '/srv/phorge/phorge/conf/custom/archive.conf.php':
+    file { '/srv/phorge/phorge/conf/custom/archive.conf.php':
         ensure  => present,
         source  => 'puppet:///modules/phorge/archive.conf.php',
         require => Git::Clone['phorge'],
