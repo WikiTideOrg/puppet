@@ -240,9 +240,9 @@ class phorge (
     }
 
     file { '/srv/phorge/phorge/conf/custom/wikiforge.conf.php':
-        ensure => present,
-        source => 'puppet:///modules/phorge/wikiforge.conf.php',
-        notify => [
+        ensure  => present,
+        source  => 'puppet:///modules/phorge/wikiforge.conf.php',
+        notify  => [
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
         ],
