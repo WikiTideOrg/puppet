@@ -176,17 +176,17 @@ class phorge (
     }
 
     file { '/srv/phorge/repos/wikiforge':
-        ensure => directory,
-        owner  => 'www-data',
-        group  => 'www-data',
-        require   => File['/srv/phorge/repos'],
+        ensure  => directory,
+        owner   => 'www-data',
+        group   => 'www-data',
+        require => File['/srv/phorge/repos'],
     }
 
     file { '/srv/phorge/repos/wikitide':
-        ensure => directory,
-        owner  => 'www-data',
-        group  => 'www-data',
-        require   => File['/srv/phorge/repos'],
+        ensure  => directory,
+        owner   => 'www-data',
+        group   => 'www-data',
+        require => File['/srv/phorge/repos'],
     }
 
     file { '/srv/phorge/images':
@@ -235,14 +235,14 @@ class phorge (
 
    file { '/srv/phorge/phorge/conf/custom/archive.conf.php':
         ensure  => present,
-        source => 'puppet:///modules/phorge/archive.conf.php',
+        source  => 'puppet:///modules/phorge/archive.conf.php',
         require => Git::Clone['phorge'],
     }
 
     file { '/srv/phorge/phorge/conf/custom/wikiforge.conf.php':
-        ensure  => present,
+        ensure => present,
         source => 'puppet:///modules/phorge/wikiforge.conf.php',
-        notify  => [
+        notify => [
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
         ],
@@ -251,7 +251,7 @@ class phorge (
 
     file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
         ensure  => present,
-        source => 'puppet:///modules/phorge/wikitide.conf.php',
+        source  => 'puppet:///modules/phorge/wikitide.conf.php',
         notify  => [
             Service['phd-wikiforge'],
             Service['phd-wikitide'],
