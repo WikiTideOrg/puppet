@@ -1,1 +1,1 @@
-mail._domainkey.miraheze.org miraheze.org:mail:/etc/opendkim/keys/mail.private
+mail._domainkey.wikiforge.net wikiforge.net:mail:/etc/opendkim/keys/mail.private

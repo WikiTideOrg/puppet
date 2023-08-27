@@ -1,5 +1,5 @@
 class roundcubemail (
-    String $db_host               = 'db112.miraheze.org',
+    String $db_host               = 'db1-private.wikiforge.net',
     String $db_name               = 'roundcubemail',
     String $db_user_name          = 'roundcubemail',
     String $db_user_password      = undef,
@@ -172,7 +172,7 @@ class roundcubemail (
 
     nginx::site { 'mail':
         ensure => present,
-        source => 'puppet:///modules/roundcubemail/mail.miraheze.org.conf',
+        source => 'puppet:///modules/roundcubemail/mail.wikiforge.net.conf',
     }
 
     nginx::site { 'roundcubemail':
@@ -194,11 +194,11 @@ class roundcubemail (
         require => File['/var/log/roundcubemail'],
     }
 
-    monitoring::services { 'webmail.miraheze.org HTTPS':
+    monitoring::services { 'webmail.wikiforge.net HTTPS':
         check_command => 'check_http',
         vars          => {
             http_ssl   => true,
-            http_vhost => 'webmail.miraheze.org',
+            http_vhost => 'webmail.wikiforge.net',
         },
     }
 }

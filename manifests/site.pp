@@ -27,6 +27,13 @@ node 'jobrunner2.wikiforge.net' {
     include role::mediawiki
 }
 
+node 'misc1.wikiforge.net' {
+    include base
+    include role::mail
+    include role::openldap
+    include role::roundcubemail
+}
+
 node 'mem1.wikiforge.net' {
     include base
     include role::memcached
