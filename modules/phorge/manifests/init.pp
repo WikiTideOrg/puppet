@@ -134,7 +134,7 @@ class phorge (
     }
 
     file { '/srv/phorge/phorge/conf/custom':
-        ensure => directory,
+        ensure  => directory,
         owner  => 'www-data',
         group  => 'www-data',
         require   => File['/srv/phorge'],
