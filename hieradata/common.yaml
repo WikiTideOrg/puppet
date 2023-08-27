@@ -1,8 +1,9 @@
 jobrunner: false
 jobrunner::intensive: false
 
-puppetserver: false
 dns: false
+mailserver: false
+puppetserver: false
 
 puppet_major_version: 8
 
@@ -62,6 +63,11 @@ varnish::backends:
     pool: false
     thumb: true
     ip_address: 52.14.195.40
+  misc1:
+    port: 8290
+    probe: false
+    pool: false
+    ip_address: 18.191.132.174
   phorge1:
     port: 8200
     probe: false
