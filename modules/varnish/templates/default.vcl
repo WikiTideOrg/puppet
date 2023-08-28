@@ -310,7 +310,6 @@ sub vcl_backend_response {
 		beresp.http.X-Wiki-Farm == "wikiforge"
 	) {
 		set bereq.backend = mw1;
-		return (pass);
 	}
 
 	# Assign restrictive Cache-Control if one is missing
