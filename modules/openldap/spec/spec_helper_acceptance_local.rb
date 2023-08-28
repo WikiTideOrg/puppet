@@ -14,7 +14,7 @@ RSpec.configure do |c|
      file { '/etc/ldap/ssl':
        ensure => directory,
      }
-     if $::osfamily == 'Debian' {
+     if $facts['os']['family'] == 'Debian' {
        # OpenLDAP is linked towards GnuTLS on Debian so we have to convert the key
        package { 'gnutls-bin':
          ensure => present,
