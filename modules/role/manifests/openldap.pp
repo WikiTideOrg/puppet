@@ -154,7 +154,7 @@ class role::openldap (
 
     class { 'openldap::client':
         base       => 'dc=wikiforge,dc=net',
-        uri        => ["ldaps://${::fqdn}"],
+        uri        => ["ldaps://${facts['networking']['fqdn']}"],
         tls_cacert => '/etc/ssl/certs/Sectigo.crt',
     }
 
