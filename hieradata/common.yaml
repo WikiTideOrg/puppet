@@ -67,7 +67,7 @@ varnish::backends:
     port: 8190
     probe: false
     pool: false
-    ip_address: 52.14.81.213
+    ip_address: 3.133.225.104
   phorge1:
     port: 8200
     probe: false
