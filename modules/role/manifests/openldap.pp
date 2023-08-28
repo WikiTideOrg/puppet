@@ -158,8 +158,6 @@ class role::openldap (
         tls_cacert => '/etc/ssl/certs/Sectigo.crt',
     }
 
-    include prometheus::exporter::openldap
-
     ensure_packages('ldapvi')
 
     file { '/etc/ldapvi.conf':
@@ -205,16 +203,6 @@ class role::openldap (
         minute  => fqdn_rand(60, $title),
         command => "/bin/ps -C slapd -o pmem= | awk '{sum+=\$1} END { if (sum <= 50.0) exit 1 }' \
         && /bin/systemctl restart slapd >/dev/null 2>/dev/null",
-    }
-
-    monitoring::services { 'LDAP':
-        check_command => 'ldap',
-        vars          => {
-            ldap_address => $::fqdn,
-            ldap_base    => 'dc=wikiforge,dc=net',
-            ldap_v3      => true,
-            ldap_ssl     => true,
-        },
     }
 
     motd::role { 'role::openldap':
