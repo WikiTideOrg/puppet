@@ -1,6 +1,6 @@
 # See README.md for details.
 class openldap::params {
-      $client_package           = 'libldap-2.4-2'
+      $client_package           = 'libldap-2.5-0'
       $client_conffile          = '/etc/ldap/ldap.conf'
       $server_confdir           = '/etc/ldap/slapd.d'
       $server_conffile          = '/etc/ldap/slapd.conf'
@@ -8,11 +8,7 @@ class openldap::params {
       $server_owner             = 'openldap'
       $server_package           = 'slapd'
       $server_service           = 'slapd'
-      if $::operatingsystem == 'Debian' and versioncmp($::operatingsystemmajrelease, '5') <= 0 {
-        $server_service_hasstatus = false
-      } else {
-        $server_service_hasstatus = true
-      }
+      $server_service_hasstatus = true
       $utils_package            = 'ldap-utils'
       $escape_ldapi_ifs         = false
 }
