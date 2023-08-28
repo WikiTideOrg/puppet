@@ -263,6 +263,14 @@ sub vcl_recv {
 		return (pass);
 	}
 
+	# WikiForge will only be routed via mw1 to see if they can get better response times
+	if (
+		beresp.http.X-Wiki-Farm == "wikiforge"
+	) {
+		set req.backend_hint = mw1;
+		return (pass);
+	}
+
 	# MediaWiki specific
 	call mw_request;
 
@@ -357,14 +365,6 @@ sub vcl_backend_response {
 		}
 	} elseif (beresp.http.Set-Cookie) {
 		set beresp.uncacheable = true; # We do this just to be safe - but we should probably log this to eliminate it?
-	}
-
-	# WikiForge will only be routed via mw1 to see if they can get better response times
-	if (
-		beresp.http.X-Wiki-Farm == "wikiforge"
-	) {
-		set req.backend_hint = mw1;
-		return (pass);
 	}
 
 	# Cache 301 redirects for 12h (/, /wiki, /wiki/ redirects only)
