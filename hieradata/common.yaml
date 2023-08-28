@@ -30,7 +30,7 @@ varnish::backends:
   mw1:
     port: 8100
     probe: mwhealth
-    pool: true
+    pool: false
     thumb: true
     ip_address: 18.191.12.113
   mw2:
