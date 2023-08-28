@@ -263,14 +263,6 @@ sub vcl_recv {
 		return (pass);
 	}
 
-	# WikiForge will only be routed via mw1 to see if they can get better response times
-	if (
-		beresp.http.X-Wiki-Farm == "wikiforge"
-	) {
-		set req.backend_hint = mw1;
-		return (pass);
-	}
-
 	# MediaWiki specific
 	call mw_request;
 
@@ -313,6 +305,14 @@ sub vcl_backend_fetch {
 
 # Backend response, defines cacheability
 sub vcl_backend_response {
+	# WikiForge will only be routed via mw1 to see if they can get better response times
+	if (
+		beresp.http.X-Wiki-Farm == "wikiforge"
+	) {
+		set bereq.backend = mw1;
+		return (pass);
+	}
+
 	# Assign restrictive Cache-Control if one is missing
 	if (!beresp.http.Cache-Control) {
 		set beresp.http.Cache-Control = "private, s-maxage=0, max-age=0, must-revalidate";
