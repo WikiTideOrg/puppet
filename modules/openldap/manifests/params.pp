@@ -15,9 +15,4 @@ class openldap::params {
       }
       $utils_package            = 'ldap-utils'
       $escape_ldapi_ifs         = false
-    }
-    default: {
-      fail "Operating System family not supported"
-    }
-  }
 }
