@@ -263,6 +263,17 @@ sub vcl_recv {
 		return (pass);
 	}
 
+	if (
+		req.http.Host == "www.avid.wiki" ||
+		req.http.Host == "director.wiki" ||
+		req.http.Host == "beaconspace.unrestrictedlorefare.com" ||
+		req.http.Host == "dcmultiversewiki.com" ||
+		req.http.Host == "director.wiki" ||
+		req.http.Host == "*.wikiforge.net"
+	) {
+		set req.backend_hint = mw1;
+	}
+
 	# MediaWiki specific
 	call mw_request;
 
@@ -305,13 +316,6 @@ sub vcl_backend_fetch {
 
 # Backend response, defines cacheability
 sub vcl_backend_response {
-	# WikiForge will only be routed via mw1 to see if they can get better response times
-	if (
-		beresp.http.X-Wiki-Farm == "wikiforge"
-	) {
-		set bereq.backend = mw1;
-	}
-
 	# Assign restrictive Cache-Control if one is missing
 	if (!beresp.http.Cache-Control) {
 		set beresp.http.Cache-Control = "private, s-maxage=0, max-age=0, must-revalidate";
