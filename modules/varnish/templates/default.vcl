@@ -272,6 +272,7 @@ sub vcl_recv {
 		req.http.Host == "*.wikiforge.net"
 	) {
 		set req.backend_hint = mw1;
+		return(deliver);
 	}
 
 	# MediaWiki specific
