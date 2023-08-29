@@ -1,6 +1,6 @@
 # servers
 
-node /^cp[123]\.wikiforge\.net$/ {
+node /^cp[1234]\.wikiforge\.net$/ {
     include base
     include role::varnish
 }
