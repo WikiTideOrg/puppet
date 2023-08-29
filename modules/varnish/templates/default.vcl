@@ -263,17 +263,17 @@ sub vcl_recv {
 		return (pass);
 	}
 
-	if (
-		req.http.Host == "www.avid.wiki" ||
-		req.http.Host == "director.wiki" ||
-		req.http.Host == "beaconspace.unrestrictedlorefare.com" ||
-		req.http.Host == "dcmultiversewiki.com" ||
-		req.http.Host == "director.wiki" ||
-		req.http.Host == "*.wikiforge.net"
-	) {
-		set req.backend_hint = mw1;
-		return(pass);
-	}
+#	if (
+#		req.http.Host == "www.avid.wiki" ||
+#		req.http.Host == "director.wiki" ||
+#		req.http.Host == "beaconspace.unrestrictedlorefare.com" ||
+#		req.http.Host == "dcmultiversewiki.com" ||
+#		req.http.Host == "director.wiki" ||
+#		req.http.Host == "*.wikiforge.net"
+#	) {
+#		set req.backend_hint = mw1;
+#		return(pass);
+#	}
 
 	# MediaWiki specific
 	call mw_request;
