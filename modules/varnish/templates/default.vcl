@@ -269,6 +269,7 @@ sub vcl_recv {
 		req.http.Host == "beaconspace.unrestrictedlorefare.com" ||
 		req.http.Host == "dcmultiversewiki.com" ||
 		req.http.Host == "director.wiki" ||
+		req.http.Host == "rosettacode.org" ||
 		req.http.Host == "*.wikiforge.net"
 	) {
 		set req.backend_hint = mw1;
