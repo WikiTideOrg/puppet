@@ -39,7 +39,7 @@ node 'mem1.wikiforge.net' {
     include role::memcached
 }
 
-node /^mw[1234]\.wikiforge\.net$/ {
+node /^mw[12345]\.wikiforge\.net$/ {
     include base
     include role::mediawiki
 }
