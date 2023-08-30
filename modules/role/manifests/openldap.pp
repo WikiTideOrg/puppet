@@ -155,7 +155,7 @@ class role::openldap (
     class { 'openldap::client':
         base       => 'dc=wikiforge,dc=net',
         uri        => ["ldaps://${facts['networking']['fqdn']}"],
-        tls_cacert => '/etc/ssl/certs/Sectigo.crt',
+        tls_cacert => '/etc/ssl/certs/ISRG_Root_X1.pem',
     }
 
     ensure_packages('ldapvi')
