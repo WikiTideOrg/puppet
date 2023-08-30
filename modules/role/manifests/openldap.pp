@@ -14,7 +14,7 @@ class role::openldap (
         ldaps_ifs => ['/'],
         ssl_ca    => '/etc/ssl/certs/Sectigo.crt',
         ssl_cert  => '/etc/ssl/localcerts/wildcard.wikiforge.net.crt',
-        ssl_key   => '/etc/ssl/localcerts/wildcard.wikiforge.net.key',
+        ssl_key   => '/etc/ssl/private/wildcard.wikiforge.net.key',
         require   => Ssl::Wildcard['openldap wildcard']
     }
 
