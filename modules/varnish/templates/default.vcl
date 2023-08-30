@@ -263,6 +263,12 @@ sub vcl_recv {
 		return (pass);
 	}
 
+	# Do not cache requests from this domain
+	if (req.http.Host == "webmail.wikiforge.net") {
+		set req.backend_hint = misc1;
+		return (pass);
+	}
+
 #	if (
 #		req.http.Host == "www.avid.wiki" ||
 #		req.http.Host == "director.wiki" ||
