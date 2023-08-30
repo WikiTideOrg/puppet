@@ -151,7 +151,7 @@ class roundcubemail (
     }
 
     exec { 'roundcubemail_js_deps':
-        command     => 'bin/install-jsdeps.sh',
+        command     => '/srv/roundcubemail/bin/install-jsdeps.sh',
         creates     => '/srv/roundcubemail/skins/elastic/deps/less.min.js',
         cwd         => '/srv/roundcubemail',
         path        => '/usr/bin',
