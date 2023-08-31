@@ -40,4 +40,24 @@ define ssl::wildcard (
             notify    => $restart_nginx,
         }
     }
+
+    if !defined(File["${ssl_cert_path}/internal.wikiforge.net.crt"]) {
+        file { "${ssl_cert_path}/internal.wikiforge.net.crt":
+            ensure => 'present',
+            source => 'puppet:///ssl/certificates/internal.wikiforge.net.crt',
+            notify => $restart_nginx,
+        }
+    }
+
+    if !defined(File["${ssl_cert_key_private_path}/internal.wikiforge.net.key"]) {
+        file { "${ssl_cert_key_private_path}/internal.wikiforge.net.key":
+            ensure    => 'present',
+            source    => 'puppet:///ssl-keys/internal.wikiforge.net.key',
+            owner     => 'root',
+            group     => $ssl_cert_key_private_group,
+            mode      => '0660',
+            show_diff => false,
+            notify    => $restart_nginx,
+        }
+    }
 }
