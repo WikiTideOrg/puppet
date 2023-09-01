@@ -554,6 +554,10 @@ Kartographer:
   path: extensions/Kartographer
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Kartographer
   composer: true
+LdapAuthentication:
+  branch: _branch_
+  path: extensions/LdapAuthentication
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-LdapAuthentication
 LabeledSectionTransclusion:
   branch: _branch_
   path: extensions/LabeledSectionTransclusion
