@@ -21,7 +21,6 @@ mysql.host: 'db1-private.wikiforge.net'
 # Needs to match php.ini post_max_size for conduit
 storage.mysql-engine.max-size: 10000000
 
-metamta.default-address: 'noreply@wikiforge.net'
 metamta.single-reply-handler-prefix: 'phorge'
 
 # Auth
