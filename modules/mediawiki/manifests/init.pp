@@ -131,7 +131,7 @@ class mediawiki {
     $wikiadmin_password            = lookup('passwords::db::wikiadmin')
     $mediawiki_password            = lookup('passwords::db::mediawiki')
     $redis_password                = lookup('passwords::redis::master')
-    $ldap_password                 = lookup('passwords::ldap_password')
+    $ldap_password                 = lookup('profile::openldap::admin_password')
     $noreply_password              = lookup('passwords::mail::noreply')
     $noreply_username              = lookup('passwords::mail::noreply_username')
     $mediawiki_upgradekey          = lookup('passwords::mediawiki::upgradekey')
