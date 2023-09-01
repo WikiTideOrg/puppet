@@ -211,7 +211,7 @@ class phorge (
                 'key'          => 'wikiforge-smtp',
                 'type'         => 'smtp',
                 'options'      => {
-                    'host'     => 'email-smtp.us-east-1.amazonaws.com',
+                    'host'     => 'mail.wikiforge.net',
                     'port'     => 587,
                     'user'     => lookup('passwords::mail::noreply_username'),
                     'password' => lookup('passwords::mail::noreply'),
