@@ -182,7 +182,7 @@ class role::openldap (
     }
 
     $firewall_rules = join(
-        query_facts('Class[Role::Grafana] or Class[Role::Graylog] or Class[Role::Mail] or Class[Role::Matomo] or Class[Role::Mediawiki] or Class[Role::Openldap]', ['ipaddress', 'ipaddress6'])
+        query_facts('Class[Role::Mail] or Class[Role::Mediawiki] or Class[Role::Openldap]', ['ipaddress', 'ipaddress6'])
         .map |$key, $value| {
             "${value['ipaddress']} ${value['ipaddress6']}"
         }
