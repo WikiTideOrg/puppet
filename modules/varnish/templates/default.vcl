@@ -205,7 +205,7 @@ sub mw_request {
 		return (pass);
 	}
 
-	# A requet via OAuth should not be cached or use a cached response elsewhere
+	# A request via OAuth should not be cached or use a cached response elsewhere
 	if (req.http.Authorization ~ "OAuth") {
 		return (pass);
 	}
@@ -264,7 +264,7 @@ sub vcl_recv {
 	}
 
 	# Do not cache requests from this domain
-	if (req.http.Host == "webmail.wikiforge.net") {
+	if (req.http.Host == "webmail.internal.wikiforge.net") {
 		set req.backend_hint = misc1;
 		return (pass);
 	}
