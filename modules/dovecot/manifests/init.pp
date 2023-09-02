@@ -2,7 +2,7 @@
 class dovecot {
     ssl::wildcard { 'dovecot wildcard': }
 
-    package { [ 'dovecot-core', 'dovecot-imapd', 'dovecot-ldap' ]:
+    package { [ 'dovecot-core', 'dovecot-imapd', 'dovecot-ldap', 'dovecot-sieve' ]:
         ensure => present,
     }
 
