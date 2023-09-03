@@ -2,6 +2,15 @@ users::groups:
   - mediawiki-admins
   - mediawiki-roots
 
+mwservices: true
+
+jobrunner: true
+jobrunner::intensive: true
+mediawiki::jobqueue::runner::redis_ip: '172.31.5.111:6379'
+
+mediawiki::is_canary: true
+mediawiki::use_staging: true
+
 role::mediawiki::use_strict_firewall: true
 
 mediawiki::php::fpm::fpm_min_child: 8

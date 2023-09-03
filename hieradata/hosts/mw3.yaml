@@ -2,6 +2,8 @@ users::groups:
   - mediawiki-admins
   - mediawiki-roots
 
+jobrunner: true
+
 role::mediawiki::use_strict_firewall: true
 
 mediawiki::php::fpm::fpm_min_child: 8
