@@ -110,9 +110,9 @@ class phorge (
         }
     }
 
-    nginx::site { 'issue-tracker.wikitide.com':
+    nginx::site { 'issue-tracker.wikitide.org':
         ensure => present,
-        source => 'puppet:///modules/phorge/issue-tracker.wikitide.com.conf',
+        source => 'puppet:///modules/phorge/issue-tracker.wikitide.org.conf',
     }
 
     nginx::site { 'support-archive.wikiforge.net':
