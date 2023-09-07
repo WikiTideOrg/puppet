@@ -94,7 +94,7 @@ class mediawiki::deploy {
     git::clone { 'wikitide-landing':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/wikitide-landing',
-        origin    => 'https://github.com/WikiForge/wikitide-landing',
+        origin    => 'https://github.com/WikiTideInc/wikitide-landing',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
