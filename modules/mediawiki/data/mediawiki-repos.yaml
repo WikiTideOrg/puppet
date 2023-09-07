@@ -1322,7 +1322,7 @@ WikiTextLoggedInOut:
 WikiTideMagic:
   branch: master
   path: extensions/WikiTideMagic
-  repo_url: https://github.com/WikiForge/WikiTideMagic
+  repo_url: https://github.com/WikiTideInc/WikiTideMagic
 Wikibase:
   branch: _branch_
   path: extensions/Wikibase
