@@ -10,18 +10,18 @@ node /^cp[123]\.wikiforge\.net$/ {
     include role::varnish
 }
 
-node 'db1.wikiforge.net' {
+node /^db(1|11)\.wikiforge\.net$/ {
     include base
     include role::db
 }
 
-node 'jobchron1.wikiforge.net' {
+node /^jobchron(1|11)\.wikiforge\.net$/ {
     include base
     include role::redis
     include mediawiki::jobqueue::chron
 }
 
-node 'jobrunner1.wikiforge.net' {
+node /^jobrunner(1|11)\.wikiforge\.net$/ {
     include base
     include role::mediawiki
     include role::irc
@@ -39,14 +39,9 @@ node 'misc1.wikiforge.net' {
     include role::roundcubemail
 }
 
-node 'mem1.wikiforge.net' {
+node /^mem(1|11)\.wikiforge\.net$/ {
     include base
     include role::memcached
-}
-
-node /^mw[12345]\.wikiforge\.net$/ {
-    include base
-    include role::mediawiki
 }
 
 node /^mw([12345]|11)\.wikiforge\.net$/ {
@@ -59,12 +54,12 @@ node /^ns[12]\.wikiforge\.net$/ {
     include role::dns
 }
 
-node 'phorge1.wikiforge.net' {
+node /^phorge(1|11)\.wikiforge\.net$/ {
     include base
     include role::phorge
 }
 
-node 'puppet1.wikiforge.net' {
+node /^puppet(1|11)\.wikiforge\.net$/ {
     include base
     include role::postgresql
     include puppetdb::database
@@ -78,7 +73,7 @@ node 'services1.wikiforge.net' {
     include role::services
 }
 
-node 'test1.wikiforge.net' {
+node /^test(1|11)\.wikiforge\.net$/ {
     include base
     include role::mediawiki
 }
