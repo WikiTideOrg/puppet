@@ -18,7 +18,7 @@ class mariadb::packages(
     }
 
     package { [
-        "mariadb-server-${version}",
+        "mariadb-server",
         'mariadb-backup',
         'libjemalloc2',
     ]:
