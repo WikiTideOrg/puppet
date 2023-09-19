@@ -5,6 +5,10 @@ node 'cloud1.wikiforge.net' {
     include role::cloud
 }
 
+node 'bots1.wikiforge.net' {
+    include base
+}
+
 node /^cp[3]\.wikiforge\.net$/ {
     include base
     include role::varnish
@@ -26,7 +30,6 @@ node 'jobrunner11.wikiforge.net' {
     include role::mediawiki
     include role::irc
 }
-
 
 node 'misc1.wikiforge.net' {
     include base
