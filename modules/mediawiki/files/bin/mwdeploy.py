@@ -38,6 +38,7 @@ prod: Environment = {
     'wikiurl': 'hub.wikiforge.net',
     'servers': [
         'mw11',
+        'mw12',
         'jobrunner11',
     ],
 }
