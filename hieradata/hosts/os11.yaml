@@ -1,0 +1,9 @@
+role::opensearch::master: true
+role::opensearch::data: true
+role::opensearch::discovery_host:
+  - os11.wikiforge.net
+role::opensearch::master_hosts:
+  - os11
+
+base::syslog::rsyslog_udp_localhost: true
+puppetserver_hostname: 'puppet1.wikiforge.net'

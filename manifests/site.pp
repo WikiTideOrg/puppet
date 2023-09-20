@@ -25,17 +25,26 @@ node 'jobchron11.wikiforge.net' {
     include mediawiki::jobqueue::chron
 }
 
+node 'graylog11.wikiforge.net' {
+    include base
+    include role::graylog
+}
+
 node 'jobrunner11.wikiforge.net' {
     include base
     include role::mediawiki
     include role::irc
 }
 
-node 'misc1.wikiforge.net' {
+node 'mail11.wikiforge.net' {
     include base
     include role::mail
-    include role::openldap
     include role::roundcubemail
+}
+
+node 'ldap11.wikiforge.net' {
+    include base
+    include role::openldap
 }
 
 node 'mem11.wikiforge.net' {
@@ -53,9 +62,19 @@ node /^ns[12]\.wikiforge\.net$/ {
     include role::dns
 }
 
+node 'os11.wikiforge.net' {
+    include base
+    include role::opensearch
+}
+
 node 'phorge11.wikiforge.net' {
     include base
     include role::phorge
+}
+
+node 'prometheus11.wikiforge.net' {
+    include base
+    include role::prometheus
 }
 
 node 'puppet1.wikiforge.net' {
