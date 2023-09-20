@@ -22,59 +22,17 @@ mediawiki::default_sync: 'all'
 mediawiki::use_shellbox: true
 mediawiki::jobqueue::wiki: 'hubwiki'
 memcached_servers:
-  - 172.31.28.186:11211:1
+  - 10.0.0.102:11211:1
 
 varnish::interval-check: '5s'
 varnish::interval-timeout: '5s'
 varnish::backends:
-  mw1:
-    port: 8100
-    probe: mwhealth
-    pool: true
-    thumb: false
-    ip_address: 18.191.12.113
-  mw2:
-    port: 8101
-    probe: mwhealth
-    pool: true
-    thumb: false
-    ip_address: 18.222.166.40
-  mw3:
-    port: 8102
-    probe: mwhealth
-    pool: false
-    thumb: true
-    ip_address: 198.251.65.198
-  mw4:
-    port: 8103
-    probe: mwhealth
-    pool: true
-    thumb: false
-    ip_address: 18.191.239.166
-  mw5:
-    port: 8104
+  mw11:
+    port: 8105
     probe: mwhealth
     pool: false
     thumb: true
     ip_address: 23.142.24.117
-  jobrunner1:
-    port: 8150
-    probe: mwhealth
-    pool: true
-    thumb: false
-    ip_address: 13.58.205.57
-  jobrunner2:
-    port: 8151
-    probe: mwhealth
-    pool: true
-    thumb: false
-    ip_address: 3.15.17.20
-  test1:
-    port: 8180
-    probe: mwhealth
-    pool: false
-    thumb: true
-    ip_address: 52.14.195.40
   misc1:
     port: 8190
     probe: false
