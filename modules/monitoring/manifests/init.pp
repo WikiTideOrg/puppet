@@ -88,7 +88,7 @@ class monitoring (
     }
 
     class { '::icinga2::feature::gelf':
-        host => 'graylog.miraheze.org',
+        host => 'graylog.wikiforge.net',
     }
 
     file { '/etc/icinga2/conf.d/commands.conf':

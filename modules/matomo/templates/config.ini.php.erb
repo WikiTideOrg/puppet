@@ -14,15 +14,15 @@ charset = "utf8mb4"
 [General]
 browser_archiving_disabled_enforce = 1
 force_ssl = 1
-noreply_email_address = "noreply@miraheze.org"
+noreply_email_address = "noreply@wikiforge.net"
 enable_load_data_infile = 0
 salt = "<%= @salt %>"
-trusted_hosts[] = "matomo.miraheze.org"
+trusted_hosts[] = "matomo.wikiforge.net"
 
 [mail]
 transport = "smtp"
 port = 25
-host = "mail.miraheze.org"
+host = "mail.wikiforge.net"
 type = "LOGIN"
 username = "noreply"
 password = "<%= @noreply_password %>"
@@ -192,7 +192,7 @@ instance_name = ""
 ldap_network_timeout = 15
 
 [LoginLdap_Miraheze_Ldap]
-hostname = "ldaps://ldap.miraheze.org/"
+hostname = "ldaps://ldap.wikiforge.net/"
 port = 636
 base_dn = "dc=miraheze,dc=org"
 admin_user = "cn=write-user,dc=miraheze,dc=org"

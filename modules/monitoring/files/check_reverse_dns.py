@@ -86,7 +86,7 @@ def check_records(hostname):
             )
             cname_check_impossible = nameserver.endswith(flatten_manadatory_providers)
 
-        if sorted(list(nameservers)) == sorted(['ns1.miraheze.org.', 'ns2.miraheze.org.']):
+        if sorted(list(nameservers)) == sorted(['ns1.wikiforge.net.', 'ns2.wikiforge.net.']):
             return 'NS'
     except resolver.NoAnswer:
         nameservers = None
@@ -96,7 +96,7 @@ def check_records(hostname):
     except resolver.NoAnswer:
         cname = None
 
-    if cname == 'mw-lb.miraheze.org.':
+    if cname == 'cf-lb.wikiforge.net.':
         return 'CNAME'
     elif cname is None and cname_check_impossible:
         return 'CNAMEFLAT'

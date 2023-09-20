@@ -1,9 +1,9 @@
 class icingaweb2 (
-    String $db_host              = 'db112.miraheze.org',
+    String $db_host              = 'db11.wikiforge.net',
     String $db_name              = 'icingaweb2',
     String $db_user_name         = 'icingaweb2',
     String $db_user_password     = undef,
-    String $ido_db_host          = 'db112.miraheze.org',
+    String $ido_db_host          = 'db11.wikiforge.net',
     String $ido_db_name          = 'icinga',
     String $ido_db_user_name     = 'icinga2',
     String $ido_db_user_password = undef,
@@ -252,11 +252,11 @@ class icingaweb2 (
         source => 'puppet:///modules/icingaweb2/icinga2.conf',
     }
 
-    monitoring::services { 'icinga.miraheze.org HTTPS':
+    monitoring::services { 'icinga.wikiforge.net HTTPS':
         check_command => 'check_http',
         vars          => {
             http_ssl   => true,
-            http_vhost => 'icinga.miraheze.org',
+            http_vhost => 'icinga.wikiforge.net',
         },
     }
 }

@@ -1,7 +1,7 @@
 # class: matomo
 class matomo (
     String $ldap_password  = lookup('passwords::matomo::ldap_password'),
-    String $matomo_db_host = 'db112.miraheze.org',
+    String $matomo_db_host = 'db11.wikiforge.net',
 ) {
     ensure_packages('composer')
 
@@ -147,7 +147,7 @@ class matomo (
 
     ssl::wildcard { 'matomo wildcard': }
 
-    nginx::site { 'matomo.miraheze.org':
+    nginx::site { 'matomo.wikiforge.net':
         ensure  => present,
         source  => 'puppet:///modules/matomo/nginx.conf',
         monitor => true,

@@ -7,7 +7,7 @@ class role::graylog {
 
     nginx::site { 'graylog_proxy':
         ensure => present,
-        source => 'puppet:///modules/role/graylog/graylog.miraheze.org.conf',
+        source => 'puppet:///modules/role/graylog/graylog.wikiforge.net.conf',
     }
 
     class { 'mongodb::globals':
@@ -41,7 +41,7 @@ class role::graylog {
         require => Class['graylog::server'],
     }
 
-    # Access is restricted: https://meta.miraheze.org/wiki/Tech:Graylog#Access
+    # Access is restricted: https://tech.wikiforge.net/wiki/Tech:Graylog#Access
     $firewall_http_rules_str = join(
         query_facts('Class[Role::Bastion] or Class[Role::Mediawiki] or Class[Role::Icinga2] or Class[Role::Prometheus]', ['ipaddress', 'ipaddress6'])
         .map |$key, $value| {

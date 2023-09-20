@@ -1,18 +1,18 @@
-apply Service "wc.miraheze.org" {
+apply Service "wc.wikiforge.net" {
   import "generic-service"
   check_command = "check_ssl_expire"
-  notes_url = "https://meta.miraheze.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
-  vars.host = "miraheze.org"
+  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  vars.host = "wikiforge.net"
   vars.time = "30"
 
   assign where "sslchecks" in host.groups
 }
 
-apply Service "m.miraheze.org - LetsEncrypt" {
+apply Service "m.wikiforge.net - LetsEncrypt" {
   import "generic-service"
   check_command = "check_ssl_expire"
-  notes_url = "https://meta.miraheze.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
-  vars.host = "m.miraheze.org"
+  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  vars.host = "m.wikiforge.net"
   vars.time = "15"
   assign where "sslchecks" in host.groups
 }
@@ -22,7 +22,7 @@ apply Service "<%= property['url'] %> - <%= property['ca'] %>" {
   import "generic-service"
   check_command = "check_ssl_expire"
   check_interval = 30m
-  notes_url = "https://meta.miraheze.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
   vars.host = "<%= property['url'] %>"
   vars.time = "<% if property['ca'] == "LetsEncrypt" %>15<% else %>30<% end %>"
   <%- if property['ca'] == "LetsEncrypt" and property['disable_event'] == false -%>
@@ -35,7 +35,7 @@ apply Service "<%= property['url'] %> - reverse DNS" {
   import "generic-service"
   check_command = "reverse_dns"
   check_interval = 30m
-  notes_url = "https://meta.miraheze.org/wiki/Tech:Icinga/MediaWiki_Monitoring#Reverse_DNS_Checks"
+  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#Reverse_DNS_Checks"
   vars.hostname = "<%= property['url'] %>"
   vars.regex = "^(test|cp)[0-9]+\\.miraheze\\.org$$"
   assign where "sslchecks" in host.groups
