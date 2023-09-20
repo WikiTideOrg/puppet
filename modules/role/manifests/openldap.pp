@@ -139,7 +139,7 @@ class role::openldap (
     }
 
     openldap::server::schema { 'ppolicy':
-        ensure => present,
+        ensure => absent,
         path   => '/etc/ldap/schema/ppolicy.schema',
     }
 
