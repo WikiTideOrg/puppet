@@ -15,7 +15,7 @@ class role::opensearch (
         config      => {
             'cluster.initial_master_nodes'                          => $os_master_hosts,
             'discovery.seed_hosts'                                  => $os_discovery,
-            'cluster.name'                                          => 'miraheze-general',
+            'cluster.name'                                          => 'wikiforge-general',
             'node.master'                                           => $os_master,
             'node.data'                                             => $os_data,
             'network.host'                                          => $::fqdn,
@@ -28,7 +28,7 @@ class role::opensearch (
             'plugins.security.ssl.transport.pemtrustedcas_filepath' => '/etc/opensearch/ssl/opensearch-ca.pem',
             'plugins.security.ssl_cert_reload_enabled'              => true,
             # TODO: Admin must use its own certificate.
-            'plugins.security.authcz.admin_dn'                      => ['CN=ADMIN_MIRAHEZE,O=Miraheze LTD,L=Worksop,ST=Nottinghamshire,C=GB'],
+            'plugins.security.authcz.admin_dn'                      => ['CN=ADMIN_WIKIFORGE,O=WikiForge LLC,L=Washington,ST=DC,C=US'],
             'plugins.security.nodes_dn'                             => ['CN=*.wikiforge.net'],
             'plugins.security.restapi.roles_enabled'                => ['all_access', 'security_rest_api_access'],
         },
