@@ -20,12 +20,12 @@ class role::opensearch (
             'node.data'                                             => $os_data,
             'network.host'                                          => $::fqdn,
             'plugins.security.ssl.http.enabled'                     => true,
-            'plugins.security.ssl.http.pemkey_filepath'             => '/etc/opensearch/ssl/opensearch-node-key.pem',
-            'plugins.security.ssl.http.pemcert_filepath'            => '/etc/opensearch/ssl/opensearch-node.crt',
-            'plugins.security.ssl.http.pemtrustedcas_filepath'      => '/etc/opensearch/ssl/opensearch-ca.pem',
-            'plugins.security.ssl.transport.pemkey_filepath'        => '/etc/opensearch/ssl/opensearch-node-key.pem',
-            'plugins.security.ssl.transport.pemcert_filepath'       => '/etc/opensearch/ssl/opensearch-node.crt',
-            'plugins.security.ssl.transport.pemtrustedcas_filepath' => '/etc/opensearch/ssl/opensearch-ca.pem',
+            'plugins.security.ssl.http.pemkey_filepath'             => '/etc/ssl/private/wildcard.wikiforge.net.key',
+            'plugins.security.ssl.http.pemcert_filepath'            => '/etc/ssl/localcerts/wildcard.wikiforge.net.crt',
+            'plugins.security.ssl.http.pemtrustedcas_filepath'      => '/etc/ssl/certs/ISRG_Root_X1.pem',
+            'plugins.security.ssl.transport.pemkey_filepath'        => '/etc/ssl/private/wildcard.wikiforge.net.key',
+            'plugins.security.ssl.transport.pemcert_filepath'       => '/etc/ssl/localcerts/wildcard.wikiforge.net.crt',
+            'plugins.security.ssl.transport.pemtrustedcas_filepath' => '/etc/ssl/certs/ISRG_Root_X1.pem',
             'plugins.security.ssl_cert_reload_enabled'              => true,
             # TODO: Admin must use its own certificate.
             'plugins.security.authcz.admin_dn'                      => ['CN=ADMIN_WIKIFORGE,O=WikiForge LLC,L=Washington,ST=DC,C=US'],
@@ -47,35 +47,6 @@ class role::opensearch (
         owner   => 'opensearch',
         group   => 'opensearch',
         require => File['/etc/opensearch']
-    }
-
-    file { '/etc/opensearch/ssl/opensearch-ca.pem':
-        ensure  => 'present',
-        source  => 'puppet:///ssl/ca/opensearch-ca.pem',
-        owner   => 'opensearch',
-        group   => 'opensearch',
-        before  => Service['opensearch'],
-        require => File['/etc/opensearch/ssl'],
-    }
-
-    file { '/etc/opensearch/ssl/opensearch-node.crt':
-        ensure  => 'present',
-        source  => 'puppet:///ssl/certificates/opensearch-node.crt',
-        owner   => 'opensearch',
-        group   => 'opensearch',
-        before  => Service['opensearch'],
-        require => File['/etc/opensearch/ssl'],
-    }
-
-    file { '/etc/opensearch/ssl/opensearch-node-key.pem':
-        ensure    => 'present',
-        source    => 'puppet:///ssl-keys/opensearch-node-key.pem',
-        owner     => 'opensearch',
-        group     => 'opensearch',
-        mode      => '0660',
-        show_diff => false,
-        before  => Service['opensearch'],
-        require   => File['/etc/opensearch/ssl'],
     }
 
     file { '/etc/opensearch/ssl/opensearch-admin-cert.pem':
