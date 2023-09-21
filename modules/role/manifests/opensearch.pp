@@ -49,26 +49,6 @@ class role::opensearch (
         require => File['/etc/opensearch']
     }
 
-    file { '/etc/opensearch/ssl/opensearch-admin-cert.pem':
-        ensure  => 'present',
-        source  => 'puppet:///ssl/certificates/opensearch-admin-cert.pem',
-        owner   => 'opensearch',
-        group   => 'opensearch',
-        before  => Service['opensearch'],
-        require => File['/etc/opensearch/ssl'],
-    }
-
-    file { '/etc/opensearch/ssl/opensearch-admin-key.pem':
-        ensure    => 'present',
-        source    => 'puppet:///ssl-keys/opensearch-admin-key.pem',
-        owner     => 'opensearch',
-        group     => 'opensearch',
-        mode      => '0660',
-        show_diff => false,
-        before  => Service['opensearch'],
-        require   => File['/etc/opensearch/ssl'],
-    }
-
     # Contains everything needed to update the opensearch security index
     # to apply any config changes to the index.
     # This is required to be run everytime the config changes.
