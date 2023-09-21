@@ -18,7 +18,7 @@ class role::opensearch (
             'cluster.name'                                          => 'wikiforge-general',
             'node.master'                                           => $os_master,
             'node.data'                                             => $os_data,
-            'network.host'                                          => $::fqdn,
+            'network.host'                                          => $facts['networking']['fqdn'],
             'plugins.security.ssl.http.enabled'                     => true,
             'plugins.security.ssl.http.pemkey_filepath'             => '/etc/ssl/private/wildcard.wikiforge.net.key',
             'plugins.security.ssl.http.pemcert_filepath'            => '/etc/ssl/localcerts/wildcard.wikiforge.net.crt',
