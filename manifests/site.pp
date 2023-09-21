@@ -86,7 +86,7 @@ node 'puppet1.wikiforge.net' {
     include role::ssl
 }
 
-node 'services1.wikiforge.net' {
+node 'services11.wikiforge.net' {
     include base
     include role::services
 }
