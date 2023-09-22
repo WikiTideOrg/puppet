@@ -57,7 +57,7 @@ node /^mw1[12]\.wikiforge\.net$/ {
     include role::mediawiki
 }
 
-node /^ns[12]\.wikiforge\.net$/ {
+node 'ns11.wikiforge.net' {
     include base
     include role::dns
 }
