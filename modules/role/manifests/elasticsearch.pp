@@ -22,7 +22,7 @@ class role::elasticsearch {
             'cluster.name'                                   => 'miraheze-general',
             'node.master'                                    => $es_master,
             'node.data'                                      => $es_data,
-            'network.host'                                   => $::fqdn,
+            'network.host'                                   => $facts['networking']['fqdn'],
             'xpack.security.enabled'                         => true,
             'xpack.security.http.ssl.enabled'                => true,
             'xpack.security.http.ssl.key'                    => '/etc/elasticsearch/ssl/wildcard.wikiforge.net.key',

@@ -326,7 +326,7 @@ class { '::icinga::web::director':
   db_host         => 'localhost',
   db_pass         => 'supersecret',
   manage_database => true,
-  endpoint        => $::fqdn,
+  endpoint        => $facts['networking']['fqdn'],
   api_host        => 'localhost',
   api_pass        => $icinga::server::director_api_pass,
 }
