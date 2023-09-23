@@ -52,6 +52,11 @@ node 'mem11.wikiforge.net' {
     include role::memcached
 }
 
+node 'mon11.wikiforge.net' {
+    include base
+    include role::grafana
+    include role::icinga2
+}
 node /^mw1[12]\.wikiforge\.net$/ {
     include base
     include role::mediawiki
