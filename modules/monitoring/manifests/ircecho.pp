@@ -1,7 +1,7 @@
 class monitoring::ircecho (
     String $wikiforgebots_password = undef,
 ) {
-    ensure_packages([
+    stdlib::ensure_packages([
         'python3-irc',
         'python3-pyinotify',
     ])
@@ -15,7 +15,7 @@ class monitoring::ircecho (
         notify => Service['ircecho'],
     }
 
-    $pyversion = $::lsbdistcodename ? {
+    $pyversion = $facts['os']['distro']['codename'] ? {
         'bullseye' => 'python3.9',
     }
 
@@ -29,7 +29,7 @@ class monitoring::ircecho (
     }
 
     $ircecho_logs = {
-        '/var/log/icinga2/irc.log' => '#miraheze-sre',
+        '/var/log/icinga2/irc.log' => '#wikiforge-sre',
     }
 
     file { '/etc/default/ircecho':
