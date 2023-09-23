@@ -1,5 +1,5 @@
 [server]
-domain = grafana.miraheze.org
+domain = grafana.wikiforge.net
 root_url = %(protocol)s://%(domain)s/
 enable_gzip = true
 
@@ -13,7 +13,7 @@ auto_assign_org = true
 [auth.anonymous]
 # enable anonymous access
 enabled = true
-org_name = Miraheze
+org_name = WikiForge
 org_role = Viewer
 
 [auth.ldap]
@@ -23,17 +23,17 @@ allow_sign_up = true
 
 [smtp]
 enabled=true
-host = mail.miraheze.org:25
+host = mail.wikiforge.net:25
 user = noreply
 password = <%= @mail_password %>
-from_address = noreply@miraheze.org
+from_address = noreply@wikiforge.net
 
 [database]
 url = mysql://grafana:<%= @grafana_password %>@<%= @grafana_db_host %>:3306/grafana
 type = mysql
 ssl_mode = true
-ca_cert_path = /etc/ssl/certs/Sectigo.crt
-server_cert_name = *.miraheze.org
+ca_cert_path = /etc/ssl/certs/ISRG_Root_X1.pem
+server_cert_name = *.wikiforge.net
 
 [security]
 cookie_secure = true
