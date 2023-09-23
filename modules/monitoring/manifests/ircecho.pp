@@ -16,7 +16,7 @@ class monitoring::ircecho (
     }
 
     $pyversion = $facts['os']['distro']['codename'] ? {
-        'bullseye' => 'python3.9',
+        'bookworm' => 'python3.11',
     }
 
     file { "/usr/local/lib/${pyversion}/dist-packages/ib3_auth.py":
