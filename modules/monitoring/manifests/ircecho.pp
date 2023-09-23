@@ -1,5 +1,5 @@
 class monitoring::ircecho (
-    String $mirahezebots_password = undef,
+    String $wikiforgebots_password = undef,
 ) {
     ensure_packages([
         'python3-irc',
@@ -42,7 +42,7 @@ class monitoring::ircecho (
 
     file { '/etc/default/ircecho_password':
         ensure  => 'present',
-        content => $mirahezebots_password,
+        content => $wikiforgebots_password,
         owner   => 'root',
         group   => 'root',
         mode    => '0640',
