@@ -44,6 +44,6 @@ class role::cloud {
     }
 
     motd::role { 'role::cloud':
-        description => 'cloud virts to host own vps using proxmox',
+        description => 'Proxmox host',
     }
 }
