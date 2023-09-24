@@ -36,6 +36,6 @@ class role::puppetserver (
     }
 
     motd::role { 'role::puppetserver':
-        description => 'Centralised puppetserver',
+        description => 'Puppet master!', # It's actually a puppetserver but puppetmaster sounds interesting
     }
 }
