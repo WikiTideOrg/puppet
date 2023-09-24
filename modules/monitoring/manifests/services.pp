@@ -1,6 +1,6 @@
 define monitoring::services (
     $check_command,
-    $host           = $::hostname,
+    $host           = $facts['networking']['hostname'],
     $retries        = 3,
     $ensure         = present,
     $check_interval = '2m',
