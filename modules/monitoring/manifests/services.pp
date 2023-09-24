@@ -10,7 +10,7 @@ define monitoring::services (
     $critical       = false,
     $vars           = undef,
 ) {
-    @@icinga2::object::service { "${::hostname} ${title}":
+    @@icinga2::object::service { "${$facts['networking']['hostname']} ${title}":
         ensure                => $ensure,
         import                => ['generic-service'],
         host_name             => $host,
