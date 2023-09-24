@@ -6,7 +6,7 @@ define monitoring::hosts (
         ensure   => $ensure,
         import   => ['generic-host'],
         address => $facts['networking']['ip'],
-        address6 => $facts['networking']['ip6'],
+#        address6 => $facts['networking']['ip6'],
         target   => '/etc/icinga2/conf.d/puppet_hosts.conf',
         vars     => {
             notification => {
