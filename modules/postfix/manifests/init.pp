@@ -70,4 +70,8 @@ class postfix {
         ensure  => running,
         require => Package['postfix'],
     }
+
+    monitoring::services { 'SMTP':
+        check_command => 'smtp',
+    }
 }
