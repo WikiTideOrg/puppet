@@ -61,6 +61,6 @@ class role::roundcubemail (
     }
 
     motd::role { 'roundcubemail':
-        description => 'hosts our webmail client',
+        description => 'webmail (Roundcube) host',
     }
 }
