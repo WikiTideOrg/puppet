@@ -193,4 +193,12 @@ class roundcubemail (
         source  => 'puppet:///modules/roundcubemail/roundcubemail.logrotate.conf',
         require => File['/var/log/roundcubemail'],
     }
+
+    monitoring::services { 'webmail.internal.wikiforge.net HTTPS':
+        check_command => 'check_http',
+        vars          => {
+            http_ssl   => true,
+            http_vhost => 'webmail.internal.wikiforge.net',
+        },
+    }
 }
