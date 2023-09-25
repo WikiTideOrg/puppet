@@ -6,6 +6,7 @@ class mediawiki {
     include mediawiki::packages
     include mediawiki::logging
     include mediawiki::php
+    include mediawiki::monitoring
 
     if lookup(mediawiki::use_staging) {
         include mediawiki::deploy
@@ -32,7 +33,7 @@ class mediawiki {
         ensure_packages(
             'internetarchive',
             {
-                ensure   => '3.0.2',
+                ensure   => '3.3.0',
                 provider => 'pip3',
                 before   => File['/usr/local/bin/iaupload'],
                 require  => Package['python3-pip'],
@@ -196,10 +197,11 @@ class mediawiki {
         require => File['/srv/mediawiki/config'],
     }
 
-    file { '/srv/mediawiki/stopforumspam/listed_ip_30_ipv46_all.txt':
+    file { '/srv/mediawiki/stopforumspam/listed_ip_90_ipv46_all.txt':
         ensure  => present,
         mode    => '0755',
-        source  => 'puppet:///private/mediawiki/listed_ip_30_ipv46_all.txt',
+        source  => 'puppet:///private/mediawiki/listed_ip_90_ipv46_all.txt',
+        show_diff => false,
         require => File['/srv/mediawiki/stopforumspam'],
     }
 
@@ -217,7 +219,7 @@ class mediawiki {
     }
 
     tidy { '/tmp':
-        matches => [ '*.png', '*.jpg', '*.gif', 'EasyTimeline.*', 'gs_*', 'localcopy_*', 'transform_*', 'vips-*.v' ],
+        matches => [ '*.png', '*.jpg', '*.gif', 'EasyTimeline.*', 'gs_*', 'localcopy_*', 'transform_*', 'vips-*.v', 'php*', 'shellbox-*' ],
         age     => '2h',
         type    => 'atime',
         backup  => false,
