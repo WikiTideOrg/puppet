@@ -6,8 +6,7 @@ define monitoring::hosts (
         ensure   => $ensure,
         import   => ['generic-host'],
     case $facts['networking']['hostname'] {
-        'mw11':
-        'mw12': {
+        'mw11', 'mw12': {
             address => $facts['networking']['interfaces']['ens19']['ip'],
         }
         default: {
