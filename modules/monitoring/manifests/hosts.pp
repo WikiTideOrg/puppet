@@ -5,14 +5,11 @@ define monitoring::hosts (
     @@icinga2::object::host { $title:
         ensure   => $ensure,
         import   => ['generic-host'],
-    case $facts['networking']['hostname'] {
-        'mw11', 'mw12': {
-            address => $facts['networking']['interfaces']['ens19']['ip'],
-        }
-        default: {
-          address => $facts['networking']['ip'],
-        }
-    }
+        address => $facts['networking']['hostname'] ? {
+          'mw11' => $facts['networking']['interfaces']['ens19']['ip'],
+          'mw12' => $facts['networking']['interfaces']['ens19']['ip'],
+          default => $facts['networking']['ip'],
+        },
 #        address6 => $facts['networking']['ip6'],
         target   => '/etc/icinga2/conf.d/puppet_hosts.conf',
         vars     => {
