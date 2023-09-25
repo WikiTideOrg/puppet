@@ -21,6 +21,7 @@ mediawiki::is_canary: false
 mediawiki::default_sync: 'all'
 mediawiki::use_shellbox: true
 mediawiki::jobqueue::wiki: 'hubwiki'
+mediawiki::monitoring::host: 'hub.wikiforge.net'
 memcached_servers:
   - 10.0.0.102:11211:1
 
