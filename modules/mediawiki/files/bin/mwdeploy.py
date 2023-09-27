@@ -44,8 +44,8 @@ prod: Environment = {
 }
 test: Environment = {
     'wikidbname': 'test1wiki',
-    'wikiurl': 'test1.wikiforge.net',
-    'servers': ['test1'],
+    'wikiurl': 'test11.wikiforge.net',
+    'servers': ['test11'],
 }
 ENVIRONMENTS: EnvironmentList = {
     'prod': prod,
