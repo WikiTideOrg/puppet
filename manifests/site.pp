@@ -96,7 +96,7 @@ node 'services11.wikiforge.net' {
     include role::services
 }
 
-node /^test(1|11)\.wikiforge\.net$/ {
+node 'test11.wikiforge.net' {
     include base
     include role::mediawiki
 }
