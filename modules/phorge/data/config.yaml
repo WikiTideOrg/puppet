@@ -5,8 +5,7 @@
 # on all instances. --Agent Isai
 
 # Amazon S3
-amazon-s3.endpoint: 's3.us-east-2.amazonaws.com'
-amazon-s3.region: 'us-east-2'
+amazon-s3.region: 'auto'
 
 # Logo/Wordmark
 # Now set via individual config
