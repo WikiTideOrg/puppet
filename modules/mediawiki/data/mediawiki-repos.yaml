@@ -1030,7 +1030,7 @@ SemanticMediaWiki:
   composer: true
 SemanticScribunto:
   branch: master
-  path: extensions/SemanticMediaWiki
+  path: extensions/SemanticScribunto
   repo_url: https://github.com/SemanticMediaWiki/SemanticScribunto
   composer: true
 Share:
