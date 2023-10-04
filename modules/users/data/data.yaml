@@ -21,6 +21,10 @@ groups:
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service redis *',
                  'ALL = (ALL) NOPASSWD: /usr/bin/puppet *',
                  'ALL = (ALL) NOPASSWD: /bin/journalctl *']
+  bastion:
+    gid: 2005
+    description: users who require bastion access
+    members: []
   mediawiki-test-admins:
     gid: 2010
     description: sudo on the MediaWiki test server
