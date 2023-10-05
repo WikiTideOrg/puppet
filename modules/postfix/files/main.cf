@@ -9,6 +9,7 @@ virtual_mailbox_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
 smtp_bind_address=208.110.84.237
+inet_protocols = ipv4
 
 virtual_mailbox_domains = $myhostname
 virtual_mailbox_base = /var/mail
