@@ -12,7 +12,7 @@ class role::graylog {
 
     class { 'mongodb::globals':
         manage_package_repo => true,
-        version             => '4.4.17' ,
+        version             => '5.0.20' ,
     }
     -> class { 'mongodb::server':
         bind_ip => ['127.0.0.1'],
@@ -22,10 +22,10 @@ class role::graylog {
     $http_proxy = lookup('http_proxy', {'default_value' => undef})
     class { 'graylog::repository':
         proxy   => $http_proxy,
-        version => '4.3',
+        version => '5.1',
     }
     -> class { 'graylog::server':
-        package_version => '4.3.9-1',
+        package_version => '5.1.4-1',
         config          => {
             'password_secret'     => lookup('passwords::graylog::password_secret'),
             'root_password_sha2'  => lookup('passwords::graylog::root_password_sha2'),
@@ -60,9 +60,9 @@ class role::graylog {
 
     # syslog-ng > graylog 12210/tcp
     $firewall_syslog_rules_str = join(
-        query_facts('Class[Base]', ['ipaddress', 'ipaddress6'])
+        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Bastion] or Class[Role::Mediawiki] or Class[Role::Icinga2] or Class[Role::Prometheus]", ['networking'])
         .map |$key, $value| {
-            "${value['ipaddress']} ${value['ipaddress6']}"
+            "${value['networking']['ip']} ${value['networking']['ip6']}"
         }
         .flatten()
         .unique()
@@ -77,9 +77,9 @@ class role::graylog {
 
 
     $firewall_icinga_rules_str = join(
-        query_facts('Class[Role::Icinga2]', ['ipaddress', 'ipaddress6'])
+        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Base]", ['networking'])
         .map |$key, $value| {
-            "${value['ipaddress']} ${value['ipaddress6']}"
+            "${value['networking']['ip']} ${value['networking']['ip6']}"
         }
         .flatten()
         .unique()
