@@ -241,12 +241,10 @@ sub vcl_recv {
 		req.http.Host == "ssl.wikiforge.net" ||
 		req.http.Host == "acme.wikiforge.net"
 	) {
-		set req.backend_hint = puppet1;
 		return (pass);
 	}
 
  	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1)\.(wikiforge\.net|wikitide\.com)") {
-                set req.backend_hint = test1;
                 return (pass);
         }
 
@@ -259,13 +257,11 @@ sub vcl_recv {
 		req.http.Host == "phorge-static.wikiforge.net" ||
 		req.http.Host == "blog.wikiforge.net"
 	) {
-		set req.backend_hint = phorge1;
 		return (pass);
 	}
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "webmail.internal.wikiforge.net") {
-		set req.backend_hint = misc1;
 		return (pass);
 	}
 
