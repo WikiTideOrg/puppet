@@ -69,4 +69,4 @@ users:
     uid: 1012
     name: notaracham
     realname: NotAracham
-    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNwBn4iuC8qQDC+hAhPBzoo7fRPF00qLw7WteBzeFCA notaracham@gmail.com]
+    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNwBn4iuC8qQDC+hAhPBzoo7fRPF00qLw7WteBzeFCA]
