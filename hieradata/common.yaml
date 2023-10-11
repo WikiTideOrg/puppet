@@ -33,22 +33,7 @@ varnish::backends:
     probe: mwhealth
     pool: false
     thumb: true
-    ip_address: 23.142.24.117
-  misc1:
-    port: 8190
-    probe: false
-    pool: false
-    ip_address: 3.133.225.104
-  phorge1:
-    port: 8200
-    probe: false
-    pool: false
-    ip_address: 3.135.195.194
-  puppet1:
-    port: 8201
-    probe: false
-    pool: false
-    ip_address: 18.117.56.175
+    ip_address: 10.0.0.0.100
 
 # Logging
 base::syslog::syslog_daemon: syslog
