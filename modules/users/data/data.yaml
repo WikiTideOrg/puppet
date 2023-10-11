@@ -24,7 +24,7 @@ groups:
   bastion:
     gid: 2005
     description: users who require bastion access
-    members: []
+    members: [notaracham]
   mediawiki-test-admins:
     gid: 2010
     description: sudo on the MediaWiki test server
