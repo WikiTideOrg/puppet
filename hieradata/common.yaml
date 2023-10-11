@@ -33,7 +33,7 @@ varnish::backends:
     probe: mwhealth
     pool: false
     thumb: true
-    ip_address: 10.0.0.0.100
+    ip_address: 10.0.0.100
 
 # Logging
 base::syslog::syslog_daemon: syslog
