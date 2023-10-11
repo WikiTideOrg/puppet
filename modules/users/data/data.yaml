@@ -12,7 +12,7 @@ groups:
   mediawiki-admins:
     gid: 2002
     description: sudo on MediaWiki servers
-    members: [rman41]
+    members: [rman41, notaracham]
     privileges: ['ALL = (www-data) NOPASSWD: ALL',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service nginx *',
                  'ALL = (ALL) NOPASSWD: /usr/sbin/service php7.4-fpm *',
@@ -64,3 +64,9 @@ users:
     name: rman41
     realname: Rman41
     ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMyiMRpKS/pOT4VRdJ1aT9/YeO16FinmSqPjocT+B77f]
+  notaracham:
+    ensure: present
+    uid: 1012
+    name: notaracham
+    realname: NotAracham
+    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNwBn4iuC8qQDC+hAhPBzoo7fRPF00qLw7WteBzeFCA notaracham@gmail.com]
