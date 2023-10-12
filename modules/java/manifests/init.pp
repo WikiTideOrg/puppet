@@ -47,7 +47,6 @@ class java (
   contain java::params
 
   $default_package_name = $distribution in $java::params::java ? {
-  $default_package_name = $distribution in $java::params::java ? {
     false   => undef,
     default => $java::params::java[$distribution]['package'],
   }
