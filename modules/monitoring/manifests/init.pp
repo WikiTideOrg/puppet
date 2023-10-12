@@ -66,7 +66,7 @@ class monitoring (
     }
 
     class { '::icinga2::feature::gelf':
-        host => 'graylog.wikiforge.net',
+        host => 'logging.wikiforge.work',
     }
 
     file { '/etc/icinga2/conf.d/commands.conf':
