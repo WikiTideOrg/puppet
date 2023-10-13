@@ -31,13 +31,11 @@ apply Service "<%= property['url'] %> - <%= property['ca'] %>" {
   assign where "sslchecks" in host.groups
 }
 
-apply Service "<%= property['url'] %> - reverse DNS" {
+apply Service "<%= property['url'] %> - pointing to WF/WT" {
   import "generic-service"
-  check_command = "reverse_dns"
+  check_command = "check_dns!-H <%= property['url'] %> -n -q CNAME -a cf-lb.wikitide.org. -a cf-lb.wikiforge.net. -a mw-lb.wikiforge.net."
   check_interval = 30m
   notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#Reverse_DNS_Checks"
-  vars.hostname = "<%= property['url'] %>"
-  vars.regex = "^(test|cp)[0-9]+\\.miraheze\\.org$$"
   assign where "sslchecks" in host.groups
 }
 <% end -%>
