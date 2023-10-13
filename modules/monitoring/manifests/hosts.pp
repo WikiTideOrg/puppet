@@ -10,6 +10,7 @@ define monitoring::hosts (
             'mail11'   => $facts['networking']['interfaces']['ens19']['ip'],
             'mw11'     => $facts['networking']['interfaces']['ens19']['ip'],
             'mw12'     => $facts['networking']['interfaces']['ens19']['ip'],
+            'ns11'     => $facts['networking']['interfaces']['ens19']['ip'],
             'phorge11' => $facts['networking']['interfaces']['ens19']['ip'],
             default    => $facts['networking']['ip'],
         },
