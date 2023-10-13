@@ -29,9 +29,9 @@ varnish::interval-check: '5s'
 varnish::interval-timeout: '5s'
 varnish::backends:
   mw11:
-    port: 8105
+    port: 8100
     probe: mwhealth
-    pool: false
+    pool: true
     thumb: true
     ip_address: 10.0.0.100
 
