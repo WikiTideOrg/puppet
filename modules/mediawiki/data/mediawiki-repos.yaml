@@ -197,6 +197,10 @@ CommonsMetadata:
   branch: _branch_
   path: extensions/CommonsMetadata
   repo_url: https://github.com/wikimedia/mediawiki-extensions-CommonsMetadata
+ConfirmAccount:
+  branch: _branch_
+  path: extensions/ConfirmAccount
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-ConfirmAccount
 ConfirmEdit:
   branch: _branch_
   path: extensions/ConfirmEdit
@@ -1241,6 +1245,10 @@ UserFunctions:
   branch: _branch_
   path: extensions/UserFunctions
   repo_url: https://github.com/wikimedia/mediawiki-extensions-UserFunctions
+UserMerge:
+  branch: _branch_
+  path: extensions/UserMerge
+  repo_url: https://github.com/wikimedia/mediawiki-extensions-UserMerge
 UserPageEditProtection:
   branch: _branch_
   path: extensions/UserPageEditProtection
