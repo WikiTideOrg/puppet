@@ -5,8 +5,6 @@ users::groups:
 
 jobrunner: true
 jobrunner::intensive: true
-mediawiki::jobqueue::runner::beta: true
-mediawiki::jobqueue::runner::redis_ip: '127.0.0.1:6379'
 mediawiki::jobqueue::wiki: 'metanexttide'
 
 role::mediawiki::use_strict_firewall: true
