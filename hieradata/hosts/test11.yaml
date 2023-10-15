@@ -4,8 +4,11 @@ users::groups:
   - mediawiki-test-admins
 
 jobrunner: true
-mediawiki::jobqueue::runner::redis_ip: '10.0.0.103:6379'
-mediawiki::jobqueue::wiki: 'test1wiki'
+jobrunner::intensive: true
+mediawiki::jobqueue::runner::beta: true
+mediawiki::jobqueue::runner::cron: true
+mediawiki::jobqueue::runner::redis_ip: '127.0.0.1:6379'
+mediawiki::jobqueue::wiki: 'metanexttide'
 
 role::mediawiki::use_strict_firewall: true
 
@@ -39,3 +42,13 @@ nginx::keepalive_requests: 150
 nginx::logrotate_number: 2
 
 puppetserver_hostname: 'puppet1.wikiforge.net'
+
+# memcached
+role::memcached::threads: ~
+role::memcached::version: 'present'
+role::memcached::growth_factor: 1.25
+role::memcached::min_slab_size: 48
+role::memcached::max_seq_reqs: 200
+role::memcached::size: 512
+role::memcached::extended_options: []
+role::memcached::port: 11211
