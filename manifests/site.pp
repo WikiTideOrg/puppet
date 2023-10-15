@@ -104,6 +104,9 @@ node 'services11.wikiforge.net' {
 node 'test11.wikiforge.net' {
     include base
     include role::mediawiki
+    include role::memcached
+    include role::redis
+    include mediawiki::jobqueue::chron
 }
 
 # ensures all servers have basic class if puppet runs
