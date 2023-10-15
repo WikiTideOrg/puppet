@@ -3,10 +3,6 @@ users::groups:
   - mediawiki-roots
   - mediawiki-test-admins
 
-jobrunner: true
-jobrunner::intensive: true
-mediawiki::jobqueue::wiki: 'metanexttide'
-
 role::mediawiki::use_strict_firewall: true
 
 mediawiki::php::fpm::fpm_min_child: 6
