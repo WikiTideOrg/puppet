@@ -245,8 +245,14 @@ sub vcl_recv {
 	}
 
  	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1)\.(wikiforge\.net|wikitide\.com)") {
+		set req.backend_hint = test11;
                 return (pass);
         }
+
+	if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
+		set req.backend_hint = test11;
+		return (pass);
+	}
 
 	# Do not cache requests from this domain
 	if (
