@@ -83,6 +83,8 @@ class puppetserver(
         ensure    => latest,
         directory => '/etc/puppetlabs/puppet/ssl-cert',
         origin    => 'https://github.com/WikiForge/ssl',
+        owner     => 'puppet',
+        group     => 'puppet',
         require   => Package['puppet-agent'],
     }
 
