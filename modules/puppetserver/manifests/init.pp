@@ -198,7 +198,7 @@ class puppetserver(
 
     cron { 'ssl-git':
         command => '/usr/bin/git -C /etc/puppetlabs/puppet/ssl-cert pull > /dev/null 2>&1',
-        user    => 'root',
+        user    => 'puppet',
         hour    => '*',
         minute  => [ '9', '19', '29', '39', '49', '59' ],
     }
