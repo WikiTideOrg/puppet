@@ -13,7 +13,7 @@ node 'bots1.wikiforge.net' {
     include base
 }
 
-node /^cp1[1]\.wikiforge\.net$/ {
+node /^cp[123456]\.wikitide\.net$/ {
     include base
     include role::varnish
 }

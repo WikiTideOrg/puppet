@@ -35,7 +35,16 @@ varnish::backends:
     probe: mwhealth
     pool: true
     thumb: true
-    ip_address: 10.0.0.100
+  mw12:
+    port: 8101
+    probe: mwhealth
+    pool: false
+    thumb: true
+  mw13:
+    port: 8102
+    probe: mwhealth
+    pool: true
+    thumb: true
   test11:
     port: 8110
     probe: mwhealth
