@@ -35,22 +35,25 @@ varnish::backends:
     probe: mwhealth
     pool: true
     thumb: true
+    ip_address: 2604:4300:a:37::100
   mw12:
     port: 8101
     probe: mwhealth
     pool: false
     thumb: true
+    ip_address: 2604:4300:a:37::106
   mw13:
     port: 8102
     probe: mwhealth
     pool: true
     thumb: true
+    ip_address: 2604:4300:a:37::119
   test11:
     port: 8110
     probe: mwhealth
     pool: false
     thumb: true
-    ip_address: 10.0.0.108
+    ip_address: 2604:4300:a:37::108
 
 # Logging
 base::syslog::syslog_daemon: syslog
