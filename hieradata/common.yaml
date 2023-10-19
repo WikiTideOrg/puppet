@@ -59,7 +59,7 @@ varnish::backends:
     pool: false
     ip_address: 2604:4300:a:37::107
   puppet11:
-    port: 8200
+    port: 8201
     probe: false
     pool: false
     ip_address: 2604:4300:a:37::105
