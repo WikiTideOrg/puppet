@@ -49,11 +49,20 @@ varnish::backends:
     thumb: true
     ip_address: 2604:4300:a:37::119
   test11:
-    port: 8110
-    probe: mwhealth
-    pool: false
+    port: 8180
+    probe: false
     thumb: true
     ip_address: 2604:4300:a:37::108
+  phorge11:
+    port: 8200
+    probe: false
+    pool: false
+    ip_address: 2604:4300:a:37::107
+  puppet11:
+    port: 8200
+    probe: false
+    pool: false
+    ip_address: 2604:4300:a:37::105
 
 # Logging
 base::syslog::syslog_daemon: syslog
