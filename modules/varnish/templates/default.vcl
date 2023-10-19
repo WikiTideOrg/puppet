@@ -569,6 +569,7 @@ sub vcl_miss {
         set req.http.X-Range = req.http.Range;
         return (pass);
 }
+}
 
 # Pass code, default logic is appended
 sub vcl_pass {
