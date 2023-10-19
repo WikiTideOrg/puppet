@@ -242,7 +242,7 @@ sub vcl_recv {
 		return (pass);
 	}
 
- 	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1)\.(wikiforge\.net|wikitide\.org)") {
+ 	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikiforge\.net|wikitide\.org)") {
 		set req.backend_hint = test11;
                 return (pass);
         }
