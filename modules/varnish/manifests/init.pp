@@ -4,7 +4,6 @@ class varnish (
     String $cache_file_size = '22G',
 ) {
     include varnish::nginx
-    include varnish::stunnel4
 
     ensure_packages(['varnish', 'varnish-modules'])
 
