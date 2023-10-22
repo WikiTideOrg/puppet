@@ -69,7 +69,6 @@ node /^mw1[123]\.wikiforge\.net$/ {
 node 'ns11.wikiforge.net' {
     include base
     include role::dns
-    include role::varnish
 }
 
 node 'os11.wikiforge.net' {
