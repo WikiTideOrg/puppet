@@ -107,17 +107,6 @@ class varnish (
         source => 'puppet:///modules/varnish/icinga/check_nginx_errorrate',
         mode   => '0755',
     }
-    file { '/usr/lib/nagios/plugins/check_varnishbackends':
-        ensure => present,
-        source => 'puppet:///modules/varnish/icinga/check_varnishbackends.py',
-        mode   => '0755',
-    }
-
-    file { '/usr/lib/nagios/plugins/check_nginx_errorrate':
-        ensure => present,
-        source => 'puppet:///modules/varnish/icinga/check_nginx_errorrate',
-        mode   => '0755',
-    }
 
     # This script needs root access to read /etc/varnish/secret
     sudo::user { 'nrpe_sudo_checkvarnishbackends':
