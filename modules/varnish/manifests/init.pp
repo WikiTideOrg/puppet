@@ -107,4 +107,41 @@ class varnish (
         source => 'puppet:///modules/varnish/icinga/check_nginx_errorrate',
         mode   => '0755',
     }
+    file { '/usr/lib/nagios/plugins/check_varnishbackends':
+        ensure => present,
+        source => 'puppet:///modules/varnish/icinga/check_varnishbackends.py',
+        mode   => '0755',
+    }
+
+    file { '/usr/lib/nagios/plugins/check_nginx_errorrate':
+        ensure => present,
+        source => 'puppet:///modules/varnish/icinga/check_nginx_errorrate',
+        mode   => '0755',
+    }
+
+    # This script needs root access to read /etc/varnish/secret
+    sudo::user { 'nrpe_sudo_checkvarnishbackends':
+        user       => 'nagios',
+        privileges => [ 'ALL = NOPASSWD: /usr/lib/nagios/plugins/check_varnishbackends' ],
+    }
+
+    # FIXME: Can't read access files without root
+    sudo::user { 'nrpe_sudo_checknginxerrorrate':
+        user       => 'nagios',
+        privileges => [ 'ALL = NOPASSWD: /usr/lib/nagios/plugins/check_nginx_errorrate' ],
+    }
+
+    monitoring::nrpe { 'Varnish Backends':
+        command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_varnishbackends'
+    }
+
+    monitoring::nrpe { 'HTTP 4xx/5xx ERROR Rate':
+        command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_nginx_errorrate'
+    }
+
+    $backends.each | $name, $property | {
+        monitoring::nrpe { "Nginx Backend for ${name}":
+            command => "/usr/lib/nagios/plugins/check_tcp -H localhost -p ${property['port']}",
+        }
+    }
 }
