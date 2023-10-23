@@ -6,7 +6,8 @@ class mariadb::config(
     String                      $tmpdir                       = '/tmp',
     String                      $innodb_buffer_pool_size      = '3G',
     Integer                     $max_connections              = 500,
-    VMlib::Mariadb_version      $version                      = lookup('mariadb::version', {'default_value' => '10.5'}),
+    VMlib::Mariadb_version      $version                      = lookup('mariadb::version', {'default_value' => '10.11'}),
+    String                      $icinga_password              = undef,
     Optional[Integer]           $server_id                    = undef,
 ) {
     $mariadb_replica_password = lookup('passwords::mariadb_replica_password')
