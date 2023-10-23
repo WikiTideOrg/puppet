@@ -6,6 +6,7 @@ class role::db (
 ) {
     include mariadb::packages
 
+    $icinga_password = lookup('passwords::db::icinga')
     $mediawiki_password = lookup('passwords::db::mediawiki')
     $wikiadmin_password = lookup('passwords::db::wikiadmin')
     $phorge_password = lookup('passwords::db::phorge')
@@ -23,6 +24,7 @@ class role::db (
 
     class { 'mariadb::config':
         config   => 'mariadb/config/mw.cnf.erb',
+        icinga_password => $icinga_password,
         password => lookup('passwords::db::root'),
     }
 
