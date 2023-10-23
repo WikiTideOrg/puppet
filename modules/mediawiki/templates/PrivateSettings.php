@@ -33,3 +33,8 @@ $wmgRedisPassword = '<%= @redis_password %>';
 
 // Shellbox secret key
 $wgShellboxSecretKey = '<%= @shellbox_secretkey %>';
+
+// Miscellaneous
+
+// External Data credentials for cslmodswikitide
+$wmgExternalDataCredsCslmodswikitide = '<%= @mediawiki_externaldata_cslmodswikitide %>';
