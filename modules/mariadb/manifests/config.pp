@@ -97,4 +97,31 @@ class mariadb::config(
         override => true,
         restart  => false,
     }
+
+    monitoring::services { 'MariaDB':
+        check_command => 'mysql',
+        docs          => 'https://tech.wikiforge.net/wiki/MariaDB',
+        vars          => {
+            mysql_hostname => $facts['networking']['fqdn'],
+            mysql_username => 'icinga',
+            mysql_password => $icinga_password,
+            mysql_ssl      => true,
+            mysql_cacert   => '/etc/ssl/certs/Sectigo.crt',
+        },
+    }
+
+    monitoring::services { 'MariaDB Connections':
+        check_command => 'mysql_connections',
+        docs          => 'https://tech.wikiforge.net/wiki/MariaDB',
+        vars => {
+            mysql_hostname  => $facts['networking']['fqdn'],
+            mysql_username  => 'icinga',
+            mysql_password  => $icinga_password,
+            mysql_ssl       => true,
+            mysql_cacert    => '/etc/ssl/certs/ISRG_Root_X1.pem', # Let's Encrypt
+            warning         => '80%',
+            critical        => '90%',
+            max_connections => $max_connections,
+        },
+    }
 }
