@@ -258,10 +258,10 @@ sub vcl_recv {
                 return (pass);
         }
 
-	if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-		set req.backend_hint = test11;
-		return (pass);
-	}
+	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
+	#	set req.backend_hint = test11;
+	#	return (pass);
+	#}
 
 	# Do not cache requests from this domain
 	if (
