@@ -146,6 +146,13 @@ sub vcl_synth {
 		set resp.http.Connection = "keep-alive";
 		set resp.http.Content-Length = "0";
 	}
+
+	if (resp.http.Location == "https://meta.wikitide.org/wiki/WikiTide_Meta" && req.http.User-Agent ~ "Googlebot") {
+		set resp.reason = "Moved Permanently";
+		set resp.http.Location = "https://wikitide.org/";
+		set resp.http.Connection = "keep-alive";
+		set resp.http.Content-Length = "0";
+	}
 }
 
 # Purge Handling
