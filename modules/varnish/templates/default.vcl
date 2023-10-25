@@ -147,7 +147,7 @@ sub vcl_synth {
 		set resp.http.Content-Length = "0";
 	}
 
-	if (req.http.host == "meta.wikitide.org" && req.url == "/wiki/WikiTide_Meta" && req.http.User-Agent ~i "Googlebot") {
+	if (req.http.host == "meta.wikitide.org" && req.url == "/wiki/WikiTide_Meta" && req.http.User-Agent ~ "(G|g)ooglebot") {
 		set resp.reason = "Moved Permanently";
 		set resp.status = 301;
 		set resp.http.Location = "https://wikitide.org/";
