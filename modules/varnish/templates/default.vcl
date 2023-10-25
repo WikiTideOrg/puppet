@@ -147,9 +147,8 @@ sub vcl_synth {
 		set resp.http.Content-Length = "0";
 	}
 
-	if (req.http.host == "meta.wikitide.org" && req.url == "/wiki/WikiTide_Meta" && req.http.User-Agent ~ "(G|g)ooglebot") {
+	if (resp.reason == "Main Page Redirect") {
 		set resp.reason = "Moved Permanently";
-		set resp.status = 301;
 		set resp.http.Location = "https://wikitide.org/";
 		set resp.http.Connection = "keep-alive";
 		set resp.http.Content-Length = "0";
@@ -227,6 +226,10 @@ sub vcl_recv {
 	# Health checks, do not send request any further, if we're up, we can handle it
 	if (req.http.Host == "health.wikiforge.net" && req.url == "/check") {
 		return (synth(200));
+	}
+
+	if (req.http.host == "meta.wikitide.org" && req.url == "/wiki/WikiTide_Meta" && req.http.User-Agent ~ "(G|g)ooglebot") {
+		return (synth(301, "Main Page Redirect"));
 	}
 
 	# Normalise Accept-Encoding for better cache hit ratio
