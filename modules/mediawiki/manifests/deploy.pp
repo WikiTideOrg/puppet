@@ -69,16 +69,29 @@ class mediawiki::deploy {
         require => File['/usr/local/bin/mwdeploy'],
     }
 
-    git::clone { 'MediaWiki config':
-        ensure    => 'latest',
-        directory => '/srv/mediawiki-staging/config',
-        origin    => 'https://github.com/WikiForge/mw-config',
-        branch    => 'master',
-        owner     => 'www-data',
-        group     => 'www-data',
-        mode      => '0755',
-        require   => File['/srv/mediawiki-staging'],
-    }
+    if lookup(mediawiki::is_wikitide) {
+        git::clone { 'MediaWiki config':
+            ensure    => 'latest',
+            directory => '/srv/mediawiki-staging/config',
+            origin    => 'https://github.com/WikiTideOrg/mw-config',
+            branch    => 'master',
+            owner     => 'www-data',
+            group     => 'www-data',
+            mode      => '0755',
+            require   => File['/srv/mediawiki-staging'],
+        }
+    } else {
+        git::clone { 'MediaWiki config':
+            ensure    => 'latest',
+            directory => '/srv/mediawiki-staging/config',
+            origin    => 'https://github.com/WikiForge/mw-config',
+            branch    => 'master',
+            owner     => 'www-data',
+            group     => 'www-data',
+            mode      => '0755',
+            require   => File['/srv/mediawiki-staging'],
+        }
+    }  
 
     git::clone { 'wikiforge-landing':
         ensure    => 'latest',
