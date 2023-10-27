@@ -5,7 +5,7 @@ node 'cloud1.wikitide.net' {
     include role::cloud
 }
 
-node 'bast11.wikitide.net' {
+node 'bast1.wikitide.net' {
     include base
     include role::bastion
 }
@@ -18,70 +18,70 @@ node /^cp[123456]\.wikitide\.net$/ {
     include role::varnish
 }
 
-node 'db11.wikitide.net' {
+node 'db1.wikitide.net' {
     include base
     include role::db
 }
 
-node 'jobchron11.wikitide.net' {
+node 'jobchron1.wikitide.net' {
     include base
     include role::redis
     include mediawiki::jobqueue::chron
 }
 
-node 'graylog11.wikitide.net' {
+node 'graylog1.wikitide.net' {
     include base
     include role::graylog
 }
 
-node 'jobrunner11.wikitide.net' {
+node 'jobrunner1.wikitide.net' {
     include base
     include role::mediawiki
     include role::irc
 }
 
-node 'mail11.wikitide.net' {
+node 'mail1.wikitide.net' {
     include base
     include role::mail
     include role::roundcubemail
 }
 
-node 'ldap11.wikitide.net' {
+node 'ldap1.wikitide.net' {
     include base
     include role::openldap
 }
 
-node 'mem11.wikitide.net' {
+node 'mem1.wikitide.net' {
     include base
     include role::memcached
 }
 
-node 'mon11.wikitide.net' {
+node 'mon1.wikitide.net' {
     include base
     include role::grafana
     include role::icinga2
 }
-node /^mw1[123]\.wikitide\.net$/ {
+node /^mw[12]\.wikitide\.net$/ {
     include base
     include role::mediawiki
 }
 
-node 'ns11.wikitide.net' {
+node 'ns1.wikitide.net' {
     include base
     include role::dns
 }
 
-node 'os11.wikitide.net' {
+node 'os1.wikitide.net' {
     include base
     include role::opensearch
 }
 
-node 'phorge11.wikitide.net' {
+node 'phorge1.wikitide.net' {
     include base
     include role::phorge
 }
 
-node 'prometheus11.wikitide.net' {
+node 'prometheus1.wikitide.net' {
     include base
     include role::prometheus
 }
@@ -95,12 +95,12 @@ node 'puppet1.wikitide.net' {
     include role::ssl
 }
 
-node 'services11.wikitide.net' {
+node 'services1.wikitide.net' {
     include base
     include role::services
 }
 
-node 'test11.wikitide.net' {
+node 'test1.wikitide.net' {
     include base
     include role::mediawiki
     include role::memcached
