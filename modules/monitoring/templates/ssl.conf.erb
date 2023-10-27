@@ -1,18 +1,18 @@
-apply Service "wc.wikiforge.net" {
+apply Service "wc.wikitide.org" {
   import "generic-service"
   check_command = "check_ssl_expire"
-  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
-  vars.host = "wikiforge.net"
+  notes_url = "https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  vars.host = "wikitide.org"
   vars.time = "30"
 
   assign where "sslchecks" in host.groups
 }
 
-apply Service "m.wikiforge.net - LetsEncrypt" {
+apply Service "m.wikitide.org - LetsEncrypt" {
   import "generic-service"
   check_command = "check_ssl_expire"
-  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
-  vars.host = "m.wikiforge.net"
+  notes_url = "https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  vars.host = "m.wikitide.org"
   vars.time = "15"
   assign where "sslchecks" in host.groups
 }
@@ -22,7 +22,7 @@ apply Service "<%= property['url'] %> - <%= property['ca'] %>" {
   import "generic-service"
   check_command = "check_ssl_expire"
   check_interval = 30m
-  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
+  notes_url = "https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
   vars.host = "<%= property['url'] %>"
   vars.time = "<% if property['ca'] == "LetsEncrypt" %>15<% else %>30<% end %>"
   <%- if property['ca'] == "LetsEncrypt" and property['disable_event'] == false -%>
@@ -35,7 +35,7 @@ apply Service "<%= property['url'] %> - pointing to WF/WT" {
   import "generic-service"
   check_command = "check_dns"
   check_interval = 30m
-  notes_url = "https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#Reverse_DNS_Checks"
+  notes_url = "https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#Reverse_DNS_Checks"
   assign where "sslchecks" in host.groups
 }
 <% end -%>

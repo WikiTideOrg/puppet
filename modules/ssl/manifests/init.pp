@@ -83,7 +83,7 @@ class ssl {
     git::clone { 'srv-ssl':
         ensure    => latest,
         directory => '/srv/ssl/ssl',
-        origin    => 'git@github.com:WikiForge/ssl.git',
+        origin    => 'git@github.com:WikiTideOrg/ssl.git',
         ssh       => 'ssh -i /var/lib/nagios/id_ed25519 -F /dev/null',
         require   => [
             File['/var/lib/nagios/id_ed25519'],

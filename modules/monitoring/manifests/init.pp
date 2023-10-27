@@ -3,7 +3,7 @@ class monitoring (
     String $db_name               = 'icinga',
     String $db_user               = 'icinga2',
     String $db_password           = undef,
-    String $wikiforgebots_password = undef,
+    String $wikitidebots_password = undef,
     String $ticket_salt           = '',
     Optional[String] $icinga2_api_bind_host = undef,
 ) {
@@ -66,7 +66,7 @@ class monitoring (
     }
 
     class { '::icinga2::feature::gelf':
-        host => 'logging.wikiforge.work',
+        host => 'logging.wikitide.net',
     }
 
     file { '/etc/icinga2/conf.d/commands.conf':
@@ -201,7 +201,7 @@ class monitoring (
 
     # includes a irc bot to relay messages from icinga to irc
     class { '::monitoring::ircecho':
-        wikiforgebots_password => $wikiforgebots_password,
+        wikitidebots_password => $wikitidebots_password,
     }
 
     file { '/usr/lib/nagios/plugins/check_icinga_config':

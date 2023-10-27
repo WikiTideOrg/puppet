@@ -71,9 +71,9 @@ class postgresql::server(
             group  => 'postgres',
         }
 
-        file { "/etc/postgresql/${pgversion}/main/ssl/wildcard.wikiforge.net.key":
+        file { "/etc/postgresql/${pgversion}/main/ssl/wikitide.net.key":
             ensure  => 'present',
-            source  => 'puppet:///ssl-keys/wildcard.wikiforge.net.key',
+            source  => 'puppet:///ssl-keys/wikitide.net.key',
             owner   => 'postgres',
             group   => 'postgres',
             mode    => '0600',
@@ -87,7 +87,7 @@ class postgresql::server(
             group   => 'root',
             mode    => '0444',
             before  => Service['postgresql'],
-            require => File["/etc/postgresql/${pgversion}/main/ssl/wildcard.wikiforge.net.key"],
+            require => File["/etc/postgresql/${pgversion}/main/ssl/wikitide.net.key"],
         }
     }
 

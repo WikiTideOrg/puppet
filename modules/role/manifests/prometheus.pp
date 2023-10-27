@@ -3,9 +3,9 @@ class role::prometheus {
     include prometheus::exporter::blackbox
 
     $blackbox_web_urls = [
-        'https://support.wikiforge.net',
-        'https://matomo.wikiforge.net',
-        'https://logging.wikiforge.work'
+        'https://issue-tracker.wikitide.org',
+        'https://matomo.wikitide.net',
+        'https://logging.wikitide.net'
     ]
 
     file { '/etc/prometheus/targets/blackbox_web_urls.yaml':

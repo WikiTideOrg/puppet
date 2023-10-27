@@ -4,4 +4,4 @@ php::php_version: '8.2'
 
 mailserver: true
 
-puppetserver_hostname: 'puppet1.wikiforge.net'
+puppetserver_hostname: 'puppet1.wikitide.net'

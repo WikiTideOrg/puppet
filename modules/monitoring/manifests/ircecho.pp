@@ -1,5 +1,5 @@
 class monitoring::ircecho (
-    String $wikiforgebots_password = undef,
+    String $wikitidebots_password = undef,
 ) {
     stdlib::ensure_packages([
         'python3-irc',
@@ -29,7 +29,7 @@ class monitoring::ircecho (
     }
 
     $ircecho_logs = {
-        '/var/log/icinga2/irc.log' => '#wikiforge-sre',
+        '/var/log/icinga2/irc.log' => '#wikitide-sre',
     }
 
     file { '/etc/default/ircecho':
@@ -42,7 +42,7 @@ class monitoring::ircecho (
 
     file { '/etc/default/ircecho_password':
         ensure  => 'present',
-        content => $wikiforgebots_password,
+        content => $wikitidebots_password,
         owner   => 'root',
         group   => 'root',
         mode    => '0640',

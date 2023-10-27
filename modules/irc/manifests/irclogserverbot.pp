@@ -8,7 +8,7 @@ class irc::irclogserverbot(
 ) {
     include ::irc
 
-    $wikiforgebots_password = lookup('passwords::irc::wikiforgebots')
+    $wikitidebots_password = lookup('passwords::irc::wikitidebots')
 
     file { '/usr/local/bin/irclogserverbot.py':
         ensure  => present,

@@ -22,7 +22,7 @@ $wmgLdapPassword = "<%= @ldap_password %>";
 $wgUpgradeKey = '<%= @mediawiki_upgradekey %>';
 $wgSecretKey = $wi->wikifarm === 'wikitide' ?
 	'<%= @mediawiki_wikitide_secretkey %>' :
-	'<%= @mediawiki_wikiforge_secretkey %>';
+	'<%= @mediawiki_wikitide_secretkey %>';
 
 // Noreply authentication
 $wmgSMTPPassword = '<%= @noreply_password %>';

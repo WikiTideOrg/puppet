@@ -15,21 +15,21 @@ class role::opensearch (
         config      => {
             'cluster.initial_master_nodes'                          => $os_master_hosts,
             'discovery.seed_hosts'                                  => $os_discovery,
-            'cluster.name'                                          => 'wikiforge-general',
+            'cluster.name'                                          => 'wikitide-general',
             'node.master'                                           => $os_master,
             'node.data'                                             => $os_data,
             'network.host'                                          => $facts['networking']['fqdn'],
             'plugins.security.ssl.http.enabled'                     => true,
-            'plugins.security.ssl.http.pemkey_filepath'             => '/etc/opensearch/ssl/wildcard.wikiforge.net.key',
-            'plugins.security.ssl.http.pemcert_filepath'            => '/etc/opensearch/ssl/wildcard.wikiforge.net.crt',
+            'plugins.security.ssl.http.pemkey_filepath'             => '/etc/opensearch/ssl/wikitide.net.key',
+            'plugins.security.ssl.http.pemcert_filepath'            => '/etc/opensearch/ssl/wikitide.net.crt',
             'plugins.security.ssl.http.pemtrustedcas_filepath'      => '/etc/opensearch/ssl/ISRG_Root_X1.pem',
-            'plugins.security.ssl.transport.pemkey_filepath'        => '/etc/opensearch/ssl/wildcard.wikiforge.net.key',
-            'plugins.security.ssl.transport.pemcert_filepath'       => '/etc/opensearch/ssl/wildcard.wikiforge.net.crt',
+            'plugins.security.ssl.transport.pemkey_filepath'        => '/etc/opensearch/ssl/wikitide.net.key',
+            'plugins.security.ssl.transport.pemcert_filepath'       => '/etc/opensearch/ssl/wikitide.net.crt',
             'plugins.security.ssl.transport.pemtrustedcas_filepath' => '/etc/opensearch/ssl/ISRG_Root_X1.pem',
             'plugins.security.ssl_cert_reload_enabled'              => true,
             # TODO: Admin must use its own certificate.
-            'plugins.security.authcz.admin_dn'                      => ['CN=ADMIN_WIKIFORGE,O=WikiForge LLC,L=Washington,ST=DC,C=US'],
-            'plugins.security.nodes_dn'                             => ['CN=*.wikiforge.net'],
+            'plugins.security.authcz.admin_dn'                      => ['CN=ADMIN_WIKITIDE,O=WikiTide Corp.,L=Washington,ST=DC,C=US'],
+            'plugins.security.nodes_dn'                             => ['CN=*.wikitide.net'],
             'plugins.security.restapi.roles_enabled'                => ['all_access', 'security_rest_api_access'],
         },
         version     => '2.10.0',
@@ -113,7 +113,7 @@ class role::opensearch (
         # For nginx
         ssl::wildcard { 'opensearch wildcard': }
 
-        nginx::site { 'opensearch.wikiforge.net':
+        nginx::site { 'opensearch.wikitided.net':
             ensure => present,
             source => 'puppet:///modules/role/opensearch/nginx.conf',
         }

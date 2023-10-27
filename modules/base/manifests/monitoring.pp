@@ -53,7 +53,7 @@ class base::monitoring {
 
     monitoring::nrpe { 'Disk Space':
         command  => '/usr/lib/nagios/plugins/check_disk -w 10% -c 5% -p /',
-        docs     => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#Disk_Space',
+        docs     => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#Disk_Space',
         critical => true
     }
 
@@ -61,27 +61,27 @@ class base::monitoring {
     $load_warning = $facts['processors']['count'] * 1.7
     monitoring::nrpe { 'Current Load':
         command => "/usr/lib/nagios/plugins/check_load -w ${load_warning} -c ${load_critical}",
-        docs    => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#Current_Load'
+        docs    => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#Current_Load'
     }
 
     monitoring::nrpe { 'Puppet':
         command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_puppet_run -w 3600 -c 43200',
-        docs    => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#Puppet'
+        docs    => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#Puppet'
     }
 
 #    monitoring::services { 'SSH':
 #        check_command => 'ssh',
-#        docs          => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#SSH'
+#        docs          => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#SSH'
 #    }
 
     monitoring::nrpe { 'APT':
         command => '/usr/lib/nagios/plugins/check_apt -o -t 60',
-        docs    => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#APT'
+        docs    => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#APT'
     }
 
     monitoring::nrpe { 'NTP time':
         command => '/usr/lib/nagios/plugins/check_ntp_time -H time.cloudflare.com -w 0.1 -c 0.5',
-        docs    => 'https://tech.wikiforge.net/wiki/Tech:Icinga/Base_Monitoring#NTP'
+        docs    => 'https://meta.wikitide.org/wiki/Tech:Icinga/Base_Monitoring#NTP'
     }
 
     # Collect all NRPE command files

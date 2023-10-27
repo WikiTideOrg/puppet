@@ -59,17 +59,6 @@ class mediawiki::jobqueue::runner (
             monthday => [ '14', '28' ],
         }
 
-        cron { 'generate sitemaps for all WikiForge wikis':
-            ensure  => present,
-            command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json ${runner}/srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/generateWikiForgeSitemap.php",
-            user    => 'www-data',
-            minute  => '0',
-            hour    => '0',
-            month   => '*',
-            weekday => [ '4' ],
-        }
-
-
         cron { 'generate sitemaps for all WikiTide wikis':
             ensure  => present,
             command => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json ${runner}/srv/mediawiki/${version}/extensions/WikiTideMagic/maintenance/generateWikiTideSitemap.php",
@@ -91,16 +80,6 @@ class mediawiki::jobqueue::runner (
                     require  => Package['python3-pip'],
                 },
             )
-
-            cron { 'generate wikiforge sitemap index':
-                ensure  => present,
-                command => "/usr/bin/python3 /srv/mediawiki/${version}/extensions/WikiForgeMagic/py/generateSitemapIndex.py -B static.wikiforge.net -K ${aws_s3_access_key} -S ${aws_s3_access_secret_key} >> /var/log/mediawiki/cron/generate-wikiforge-sitemap-index.log",
-                user    => 'www-data',
-                minute  => '0',
-                hour    => '0',
-                month   => '*',
-                weekday => [ '7' ],
-            }
 
             cron { 'generate wikitide sitemap index':
                 ensure  => present,
@@ -133,7 +112,6 @@ class mediawiki::jobqueue::runner (
                 monthday => ['27'],
                 month    => ['3', '6', '9', '12'],
             }
-        }
 
         cron { 'update_statistics':
             ensure   => present,
@@ -142,15 +120,6 @@ class mediawiki::jobqueue::runner (
             minute   => '0',
             hour     => '5',
             monthday => [ '1', '15' ],
-        }
-
-        cron { 'update_sites_wikiforge':
-            ensure   => present,
-            command  => "/usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikiforge.json ${runner}/srv/mediawiki/${version}/extensions/WikiForgeMagic/maintenance/populateWikibaseSitesTable.php > /dev/null",
-            user     => 'www-data',
-            minute   => '0',
-            hour     => '5',
-            monthday => [ '5', '20' ],
         }
 
         cron { 'update_sites_wikitide':

@@ -8,7 +8,7 @@
 #
 # [*puppet_major_version*] Specify the puppetserver version you want to support / install.
 #
-# [*puppetserver_hostname*] Hostname of the puppetserver, eg puppet1.wikiforge.net.
+# [*puppetserver_hostname*] Hostname of the puppetserver, eg puppet1.wikitide.net.
 #
 # [*puppetserver_java_opts*] Options to pass to the puppetserver, eg configuring the heap.
 #
@@ -68,7 +68,7 @@ class puppetserver(
     git::clone { 'puppet':
         ensure    => latest,
         directory => '/etc/puppetlabs/puppet/git',
-        origin    => 'https://github.com/WikiForge/puppet',
+        origin    => 'https://github.com/WikiTideOrg/puppet',
         require   => Package['puppet-agent'],
     }
 
@@ -82,7 +82,7 @@ class puppetserver(
     git::clone { 'ssl':
         ensure    => latest,
         directory => '/etc/puppetlabs/puppet/ssl-cert',
-        origin    => 'https://github.com/WikiForge/ssl',
+        origin    => 'https://github.com/WikiTideOrg/ssl',
         owner     => 'puppet',
         group     => 'puppet',
         require   => Package['puppet-agent'],

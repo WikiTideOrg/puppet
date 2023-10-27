@@ -69,45 +69,21 @@ class mediawiki::deploy {
         require => File['/usr/local/bin/mwdeploy'],
     }
 
-    if lookup(mediawiki::is_wikitide) {
-        git::clone { 'MediaWiki config':
-            ensure    => 'latest',
-            directory => '/srv/mediawiki-staging/config',
-            origin    => 'https://github.com/WikiTideOrg/mw-config',
-            branch    => 'master',
-            owner     => 'www-data',
-            group     => 'www-data',
-            mode      => '0755',
-            require   => File['/srv/mediawiki-staging'],
-        }
-    } else {
-        git::clone { 'MediaWiki config':
-            ensure    => 'latest',
-            directory => '/srv/mediawiki-staging/config',
-            origin    => 'https://github.com/WikiForge/mw-config',
-            branch    => 'master',
-            owner     => 'www-data',
-            group     => 'www-data',
-            mode      => '0755',
-            require   => File['/srv/mediawiki-staging'],
-        }
-    }  
-
-    git::clone { 'wikiforge-landing':
+    git::clone { 'MediaWiki config':
         ensure    => 'latest',
-        directory => '/srv/mediawiki-staging/wikiforge-landing',
-        origin    => 'https://github.com/WikiForge/wikiforge-landing',
+        directory => '/srv/mediawiki-staging/config',
+        origin    => 'https://github.com/WikiTideOrg/mw-config',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
         mode      => '0755',
         require   => File['/srv/mediawiki-staging'],
-    }
+        }
 
     git::clone { 'wikitide-landing':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/wikitide-landing',
-        origin    => 'https://github.com/WikiTideInc/wikitide-landing',
+        origin    => 'https://github.com/WikiTideOrg/wikitide-landing',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
@@ -118,7 +94,7 @@ class mediawiki::deploy {
     git::clone { 'ErrorPages':
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/ErrorPages',
-        origin    => 'https://github.com/WikiForge/ErrorPages',
+        origin    => 'https://github.com/WikiTideOrg/ErrorPages',
         branch    => 'master',
         owner     => 'www-data',
         group     => 'www-data',
@@ -132,15 +108,6 @@ class mediawiki::deploy {
         refreshonly => true,
         user        => www-data,
         subscribe   => Git::Clone['MediaWiki config'],
-        require     => File['/usr/local/bin/mwdeploy'],
-    }
-
-    exec { 'WikiForge Landing Sync':
-        command     => "/usr/local/bin/mwdeploy --wikiforge-landing --servers=${lookup(mediawiki::default_sync)} --no-log",
-        cwd         => '/srv/mediawiki-staging',
-        refreshonly => true,
-        user        => www-data,
-        subscribe   => Git::Clone['wikiforge-landing'],
         require     => File['/usr/local/bin/mwdeploy'],
     }
 

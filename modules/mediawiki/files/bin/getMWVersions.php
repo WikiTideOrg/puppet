@@ -3,14 +3,14 @@
 
 error_reporting( 0 );
 
-require_once '/srv/mediawiki/config/initialise/WikiForgeFunctions.php';
+require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
 
 if ( ( $argv[1] ?? false ) === 'all' ) {
-	echo json_encode( WikiForgeFunctions::MEDIAWIKI_VERSIONS );
+	echo json_encode( WikiTideFunctions::MEDIAWIKI_VERSIONS );
 	exit( 0 );
 }
 
-$versions = array_unique( WikiForgeFunctions::MEDIAWIKI_VERSIONS );
+$versions = array_unique( WikiTideFunctions::MEDIAWIKI_VERSIONS );
 asort( $versions );
 
 echo json_encode( array_combine( $versions, $versions ) );

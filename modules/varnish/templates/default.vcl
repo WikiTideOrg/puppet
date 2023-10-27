@@ -1,4 +1,4 @@
-# This is the VCL file for Varnish, adjusted for WikiForge's needs.
+# This is the VCL file for Varnish, adjusted for WikiTide's needs.
 # It was originally written by Southparkfan in 2015, but rewritten in 2022 by John.
 # Some material used is inspired by the Wikimedia Foundation's configuration files.
 # Their material and license is available at https://github.com/wikimedia/puppet
@@ -15,7 +15,7 @@ import vsthrottle;
 # MediaWiki configuration
 probe mwhealth {
 	.request = "GET /check HTTP/1.1"
-		"Host: health.wikiforge.net"
+		"Host: health.wikitide.net"
 		"User-Agent: Varnish healthcheck"
 		"Connection: close";
 	# Check each <%= @interval_check %>
@@ -114,7 +114,7 @@ sub rate_limit {
 	# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
 	# Exempts rate limit for IABot
 	if (
-		((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikiforge.net" && req.http.Host != "wikitide.org") || req.url ~ "^/(w/)?(api|index)\.php")
+		((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikitide.org") || req.url ~ "^/(w/)?(api|index)\.php")
 		&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
 	) {
 		if (req.url ~ "^/(wiki/)?\S+\:MathShowImage\?hash=[0-9a-z]+&mode=mathml") {
@@ -142,7 +142,7 @@ sub vcl_synth {
 	// Homepage redirect to commons
 	if (resp.reason == "Commons Redirect") {
 		set resp.reason = "Moved Permanently";
-		set resp.http.Location = "https://commons.wikiforge.net/";
+		set resp.http.Location = "https://commons.wikitide.org/";
 		set resp.http.Connection = "keep-alive";
 		set resp.http.Content-Length = "0";
 	}
@@ -173,9 +173,9 @@ sub mw_request {
 	
 	# Assigning a backend
 
-	if (req.http.X-WikiForge-Debug-Access-Key == "<%= @debug_access_key %>" || client.ip ~ debug) {
+	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || client.ip ~ debug) {
 <%- @backends.each_pair do | name, property | -%>
-		if (req.http.X-WikiForge-Debug == "<%= name %>.wikiforge.net") {
+		if (req.http.X-WikiTide-Debug == "<%= name %>.wikitide.net") {
 			set req.backend_hint = <%= name %>;
 			return (pass);
 		}
@@ -201,7 +201,7 @@ sub mw_request {
 
 	# We can rewrite those to one domain name to increase cache hits
 	if (req.url ~ "^/(1\.\d{2,})/(skins|resources|extensions)/" ) {
-		set req.http.Host = "hub.wikiforge.net";
+		set req.http.Host = "meta.wikitide.org";
 	}
 
 	# api & rest.php are not safe when cached
@@ -224,7 +224,7 @@ sub vcl_recv {
 	unset req.http.Proxy; # https://httpoxy.org/
 
 	# Health checks, do not send request any further, if we're up, we can handle it
-	if (req.http.Host == "health.wikiforge.net" && req.url == "/check") {
+	if (req.http.Host == "health.wikitide.net" && req.url == "/check") {
 		return (synth(200));
 	}
 
@@ -246,8 +246,8 @@ sub vcl_recv {
 
 	if (
 		req.url ~ "^/\.well-known" ||
-		req.http.Host == "ssl.wikiforge.net" ||
-		req.http.Host == "acme.wikiforge.net"
+		req.http.Host == "ssl.wikitide.net" ||
+		req.http.Host == "acme.wikitide.net"
 	) {
 		set req.backend_hint = puppet11;
 		return (pass);
@@ -267,10 +267,7 @@ sub vcl_recv {
 	if (
 		req.http.Host == "issue-tracker.wikitide.org" ||
 		req.http.Host == "phorge-static.wikitide.org" ||
-		req.http.Host == "support-archive.wikiforge.net" ||
-		req.http.Host == "support.wikiforge.net" ||
-		req.http.Host == "phorge-static.wikiforge.net" ||
-		req.http.Host == "blog.wikiforge.net"
+		req.http.Host == "blog.wikitide.org"
 	) {
 		set req.backend_hint = phorge11;
 		return (pass);
@@ -285,7 +282,7 @@ sub vcl_recv {
 # Defines the uniqueness of a request
 sub vcl_hash {
 	# FIXME: try if we can make this ^/(wiki/)? only?
-	if ((req.http.Host != "wikiforge.net" && req.http.Host != "wikitide.org" && req.url ~ "^/(wiki/)?") || req.url ~ "^/w/load.php") {
+	if ((req.http.Host != req.http.Host != "wikitide.org" && req.url ~ "^/(wiki/)?") || req.url ~ "^/w/load.php") {
 		hash_data(req.http.X-Subdomain);
 	}
 }
@@ -403,7 +400,7 @@ sub vcl_backend_response {
 
 	# Cache non-modified robots.txt for 12 hours, otherwise 5 minutes
 	if (bereq.url == "/robots.txt") {
-		if (beresp.http.X-WikiForge-Robots == "Custom") {
+		if (beresp.http.X-WikiTide-Robots == "Custom") {
 			set beresp.ttl = 300s;
 		} else {
 			set beresp.ttl = 43200s;

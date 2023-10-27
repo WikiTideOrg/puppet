@@ -1,7 +1,7 @@
 # RESTBase config for large or small wiki installs
 #
 # - sqlite backend
-# - wiki at https://<wiki>.wikiforge.net/w/api.php or https://<custom_wiki>/w/api.php
+# - wiki at https://<wiki>.wikitide.net/w/api.php or https://<custom_wiki>/w/api.php
 #
 
 num_workers: 1
@@ -14,7 +14,7 @@ default_project: &default_project
         paths:
           /{api:v1}:
             x-modules:
-              - path: /etc/mediawiki/restbase/wikiforge_project_v1.yaml
+              - path: /etc/mediawiki/restbase/wikitide_project_v1.yaml
                 options: &default_options
                   action:
                     apiUriTemplate: "{{'https://{domain}/w/api.php'}}"
@@ -35,7 +35,7 @@ default_project: &default_project
                   block_external_reqs: true
           /{api:sys}: &default_sys
             x-modules:
-              - path: /etc/mediawiki/restbase/wikiforge_project_sys.yaml
+              - path: /etc/mediawiki/restbase/wikitide_project_sys.yaml
                 options: *default_options
               - path: projects/proxy.yaml
                 options:
@@ -86,7 +86,7 @@ spec_root: &spec_root
   paths:
 <%- @wikis.each_pair do |wiki, value| -%>
 <%- if value == true -%>
-    /{domain:<%= wiki %>.wikiforge.net}: *default_project
+    /{domain:<%= wiki %>.wikitide.org}: *default_project
 <%- else -%>
     /{domain:<%= value %>}: *default_project
 <%- end -%>

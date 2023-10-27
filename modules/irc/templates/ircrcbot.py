@@ -11,7 +11,7 @@ recver = None
 
 class RCBot(irc.IRCClient):
     nickname = "<%= @nickname %>"
-    password = "<%= @wikiforgebots_password %>"
+    password = "<%= @wikitidebots_password %>"
     channel = "<%= @channel %>"
     lineRate = 1
 

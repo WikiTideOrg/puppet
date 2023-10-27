@@ -1,15 +1,15 @@
 # servers
 
-node 'cloud1.wikiforge.net' {
+node 'cloud1.wikitide.net' {
     include base
     include role::cloud
 }
 
-node 'bast11.wikiforge.net' {
+node 'bast11.wikitide.net' {
     include base
     include role::bastion
 }
-node 'bots1.wikiforge.net' {
+node 'bots1.wikitide.net' {
     include base
 }
 
@@ -18,75 +18,75 @@ node /^cp[123456]\.wikitide\.net$/ {
     include role::varnish
 }
 
-node 'db11.wikiforge.net' {
+node 'db11.wikitide.net' {
     include base
     include role::db
 }
 
-node 'jobchron11.wikiforge.net' {
+node 'jobchron11.wikitide.net' {
     include base
     include role::redis
     include mediawiki::jobqueue::chron
 }
 
-node 'graylog11.wikiforge.net' {
+node 'graylog11.wikitide.net' {
     include base
     include role::graylog
 }
 
-node 'jobrunner11.wikiforge.net' {
+node 'jobrunner11.wikitide.net' {
     include base
     include role::mediawiki
     include role::irc
 }
 
-node 'mail11.wikiforge.net' {
+node 'mail11.wikitide.net' {
     include base
     include role::mail
     include role::roundcubemail
 }
 
-node 'ldap11.wikiforge.net' {
+node 'ldap11.wikitide.net' {
     include base
     include role::openldap
 }
 
-node 'mem11.wikiforge.net' {
+node 'mem11.wikitide.net' {
     include base
     include role::memcached
 }
 
-node 'mon11.wikiforge.net' {
+node 'mon11.wikitide.net' {
     include base
     include role::grafana
     include role::icinga2
 }
-node /^mw1[123]\.wikiforge\.net$/ {
+node /^mw1[123]\.wikitide\.net$/ {
     include base
     include role::mediawiki
 }
 
-node 'ns11.wikiforge.net' {
+node 'ns11.wikitide.net' {
     include base
     include role::dns
 }
 
-node 'os11.wikiforge.net' {
+node 'os11.wikitide.net' {
     include base
     include role::opensearch
 }
 
-node 'phorge11.wikiforge.net' {
+node 'phorge11.wikitide.net' {
     include base
     include role::phorge
 }
 
-node 'prometheus11.wikiforge.net' {
+node 'prometheus11.wikitide.net' {
     include base
     include role::prometheus
 }
 
-node 'puppet1.wikiforge.net' {
+node 'puppet1.wikitide.net' {
     include base
     include role::postgresql
     include puppetdb::database
@@ -95,12 +95,12 @@ node 'puppet1.wikiforge.net' {
     include role::ssl
 }
 
-node 'services11.wikiforge.net' {
+node 'services11.wikitide.net' {
     include base
     include role::services
 }
 
-node 'test11.wikiforge.net' {
+node 'test11.wikitide.net' {
     include base
     include role::mediawiki
     include role::memcached

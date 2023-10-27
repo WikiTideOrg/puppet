@@ -1,2 +1,2 @@
-puppetserver_hostname: 'puppet1.wikiforge.net'
+puppetserver_hostname: 'puppet1.wikitide.net'
 dns: true

@@ -66,16 +66,16 @@ class services::restbase {
         notify  => Service['restbase'],
     }
 
-    file { '/etc/mediawiki/restbase/wikiforge_project_v1.yaml':
+    file { '/etc/mediawiki/restbase/wikitide_project_v1.yaml':
         ensure  => present,
-        source  => 'puppet:///modules/services/restbase/wikiforge_project_v1.yaml',
+        source  => 'puppet:///modules/services/restbase/wikitide_project_v1.yaml',
         require => File['/etc/mediawiki/restbase'],
         notify  => Service['restbase'],
     }
 
-    file { '/etc/mediawiki/restbase/wikiforge_project_sys.yaml':
+    file { '/etc/mediawiki/restbase/wikitide_project_sys.yaml':
         ensure  => present,
-        source  => 'puppet:///modules/services/restbase/wikiforge_project_sys.yaml',
+        source  => 'puppet:///modules/services/restbase/wikitide_project_sys.yaml',
         require => File['/etc/mediawiki/restbase'],
         notify  => Service['restbase'],
     }

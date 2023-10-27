@@ -3,7 +3,7 @@
 
 error_reporting( 0 );
 
-require_once '/srv/mediawiki/config/initialise/WikiForgeFunctions.php';
+require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
 
 if ( count( $argv ) < 2 ) {
 	print "Usage: getMWVersion <dbname> \n";
@@ -12,4 +12,4 @@ if ( count( $argv ) < 2 ) {
 
 define( 'MW_DB', $argv[1] );
 
-echo WikiForgeFunctions::getMediaWikiVersion( $argv[1] ) . "\n";
+echo WikiTideFunctions::getMediaWikiVersion( $argv[1] ) . "\n";

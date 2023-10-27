@@ -13,15 +13,15 @@ class role::openldap (
     class { 'openldap::server':
         ldaps_ifs => ['/'],
         ssl_ca    => '/etc/ssl/certs/ISRG_Root_X1.pem',
-        ssl_cert  => '/etc/ssl/localcerts/wildcard.wikiforge.net.crt',
-        ssl_key   => '/etc/ssl/private/wildcard.wikiforge.net.key',
+        ssl_cert  => '/etc/ssl/localcerts/wikitide.net.crt',
+        ssl_key   => '/etc/ssl/private/wikitide.net.key',
         require   => Ssl::Wildcard['openldap wildcard']
     }
 
-    openldap::server::database { 'dc=wikiforge,dc=net':
+    openldap::server::database { 'dc=wikitide,dc=org':
         ensure    => present,
-        directory => '/var/lib/ldap/wikiforge',
-        rootdn    => 'cn=admin,dc=wikiforge,dc=net',
+        directory => '/var/lib/ldap/wikitide',
+        rootdn    => 'cn=admin,dc=wikitide,dc=org',
         rootpw    => $admin_password,
     }
 
@@ -32,11 +32,11 @@ class role::openldap (
     }
 
     # Allow everybody to try to bind
-    openldap::server::access { '0 on dc=wikiforge,dc=net':
+    openldap::server::access { '0 on dc=wikitide,dc=org':
         what   => 'attrs=userPassword,shadowLastChange',
         access => [
-            'by dn="cn=admin,dc=wikiforge,dc=net" write',
-            'by group.exact="cn=Administrators,ou=groups,dc=wikiforge,dc=net" write',
+            'by dn="cn=admin,dc=wikitide,dc=org" write',
+            'by group.exact="cn=Administrators,ou=groups,dc=wikitide,dc=org" write',
             'by self write',
             'by anonymous auth',
             'by * none',
@@ -44,10 +44,10 @@ class role::openldap (
     }
 
     # Allow admin users to manage things and authed users to read
-    openldap::server::access { '1 on dc=wikiforge,dc=net':
-        what   => 'dn.children="dc=wikiforge,dc=net"',
+    openldap::server::access { '1 on dc=wikitide,dc=org':
+        what   => 'dn.children="dc=wikitide,dc=org"',
         access => [
-            'by group.exact="cn=Administrators,ou=groups,dc=wikiforge,dc=net" write',
+            'by group.exact="cn=Administrators,ou=groups,dc=wikitide,dc=org" write',
             'by users read',
             'by * break',
         ],
@@ -58,8 +58,8 @@ class role::openldap (
         what   => 'dn.subtree="cn=monitor"',
         suffix => 'cn=monitor',
         access => [
-            'by dn="cn=admin,dc=wikiforge,dc=net" write',
-            'by dn="cn=monitor,dc=wikiforge,dc=net" read',
+            'by dn="cn=admin,dc=wikitide,dc=org" write',
+            'by dn="cn=monitor,dc=wikitide,dc=org" read',
             'by self write',
             'by * none',
         ],
@@ -98,7 +98,7 @@ class role::openldap (
         ensure => present,
     }
 
-    openldap::server::overlay { 'memberof on dc=wikiforge,dc=net':
+    openldap::server::overlay { 'memberof on dc=wikitide,dc=org':
         ensure => present,
     }
 
@@ -153,7 +153,7 @@ class role::openldap (
     }
 
     class { 'openldap::client':
-        base       => 'dc=wikiforge,dc=net',
+        base       => 'dc=wikitide,dc=org',
         uri        => ["ldaps://${facts['networking']['fqdn']}"],
         tls_cacert => '/etc/ssl/certs/ISRG_Root_X1.pem',
     }

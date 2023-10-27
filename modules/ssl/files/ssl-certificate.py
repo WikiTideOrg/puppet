@@ -91,7 +91,7 @@ class SslCertificate:
         subprocess.call([
             'bash',
             '-c',
-            f'openssl req -new -sha256 -key /root/ssl/{self.domain}.key -subj \"/C=US/ST=United States/L=United States/O=WikiForge/CN={self.domain}\" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf \"[SAN]\nsubjectAltName=DNS:{self.domain}{secondary_domain}\")) > /root/ssl/{self.domain}.csr',
+            f'openssl req -new -sha256 -key /root/ssl/{self.domain}.key -subj \"/C=US/ST=United States/L=United States/O=WikiTide/CN={self.domain}\" -reqexts SAN -config <(cat /etc/ssl/openssl.cnf <(printf \"[SAN]\nsubjectAltName=DNS:{self.domain}{secondary_domain}\")) > /root/ssl/{self.domain}.csr',
         ])
 
         if not self.quiet:
@@ -139,8 +139,8 @@ class SslCertificate:
                 print('Pushing LetsEncrypt SSL certificate to GitHub')
 
             os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null"')
-            os.system('git -C /srv/ssl/ssl/ config user.name "WikiForgeSSLBot"')
-            os.system('git -C /srv/ssl/ssl/ config user.email "universalomega@wikiforge.net"')
+            os.system('git -C /srv/ssl/ssl/ config user.name "WikiTideSSLBot"')
+            os.system('git -C /srv/ssl/ssl/ config user.email "universalomega@wikitide.org"')
             os.system('git -C /srv/ssl/ssl/ reset --hard origin/master')
             os.system('git -C /srv/ssl/ssl/ pull')
             os.system(f'cp /etc/letsencrypt/live/{self.domain}/fullchain.pem /srv/ssl/ssl/certificates/{self.domain}.crt')
@@ -209,12 +209,12 @@ class SslCertificate:
             print('Pushing LetsEncrypt SSL certificate to GitHub')
 
         domain = self.domain
-        if domain == 'wikiforge.net':
-            domain = 'wildcard.wikiforge.net'
+        if domain == 'wikitide.org':
+            domain = 'wikitide.org'
 
         os.system('git config --global core.sshCommand "ssh -i /var/lib/nagios/id_ed25519 -F /dev/null"')
-        os.system('git -C /srv/ssl/ssl/ config user.name "WikiForgeSSLBot"')
-        os.system('git -C /srv/ssl/ssl/ config user.email "universalomega@wikiforge.net"')
+        os.system('git -C /srv/ssl/ssl/ config user.name "WikiTideSSLBot"')
+        os.system('git -C /srv/ssl/ssl/ config user.email "ssl@wikitide.org"')
         os.system('git -C /srv/ssl/ssl/ reset --hard origin/master')
         os.system('git -C /srv/ssl/ssl/ pull')
         os.system(f'cp /etc/letsencrypt/live/{self.domain}/fullchain.pem /srv/ssl/ssl/certificates/{domain}.crt')

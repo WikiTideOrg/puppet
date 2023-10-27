@@ -4,8 +4,8 @@
 
 define( 'MW_NO_SESSION', 1 );
 
-require_once '/srv/mediawiki/config/initialise/WikiForgeFunctions.php';
-require WikiForgeFunctions::getMediaWiki( 'includes/WebStart.php' );
+require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
+require WikiTideFunctions::getMediaWiki( 'includes/WebStart.php' );
 
 use MediaWiki\MediaWikiServices;
 
@@ -15,7 +15,7 @@ function streamFavicon() {
 
 	$favicon = $wgFavicon;
 	if ( $favicon === '/favicon.ico' ) {
-		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
+		if ( WikiTideFunctions::getWikiFarm() === 'wikitide' ) {
 			$favicon = '/favicons/default-wikitide.ico';
 		} else {
 			$favicon = '/favicons/default-wikiforge.ico';
@@ -36,7 +36,7 @@ function streamFavicon() {
 
 	$status = $client->execute();
 	if ( !$status->isOK() ) {
-		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
+		if ( WikiTideFunctions::getWikiFarm() === 'wikitide' ) {
 			$favicon = '/favicons/default-wikitide.ico';
 		} else {
 			$favicon = '/favicons/default-wikiforge.ico';

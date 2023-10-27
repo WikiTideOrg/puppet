@@ -97,7 +97,7 @@ class memcached(
 
     monitoring::services { 'memcached':
         check_command => 'tcp',
-        docs          => 'https://tech.wikiforge.net/wiki/Tech:Icinga/MediaWiki_Monitoring#Memcached',
+        docs          => 'https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#Memcached',
         vars          => {
             tcp_port    => $port,
         }

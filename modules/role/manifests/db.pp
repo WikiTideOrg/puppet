@@ -27,12 +27,12 @@ class role::db (
         password        => lookup('passwords::db::root'),
     }
 
-    file { '/etc/mysql/wikiforge/mediawiki-grants.sql':
+    file { '/etc/mysql/wikitide/mediawiki-grants.sql':
         ensure  => present,
         content => template('mariadb/grants/mediawiki-grants.sql.erb'),
     }
 
-    file { '/etc/mysql/wikiforge/phorge-grants.sql':
+    file { '/etc/mysql/wikitide/phorge-grants.sql':
         ensure  => present,
         content => template('mariadb/grants/phorge-grants.sql.erb'),
     }
@@ -104,7 +104,7 @@ class role::db (
 
     monitoring::nrpe { 'Backups SQL':
         command  => '/usr/lib/nagios/plugins/check_file_age -w 864000 -c 1209600 -f /var/log/backup-logs/sql-backup.log',
-        docs     => 'https://tech.wikiforge.net/wiki/Backups#General_backup_Schedules',
+        docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
         critical => true
     }
 
@@ -120,7 +120,7 @@ class role::db (
 
         monitoring::nrpe { "Backups SQL ${db}":
             command  => "/usr/lib/nagios/plugins/check_file_age -w 864000 -c 1209600 -f /var/log/backup-logs/sql-${db}-backup-weekly.log",
-            docs     => 'https://tech.wikiforge.net/wiki/Backups#General_backup_Schedules',
+            docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
             critical => true
         }
     }
@@ -137,7 +137,7 @@ class role::db (
 
         monitoring::nrpe { "Backups SQL ${db}":
             command  => "/usr/lib/nagios/plugins/check_file_age -w 1555200 -c 1814400 -f /var/log/backup-logs/sql-${db}-backup-fortnightly.log",
-            docs     => 'https://tech.wikiforge.net/wiki/Backups#General_backup_Schedules',
+            docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
             critical => true
         }
     }
@@ -154,7 +154,7 @@ class role::db (
 
         monitoring::nrpe { "Backups SQL ${db}":
             command  => "/usr/lib/nagios/plugins/check_file_age -w 3024000 -c 3456000 -f /var/log/backup-logs/sql-${db}-backup-monthly.log",
-            docs     => 'https://tech.wikiforge.net/wiki/Backups#General_backup_Schedules',
+            docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
             critical => true
         }
     }

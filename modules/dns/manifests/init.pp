@@ -7,7 +7,7 @@ class dns {
     git::clone { 'dns':
         ensure    => latest,
         directory => '/etc/gdnsd',
-        origin    => 'https://github.com/WikiForge/dns',
+        origin    => 'https://github.com/WikiTideOrg/dns',
         owner     => 'gdnsd',
         group     => 'gdnsd',
         before    => Package['gdnsd'],

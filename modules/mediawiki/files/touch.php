@@ -4,8 +4,8 @@
 
 define( 'MW_NO_SESSION', 1 );
 
-require_once '/srv/mediawiki/config/initialise/WikiForgeFunctions.php';
-require WikiForgeFunctions::getMediaWiki( 'includes/WebStart.php' );
+require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
+require WikiTideFunctions::getMediaWiki( 'includes/WebStart.php' );
 
 use MediaWiki\MediaWikiServices;
 
@@ -15,7 +15,7 @@ function streamAppleTouch() {
 
 	$touch = $wgAppleTouchIcon;
 	if ( $touch === '/apple-touch-icon.png' || $touch === false ) {
-		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
+		if ( WikiTideFunctions::getWikiFarm() === 'wikitide' ) {
 			$touch = '/favicons/apple-touch-icon-default-wikitide.png';
 		} else {
 			$touch = '/favicons/apple-touch-icon-default-wikiforge.png';
@@ -36,7 +36,7 @@ function streamAppleTouch() {
 
 	$status = $client->execute();
 	if ( !$status->isOK() ) {
-		if ( WikiForgeFunctions::getWikiFarm() === 'wikitide' ) {
+		if ( WikiTideFunctions::getWikiFarm() === 'wikitide' ) {
 			$touch = '/favicons/apple-touch-icon-default-wikitide.png';
 		} else {
 			$touch = '/favicons/apple-touch-icon-default-wikiforge.png';

@@ -1,5 +1,5 @@
 class roundcubemail (
-    String $db_host               = 'db11.wikiforge.net',
+    String $db_host               = 'db1.wikitide.net',
     String $db_name               = 'roundcubemail',
     String $db_user_name          = 'roundcubemail',
     String $db_user_password      = undef,
@@ -172,7 +172,7 @@ class roundcubemail (
 
     nginx::site { 'mail':
         ensure => present,
-        source => 'puppet:///modules/roundcubemail/mail.wikiforge.net.conf',
+        source => 'puppet:///modules/roundcubemail/mail.wikitide.net.conf',
     }
 
     nginx::site { 'roundcubemail':
@@ -194,11 +194,11 @@ class roundcubemail (
         require => File['/var/log/roundcubemail'],
     }
 
-    monitoring::services { 'webmail.wikiforge.work HTTPS':
+    monitoring::services { 'webmail.wikitide.net HTTPS':
         check_command => 'check_http',
         vars          => {
             http_ssl   => true,
-            http_vhost => 'webmail.wikiforge.work',
+            http_vhost => 'webmail.wikitide.net',
         },
     }
 }

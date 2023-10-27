@@ -15,7 +15,7 @@ mw_versions = os.popen('getMWVersions').read().strip()
 versions = {'version': 'version'}
 if mw_versions:
     versions = json.loads(mw_versions)
-repos = {**versions, 'config': 'config', 'errorpages': 'ErrorPages', 'wikiforge-landing': 'wikiforge-landing', 'wikitide-landing': 'wikitide-landing'}
+repos = {**versions, 'config': 'config', 'errorpages': 'ErrorPages', 'wikitide-landing': 'wikitide-landing'}
 
 del mw_versions
 
@@ -34,8 +34,8 @@ class EnvironmentList(TypedDict):
 
 
 prod: Environment = {
-    'wikidbname': 'hubwiki',
-    'wikiurl': 'hub.wikiforge.net',
+    'wikidbname': 'metawikitide',
+    'wikiurl': 'meta.wikitide.org',
     'servers': [
         'mw11',
         'mw12',
@@ -45,7 +45,7 @@ prod: Environment = {
 }
 test: Environment = {
     'wikidbname': 'test1wiki',
-    'wikiurl': 'test11.wikiforge.net',
+    'wikiurl': 'test1.wikitide.net',
     'servers': ['test11'],
 }
 ENVIRONMENTS: EnvironmentList = {
@@ -169,14 +169,14 @@ def non_zero_code(ec: list[int], nolog: bool = True, leave: bool = True) -> bool
     return False
 
 
-def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = None, domain: str = 'hub.wikiforge.net', verify: bool = True, force: bool = False, port: int = 443) -> bool:
+def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = None, domain: str = 'meta.wikitide.org', verify: bool = True, force: bool = False, port: int = 443) -> bool:
     if verify is False:
         os.environ['PYTHONWARNINGS'] = 'ignore:Unverified HTTPS request'
     if not Debug and not Host:
         raise Exception('Host or Debug must be specified')
     if Debug:
-        server = f'{Debug}.wikiforge.net'
-        headers = {'X-WikiForge-Debug': server}
+        server = f'{Debug}.wikitide.net'
+        headers = {'X-WikiTide-Debug': server}
         location = f'{domain}@{server}'
     else:
         os.environ['NO_PROXY'] = 'localhost'
@@ -189,7 +189,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
     else:
         proto = 'http://'
     req = requests.get(f'{proto}{domain}:{port}/w/api.php?action=query&meta=siteinfo&formatversion=2&format=json', headers=headers, verify=verify)
-    if req.status_code == 200 and 'wikiforge' in req.text and (Debug is None or Debug in req.headers['X-Served-By']):
+    if req.status_code == 200 and 'wikitide' in req.text and (Debug is None or Debug in req.headers['X-Served-By']):
         up = True
     if not up:
         print(f'Status: {req.status_code}')
@@ -249,7 +249,7 @@ def _construct_rsync_command(time: Union[bool, str], dest: str, recursive: bool 
     if location is None:
         location = dest
     if location == dest and server:  # ignore location if not specified, if given must equal dest.
-        return f'sudo -u {DEPLOYUSER} rsync {params} -e "ssh -i /srv/mediawiki-staging/deploykey" {dest} {DEPLOYUSER}@{server}.wikiforge.net:{dest}'
+        return f'sudo -u {DEPLOYUSER} rsync {params} -e "ssh -i /srv/mediawiki-staging/deploykey" {dest} {DEPLOYUSER}@{server}.wikitide.net:{dest}'
     # a return None here would be dangerous - except and ignore R503 as return after Exception is not reachable
     raise Exception(f'Error constructing command. Either server was missing or {location} != {dest}')
 
@@ -473,7 +473,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                     option = version
                     os.chdir(_get_staging_path(version))
                     exitcodes.append(run_command(f'sudo -u {DEPLOYUSER} composer update --no-dev --quiet'))
-                    rebuild.append(f'sudo -u {DEPLOYUSER} MW_INSTALL_PATH=/srv/mediawiki-staging/{version} php {runner_staging}/srv/mediawiki-staging/{version}/extensions/WikiForgeMagic/maintenance/rebuildVersionCache.php --save-gitinfo --version={version} --wiki={envinfo["wikidbname"]} --conf=/srv/mediawiki-staging/config/LocalSettings.php')
+                    rebuild.append(f'sudo -u {DEPLOYUSER} MW_INSTALL_PATH=/srv/mediawiki-staging/{version} php {runner_staging}/srv/mediawiki-staging/{version}/extensions/WikiTideMagic/maintenance/rebuildVersionCache.php --save-gitinfo --version={version} --wiki={envinfo["wikidbname"]} --conf=/srv/mediawiki-staging/config/LocalSettings.php')
                     rsyncpaths.append(f'/srv/mediawiki/cache/{version}/gitinfo/')
                 rsync.append(_construct_rsync_command(time=args.ignore_time, location=f'{_get_staging_path(option)}*', dest=_get_deployed_path(option)))
         non_zero_code(exitcodes, nolog=args.nolog)
@@ -644,7 +644,6 @@ if __name__ == '__main__':
     parser.add_argument('--upgrade-vendor', dest='upgrade_vendor', action='store_true')
     parser.add_argument('--config', dest='config', action='store_true')
     parser.add_argument('--world', dest='world', action='store_true')
-    parser.add_argument('--wikiforge-landing', dest='wikiforge_landing', action='store_true')
     parser.add_argument('--wikitide-landing', dest='wikitide_landing', action='store_true')
     parser.add_argument('--errorpages', dest='errorpages', action='store_true')
     parser.add_argument('--l10n', '--i18n', dest='l10n', action='store_true')

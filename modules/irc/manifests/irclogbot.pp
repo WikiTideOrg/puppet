@@ -13,12 +13,12 @@ class irc::irclogbot {
         require   => File['/etc/irclogbot'],
     }
 
-    $wikiforgebots_password = lookup('passwords::irc::wikiforgebots')
-    $wikiforgelogbot_password = lookup('passwords::mediawiki::wikiforgelogbot')
-    $wikiforgelogbot_consumer_token = lookup('passwords::mediawiki::wikiforgelogbot_consumer_token')
-    $wikiforgelogbot_consumer_secret = lookup('passwords::mediawiki::wikiforgelogbot_consumer_secret')
-    $wikiforgelogbot_access_token = lookup('passwords::mediawiki::wikiforgelogbot_access_token')
-    $wikiforgelogbot_access_secret = lookup('passwords::mediawiki::wikiforgelogbot_access_secret')
+    $wikitidebots_password = lookup('passwords::irc::wikitidebots')
+    $wikitidelogbot_password = lookup('passwords::mediawiki::wikitidelogbot')
+    $wikitidelogbot_consumer_token = lookup('passwords::mediawiki::wikitidelogbot_consumer_token')
+    $wikitidelogbot_consumer_secret = lookup('passwords::mediawiki::wikitidelogbot_consumer_secret')
+    $wikitidelogbot_access_token = lookup('passwords::mediawiki::wikitidelogbot_access_token')
+    $wikitidelogbot_access_secret = lookup('passwords::mediawiki::wikitidelogbot_access_secret')
 
     file { '/etc/irclogbot/adminlog.py':
         ensure => present,

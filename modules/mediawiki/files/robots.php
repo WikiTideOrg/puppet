@@ -2,8 +2,8 @@
 
 define( 'MW_NO_SESSION', 1 );
 
-require_once '/srv/mediawiki/config/initialise/WikiForgeFunctions.php';
-require WikiForgeFunctions::getMediaWiki( 'includes/WebStart.php' );
+require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
+require WikiTideFunctions::getMediaWiki( 'includes/WebStart.php' );
 
 use MediaWiki\MediaWikiServices;
 
@@ -13,7 +13,7 @@ $titleFactory = MediaWikiServices::getInstance()->getTitleFactory();
 $page = $wikiPageFactory->newFromTitle( $titleFactory->newFromText( 'Robots.txt', NS_MEDIAWIKI ) );
 
 header( 'Content-Type: text/plain; charset=utf-8' );
-header( 'X-WikiForge-Robots: Default' );
+header( 'X-WikiTide-Robots: Default' );
 
 $articlePath = str_replace( '$1', '', $wgArticlePath );
 
@@ -101,7 +101,7 @@ echo "# Dynamic sitemap url" . "\r\n";
 echo "Sitemap: {$wgServer}/sitemap.xml" . "\r\n\n";
 
 if ( $page->exists() ) {
-	header( 'X-WikiForge-Robots: Custom' );
+	header( 'X-WikiTide-Robots: Custom' );
 
 	echo "# -- BEGIN CUSTOM -- #\r\n\n";
 

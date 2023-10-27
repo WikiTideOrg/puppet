@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
   version: 1.0.0
-  title: WikiForge REST API
+  title: WikiTide REST API
   description: >
       This API provides cacheable and straightforward access to
-      WikiForge content and data, in machine-readable formats.
+      WikiTide content and data, in machine-readable formats.
 
       ### Global Rules
 
@@ -14,14 +14,14 @@ info:
         allows us to contact you quickly. Email addresses or URLs
         of contact pages work well.
 
-      By using this API, you agree to WikiForge's
-      [Terms of Service](https://hub.wikiforge.net/wiki/Terms_of_Service) and
-      [Privacy Policy](https://hub.wikiforge.net/wiki/Privacy_Policy).
+      By using this API, you agree to WikiTide's
+      [Terms of Service](https://meta.wikitide.org/wiki/Terms_of_Service) and
+      [Privacy Policy](https://meta.wikitide.org/wiki/Privacy_Policy).
 
-  termsOfService: https://hub.wikiforge.net/wiki/Terms_of_Service
+  termsOfService: https://meta.wikitide.org/wiki/Terms_of_Service
   contact:
-    name: the WikiForge Staff team
-    url: https://hub.wikiforge.net
+    name: the WikiTide Staff team
+    url: https://meta.wikitide.org
   license:
     name: Apache2
     url: http://www.apache.org/licenses/LICENSE-2.0

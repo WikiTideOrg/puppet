@@ -58,7 +58,7 @@ services:
       #   - user-agent
       #   - x-request-id
       # the user agent to use when issuing requests
-      user_agent: WikiForge Proton Renderer
+      user_agent: WikiTide Proton Renderer
       mw_req:
         method: get
         uri: https://{{extdomain}}/w/index.php

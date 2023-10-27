@@ -4,18 +4,18 @@ class role::irc {
 #    include irc::relaybot
 
     class { 'irc::ircrcbot':
-        nickname     => 'WikiForgeRC',
+        nickname     => 'WikiTideRC',
         network      => 'irc.libera.chat',
         network_port => '6697',
-        channel      => '#wikiforge-feed',
+        channel      => '#wikitide-feed',
         udp_port     => '5070',
     }
 
     class { 'irc::irclogserverbot':
-        nickname     => 'WikiForgeLSBot',
+        nickname     => 'WikiTideLSBot',
         network      => 'irc.libera.chat',
         network_port => '6697',
-        channel      => '#wikiforge-sre',
+        channel      => '#wikitide-sre',
         udp_port     => '5071',
     }
 

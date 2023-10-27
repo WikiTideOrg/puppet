@@ -1,2 +1,2 @@
-elasticsearch_host: 'https://opensearch.wikiforge.net'
-puppetserver_hostname: 'puppet1.wikiforge.net'
+elasticsearch_host: 'https://opensearch.wikitide.net'
+puppetserver_hostname: 'puppet1.wikitide.net'

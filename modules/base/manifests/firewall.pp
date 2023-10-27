@@ -19,7 +19,7 @@ class base::firewall (
     }
 
     if $block_abuse != undef and $block_abuse != [] {
-        ferm::rule { 'drop-abuse-net-wikiforge':
+        ferm::rule { 'drop-abuse-net-wikitide':
             prio => '01',
             rule => "saddr (${$block_abuse.join(' ')}) DROP;",
         }

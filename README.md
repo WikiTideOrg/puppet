@@ -1,4 +1,4 @@
-# WikiForge's Puppet Configuration
+# WikiTide's Puppet Configuration
 
 This repository contains our production Puppet configuration.
 

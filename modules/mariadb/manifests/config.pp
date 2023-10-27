@@ -57,7 +57,7 @@ class mariadb::config(
         }
     }
 
-    file { '/etc/mysql/wikiforge':
+    file { '/etc/mysql/wikitide':
         ensure  => directory,
         owner   => 'mysql',
         group   => 'mysql',
@@ -65,10 +65,10 @@ class mariadb::config(
         require => Package['mariadb-server'],
     }
 
-    file { '/etc/mysql/wikiforge/default-grants.sql':
+    file { '/etc/mysql/wikitide/default-grants.sql':
         ensure  => present,
         content => template('mariadb/grants/default-grants.sql.erb'),
-        require => File['/etc/mysql/wikiforge'],
+        require => File['/etc/mysql/wikitide'],
     }
 
     file { '/root/.my.cnf':
@@ -101,7 +101,7 @@ class mariadb::config(
 
     monitoring::services { 'MariaDB':
         check_command => 'mysql',
-        docs          => 'https://tech.wikiforge.net/wiki/MariaDB',
+        docs          => 'https://meta.wikitide.org/wiki/MariaDB',
         vars          => {
             mysql_hostname => $facts['networking']['fqdn'],
             mysql_username => 'icinga',
@@ -113,7 +113,7 @@ class mariadb::config(
 
     monitoring::services { 'MariaDB Connections':
         check_command => 'mysql_connections',
-        docs          => 'https://tech.wikiforge.net/wiki/MariaDB',
+        docs          => 'https://meta.wikitide.org/wiki/MariaDB',
         vars          => {
             mysql_hostname  => $facts['networking']['fqdn'],
             mysql_username  => 'icinga',

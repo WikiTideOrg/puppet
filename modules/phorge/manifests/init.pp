@@ -4,8 +4,8 @@ class phorge (
 ) {
     ensure_packages(['mariadb-client', 'python3-pygments', 'subversion'])
 
-$wikiforge_s3_access                = lookup('mediawiki::aws_s3_access_key')
-$wikiforge_s3_secret                = lookup('mediawiki::aws_s3_access_secret_key')
+$wikitide_s3_access                = lookup('mediawiki::aws_s3_access_key')
+$wikitide_s3_secret                = lookup('mediawiki::aws_s3_access_secret_key')
 $wikitide_s3_access                = lookup('phorge::aws_s3_access_key_wikitide')
 $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wikitide')
 
@@ -120,16 +120,6 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         source => 'puppet:///modules/phorge/issue-tracker.wikitide.org.conf',
     }
 
-    nginx::site { 'support-archive.wikiforge.net':
-        ensure => present,
-        source => 'puppet:///modules/phorge/support-archive.wikiforge.net.conf',
-    }
-
-    nginx::site { 'support.wikiforge.net':
-        ensure => present,
-        source => 'puppet:///modules/phorge/support.wikiforge.net.conf',
-    }
-
     ssl::wildcard { 'phorge wildcard': }
 
     file { '/srv/phorge':
@@ -180,13 +170,6 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         group  => 'www-data',
     }
 
-    file { '/srv/phorge/repos/wikiforge':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => File['/srv/phorge/repos'],
-    }
-
     file { '/srv/phorge/repos/wikitide':
         ensure  => directory,
         owner   => 'www-data',
@@ -211,10 +194,10 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         # smtp
         'cluster.mailers'      => [
             {
-                'key'          => 'wikiforge-smtp',
+                'key'          => 'wikitide-smtp',
                 'type'         => 'smtp',
                 'options'      => {
-                    'host'     => 'mail.wikiforge.net',
+                    'host'     => 'mail.wikitide.net',
                     'port'     => 587,
                     'user'     => lookup('passwords::mail::noreply_username'),
                     'password' => lookup('passwords::mail::noreply'),
@@ -230,7 +213,6 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         ensure  => present,
         content => to_json_pretty($phorge_settings),
         notify  => [
-            Service['phd-wikiforge'],
             Service['phd-wikitide'],
         ],
         require => Git::Clone['phorge'],
@@ -242,31 +224,13 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         require => Git::Clone['phorge'],
     }
 
-    file { '/srv/phorge/phorge/conf/custom/wikiforge.conf.php':
-        ensure  => present,
-        source  => 'puppet:///modules/phorge/wikiforge.conf.php',
-        notify  => [
-            Service['phd-wikiforge'],
-            Service['phd-wikitide'],
-        ],
-        require => Git::Clone['phorge'],
-    }
-
     file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
         ensure  => present,
         source  => 'puppet:///modules/phorge/wikitide.conf.php',
         notify  => [
-            Service['phd-wikiforge'],
             Service['phd-wikitide'],
         ],
         require => Git::Clone['phorge'],
-    }
-
-    systemd::service { 'phd-wikiforge':
-        ensure  => present,
-        content => systemd_template('phd-wikiforge'),
-        restart => true,
-        require => File['/srv/phorge/phorge/conf/local/local.json'],
     }
 
     systemd::service { 'phd-wikitide':

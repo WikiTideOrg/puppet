@@ -14,7 +14,7 @@ from filelock import FileLock
 from datetime import datetime
 
 if os.path.exists('/var/log/ssl'):
-    logging.basicConfig(filename='/var/log/ssl/wikiforge-renewal.log', format='%(asctime)s - %(message)s', level=logging.INFO, force=True)
+    logging.basicConfig(filename='/var/log/ssl/wikitide-renewal.log', format='%(asctime)s - %(message)s', level=logging.INFO, force=True)
 
 
 def get_ssl_domains(ssl_dir):

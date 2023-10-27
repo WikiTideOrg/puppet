@@ -1,9 +1,9 @@
 class icingaweb2 (
-    String $db_host              = 'db11.wikiforge.net',
+    String $db_host              = 'db1.wikitide.net',
     String $db_name              = 'icingaweb2',
     String $db_user_name         = 'icingaweb2',
     String $db_user_password     = undef,
-    String $ido_db_host          = 'db11.wikiforge.net',
+    String $ido_db_host          = 'db1.wikitide.net',
     String $ido_db_name          = 'icinga',
     String $ido_db_user_name     = 'icinga2',
     String $ido_db_user_password = undef,
@@ -252,11 +252,11 @@ class icingaweb2 (
         source => 'puppet:///modules/icingaweb2/icinga2.conf',
     }
 
-    monitoring::services { 'icinga.wikiforge.net HTTPS':
+    monitoring::services { 'monitoring.wikitide.net HTTPS':
         check_command => 'check_http',
         vars          => {
             http_ssl   => true,
-            http_vhost => 'icinga.wikiforge.net',
+            http_vhost => 'monitoring.wikitide.net',
         },
     }
 }

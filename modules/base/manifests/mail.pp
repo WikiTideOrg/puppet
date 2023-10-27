@@ -1,5 +1,5 @@
 # A class to handle GENERIC server mail internally. This will NOT work outside
-# a WikiForge Mail Server.
+# a WikiTid Mail Server.
 class base::mail {
     package { 'postfix':
         ensure => present,
@@ -24,11 +24,11 @@ class base::mail {
     }
 
     mailalias { 'root':
-        recipient => 'root@wikiforge.net',
+        recipient => 'root@wikitide.org',
     }
 
     file { '/etc/mailname':
         ensure  => present,
-        content => 'wikiforge.net',
+        content => 'wikitide.org',
     }
 }

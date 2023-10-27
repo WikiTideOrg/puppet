@@ -1,6 +1,6 @@
 index index.php index.html;
 
-location ~ ^/(\.git|config|wikiforge-landing|wikitide-landing|cache|stopforumspam|geoip) {
+location ~ ^/(\.git|config|wikitide-landing|cache|stopforumspam|geoip) {
         deny all;
 }
 
@@ -14,7 +14,7 @@ location ~ ^/1\.\d\d/((skins|resources)|extensions/[A-Za-z0-9]+.*)/.*\.(gif|jpe?
 }
 
 location /w/thumb.php {
-	proxy_pass https://thumb-lb.wikiforge.net$request_uri;
+	proxy_pass https://thumb-lb.wikitide.net$request_uri;
         proxy_set_header Host $host;
 }
 

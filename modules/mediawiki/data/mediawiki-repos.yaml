@@ -1312,10 +1312,6 @@ WikiEditor:
   branch: _branch_
   path: extensions/WikiEditor
   repo_url: https://github.com/wikimedia/mediawiki-extensions-WikiEditor
-WikiForgeMagic:
-  branch: master
-  path: extensions/WikiForgeMagic
-  repo_url: https://github.com/WikiForge/WikiForgeMagic
 WikiForum:
   branch: master
   path: extensions/WikiForum

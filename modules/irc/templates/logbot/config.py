@@ -29,19 +29,19 @@ twitter_api_params = {
 }
 
 # Channels to join
-targets = ("#wikiforge-sre", "#wikiforge-sre-security")
+targets = ("#wikitide-sre", "#wikitide-sre-security")
 
 # Name of nickserv user
 nickserv = "nickserv"
 
 # Nick to use when joining
-nick = "WikiForgeLogbot"
+nick = "WikiTideLogbot"
 
 # Username for NickServ Auth
-nick_username = "wikiforgebots"
+nick_username = "wikitidebots"
 
 # Password to identify with
-nick_password = "<%= @wikiforgebots_password %>"
+nick_password = "<%= @wikitidebots_password %>"
 
 # Network to join (ex: irc.libera.chat)
 network = "irc.libera.chat"
@@ -53,8 +53,8 @@ ssl = True
 
 # Map irc nick to real name
 author_map = {
-    "WikiForgeLSBot": "WikiTideLSBot",
-    "WikiForgeLSBot_": "WikiTideLSBot",
+    "WikiTideLSBot": "WikiTideLSBot",
+    "WikiTideLSBot_": "WikiTideLSBot",
     "CosmicAlpha": "Universal Omega"
 }
 
@@ -71,17 +71,17 @@ wiki_path = "/w/"
 wiki_user = "WikiTideLogBot"
 
 # Password of wiki bot user
-wiki_pass = "<%= @wikiforgelogbot_password %>"
+wiki_pass = "<%= @wikitidelogbot_password %>"
 
 # OAUTH
 
-wiki_consumer_token = "<%= @wikiforgelogbot_consumer_token %>"
+wiki_consumer_token = "<%= @wikitidelogbot_consumer_token %>"
 
-wiki_consumer_secret = "<%= @wikiforgelogbot_consumer_secret %>"
+wiki_consumer_secret = "<%= @wikitidelogbot_consumer_secret %>"
 
-wiki_access_token = "<%= @wikiforgelogbot_access_token %>"
+wiki_access_token = "<%= @wikitidelogbot_access_token %>"
 
-wiki_access_secret = "<%= @wikiforgelogbot_access_secret %>"
+wiki_access_secret = "<%= @wikitidelogbot_access_secret %>"
 
 # Whether to use a bot flag or not
 wiki_bot = True

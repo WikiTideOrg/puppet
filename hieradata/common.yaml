@@ -16,14 +16,14 @@ mediawiki::multiversion::versions:
   '1.41':
     branch: 'REL1_41'
 
-puppetserver_hostname: puppet1.wikiforge.net
-role::salt::minions::salt_master: 'puppet1.wikiforge.net'
+puppetserver_hostname: puppet1.wikitide.net
+role::salt::minions::salt_master: 'puppet1.wikitide.net'
 mediawiki::use_staging: false
 mediawiki::is_canary: false
 mediawiki::default_sync: 'all'
 mediawiki::use_shellbox: true
 mediawiki::jobqueue::wiki: 'hubwiki'
-mediawiki::monitoring::host: 'hub.wikiforge.net'
+mediawiki::monitoring::host: 'meta.wikitide.org'
 memcached_servers:
   - 10.0.0.102:11211:1
 
