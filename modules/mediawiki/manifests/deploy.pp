@@ -73,7 +73,7 @@ class mediawiki::deploy {
         ensure    => 'latest',
         directory => '/srv/mediawiki-staging/config',
         origin    => 'https://github.com/WikiTideOrg/mw-config',
-        branch    => 'master',
+        branch    => 'main',
         owner     => 'www-data',
         group     => 'www-data',
         mode      => '0755',
