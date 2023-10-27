@@ -1,7 +1,0 @@
-php::fpm::fpm_workers_multiplier: 2.0
-php::fpm::fpm_min_child: 8
-php::php_version: '8.2'
-
-mailserver: true
-
-puppetserver_hostname: 'puppet1.wikitide.net'
