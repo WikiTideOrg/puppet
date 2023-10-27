@@ -1331,7 +1331,7 @@ WikiTextLoggedInOut:
 WikiTideMagic:
   branch: master
   path: extensions/WikiTideMagic
-  repo_url: https://github.com/WikiTideInc/WikiTideMagic
+  repo_url: https://github.com/WikiTideOrg/WikiTideMagic
 Wikibase:
   branch: _branch_
   path: extensions/Wikibase
