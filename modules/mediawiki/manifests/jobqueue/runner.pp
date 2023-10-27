@@ -69,7 +69,7 @@ class mediawiki::jobqueue::runner (
             weekday => [ '6' ],
         }
 
-        if $wiki == 'hubwiki' {
+        if $wiki == 'metawikitide' {
             $aws_s3_access_key = lookup('mediawiki::aws_s3_access_key')
             $aws_s3_access_secret_key = lookup('mediawiki::aws_s3_access_secret_key')
             ensure_packages(
