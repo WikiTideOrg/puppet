@@ -216,12 +216,6 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         require => Git::Clone['phorge'],
     }
 
-    file { '/srv/phorge/phorge/conf/custom/archive.conf.php':
-        ensure  => present,
-        source  => 'puppet:///modules/phorge/archive.conf.php',
-        require => Git::Clone['phorge'],
-    }
-
     file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
         ensure  => present,
         source  => 'puppet:///modules/phorge/wikitide.conf.php',
