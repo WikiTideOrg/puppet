@@ -32,30 +32,30 @@ varnish::backends:
   mw1:
     port: 8100
     probe: mwhealth
-    pool: false
+    pool: true
     thumb: true
-    ip_address: 2604:4300:a:37::100
+    ip_address: 2604:4300:a:24::101
   mw2:
     port: 8101
     probe: mwhealth
-    pool: false
+    pool: true
     thumb: true
-    ip_address: 2604:4300:a:37::106
+    ip_address: 2604:4300:a:24::102
   test1:
     port: 8180
     probe: false
     thumb: true
-    ip_address: 2604:4300:a:37::108
+    ip_address: 2604:4300:a:24::107
   phorge1:
     port: 8200
     probe: false
     pool: false
-    ip_address: 2604:4300:a:37::107
+    ip_address: 2604:4300:a:24::108
   puppet1:
     port: 8201
     probe: false
     pool: false
-    ip_address: 2604:4300:a:37::105
+    ip_address: 2604:4300:a:24::100
 
 # Logging
 base::syslog::syslog_daemon: syslog
