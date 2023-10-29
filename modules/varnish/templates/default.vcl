@@ -249,17 +249,17 @@ sub vcl_recv {
 		req.http.Host == "ssl.wikitide.net" ||
 		req.http.Host == "acme.wikitide.net"
 	) {
-		set req.backend_hint = puppet11;
+		set req.backend_hint = puppet1;
 		return (pass);
 	}
 
  	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikiforge\.net|wikitide\.org)") {
-		set req.backend_hint = test11;
+		set req.backend_hint = test1;
                 return (pass);
         }
 
 	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-	#	set req.backend_hint = test11;
+	#	set req.backend_hint = test1;
 	#	return (pass);
 	#}
 
@@ -269,7 +269,7 @@ sub vcl_recv {
 		req.http.Host == "phorge-static.wikitide.org" ||
 		req.http.Host == "blog.wikitide.org"
 	) {
-		set req.backend_hint = phorge11;
+		set req.backend_hint = phorge1;
 		return (pass);
 	}
 
