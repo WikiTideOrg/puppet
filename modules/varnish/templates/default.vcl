@@ -15,7 +15,7 @@ import vsthrottle;
 # MediaWiki configuration
 probe mwhealth {
 	.request = "GET /check HTTP/1.1"
-		"Host: health.wikitide.net"
+		"Host: health.wikitide.org"
 		"User-Agent: Varnish healthcheck"
 		"Connection: close";
 	# Check each <%= @interval_check %>
@@ -224,7 +224,7 @@ sub vcl_recv {
 	unset req.http.Proxy; # https://httpoxy.org/
 
 	# Health checks, do not send request any further, if we're up, we can handle it
-	if (req.http.Host == "health.wikitide.net" && req.url == "/check") {
+	if (req.http.Host == "health.wikitide.org" && req.url == "/check") {
 		return (synth(200));
 	}
 
