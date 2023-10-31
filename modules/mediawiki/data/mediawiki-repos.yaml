@@ -197,10 +197,6 @@ CommonsMetadata:
   branch: _branch_
   path: extensions/CommonsMetadata
   repo_url: https://github.com/wikimedia/mediawiki-extensions-CommonsMetadata
-ConfirmAccount:
-  branch: _branch_
-  path: extensions/ConfirmAccount
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-ConfirmAccount
 ConfirmEdit:
   branch: _branch_
   path: extensions/ConfirmEdit
@@ -279,11 +275,6 @@ DiscordNotifications:
   branch: master
   path: extensions/DiscordNotifications
   repo_url: https://github.com/Universal-Omega/DiscordNotifications
-DiscourseSsoConsumer:
-  branch: main
-  path: extensions/DiscourseSsoConsumer
-  repo_url: https://github.com/centertap/DiscourseSsoConsumer
-  removed: true
 DiscussionTools:
   branch: _branch_
   path: extensions/DiscussionTools
@@ -341,10 +332,6 @@ ElectronPdfService:
   branch: _branch_
   path: extensions/ElectronPdfService
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ElectronPdfService
-EmailAuthorization:
-  branch: _branch_
-  path: extensions/EmailAuthorization
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-EmailAuthorization
 EmbedSpotify:
   branch: master
   path: extensions/EmbedSpotify
@@ -365,11 +352,6 @@ ExternalData:
   branch: master
   path: extensions/ExternalData
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ExternalData
-Femiwiki:
-  branch: _branch_
-  path: skins/Femiwiki
-  repo_url: https://github.com/femiwiki/FemiwikiSkin
-  alpha_branch: main
 FileStorageMonitor:
   branch: master
   path: extensions/FileStorageMonitor
@@ -492,10 +474,6 @@ HighlightLinksInCategory:
   branch: master
   path: extensions/HighlightLinksInCategory
   repo_url: https://github.com/labster/HighlightLinksInCategory
-HitCounters:
-  branch: _branch_
-  path: extensions/HitCounters
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-HitCounters
 IPInfo:
   branch: _branch_
   path: extensions/IPInfo
@@ -874,10 +852,6 @@ Pivot:
   branch: master
   path: skins/Pivot
   repo_url: https://github.com/wikimedia/mediawiki-skins-Pivot
-PluggableAuth:
-  branch: _branch_
-  path: extensions/PluggableAuth
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-PluggableAuth
 Poem:
   branch: _branch_
   path: extensions/Poem
@@ -1032,11 +1006,6 @@ SemanticMediaWiki:
   path: extensions/SemanticMediaWiki
   repo_url: https://github.com/SemanticMediaWiki/SemanticMediaWiki
   composer: true
-SemanticScribunto:
-  branch: master
-  path: extensions/SemanticScribunto
-  repo_url: https://github.com/SemanticMediaWiki/SemanticScribunto
-  composer: true
 Share:
   branch: master
   path: extensions/Share
@@ -1053,10 +1022,6 @@ SimpleChanges:
   branch: _branch_
   path: extensions/SimpleChanges
   repo_url: https://github.com/wikimedia/mediawiki-extensions-SimpleChanges
-SimpleSAMLphp:
-  branch: _branch_
-  path: extensions/SimpleSAMLphp
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-SimpleSAMLphp
 SimpleTooltip:
   branch: master
   path: extensions/SimpleTooltip
@@ -1286,11 +1251,6 @@ WMAU:
   branch: master
   path: skins/WMAU
   repo_url: https://github.com/wikimedia/mediawiki-skins-WMAU
-WSOAuth:
-  branch: _branch_
-  path: extensions/WSOAuth
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-WSOAuth
-  composer: true
 WebAuthn:
   branch: _branch_
   path: extensions/WebAuthn
