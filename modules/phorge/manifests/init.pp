@@ -126,13 +126,6 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         group  => 'www-data',
     }
 
-    file { '/srv/phorge/phorge/conf/custom':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => File['/srv/phorge'],
-    }
-
     git::clone { 'arcanist':
         ensure    => present,
         directory => '/srv/phorge/arcanist',
@@ -182,9 +175,18 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
         group  => 'www-data',
     }
 
+    file { '/srv/phorge/phorge/conf/custom':
+        ensure  => directory,
+        owner   => 'www-data',
+        group   => 'www-data',
+        require => File['/srv/phorge'],
+    }
+
     $module_path = get_module_path($module_name)
     $phorge_yaml = loadyaml("${module_path}/data/config.yaml")
     $phorge_private = {
+        'amazon-s3.access-key' => $wikitide_s3_access,
+        'amazon-s3.secret-key' => $wikitide_s3_secret,
         'mysql.pass' => lookup('passwords::db::phorge'),
     }
 
