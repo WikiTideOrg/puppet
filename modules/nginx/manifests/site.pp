@@ -27,6 +27,7 @@
 #
 define nginx::site(
     VMlib::Ensure                $ensure  = 'present',
+    Boolean                      $monitor = true,
     Optional[String]             $content = undef,
     Optional[Stdlib::Filesource] $source  = undef,
 ) {
