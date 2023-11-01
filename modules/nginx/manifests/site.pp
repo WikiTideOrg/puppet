@@ -51,4 +51,22 @@ define nginx::site(
         target => "/etc/nginx/sites-available/${basename}",
         notify => Service['nginx'],
     }
+
+    $monitor_service = $monitor ? {
+        true  => 'present',
+        default => 'absent',
+    }
+
+    if !defined(Monitoring::Services['HTTPS']) {
+        monitoring::services { 'HTTPS':
+            ensure        => $monitor_service,
+            check_command => 'check_curl',
+            vars          => {
+                address6         => $facts['networking']['ip6'],
+                http_vhost       => $facts['networking']['fqdn'],
+                http_ssl         => true,
+                http_ignore_body => true,
+            },
+        }
+    }
 }
