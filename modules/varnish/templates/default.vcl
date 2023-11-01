@@ -656,9 +656,9 @@ sub vcl_backend_error {
 		<div class="container" style="padding: 70px 0; text-align: center;">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
-				<img src="https://static.wikiforge.net/hubwiki/8/88/WikiForge_Logo.svg" width="130" height="130" alt="WikiForge Logo" />
+				<img src="https://static.wikiforge.net/commonswikitide/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
 				<h1>Something went wrong</h1>
-				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikiforge.net/docs/errors/503">Learn more</a>.</p>
+				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikitide.org/docs/errors/503">Learn more</a>.</p>
 				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>
 			</div>
 		</div>
