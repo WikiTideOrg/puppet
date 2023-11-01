@@ -253,7 +253,7 @@ sub vcl_recv {
 		return (pass);
 	}
 
- 	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikiforge\.net|wikitide\.org)") {
+ 	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikitide\.org)") {
 		set req.backend_hint = test1;
                 return (pass);
         }
@@ -262,6 +262,29 @@ sub vcl_recv {
 	#	set req.backend_hint = test1;
 	#	return (pass);
 	#}
+
+	# Only cache js files from Matomo
+	if (req.http.Host == "analytics.wikitide.net") {
+		set req.backend_hint = matomo1;
+
+		# Only cache this!
+		if (req.url ~ "^/piwik.js" || req.url ~ "^/matomo.js") {
+			return (hash);
+		} else {
+			return (pass);
+		}
+	}
+
+	# Do not cache requests from this domain
+	if (req.http.Host == "monitoring.wikitide.net" || req.http.Host == "grafana.wikitide.net") {
+		set req.backend_hint = mon1;
+
+		if (req.http.upgrade ~ "(?i)websocket") {
+			return (pipe);
+		}
+
+		return (pass);
+	}
 
 	# Do not cache requests from this domain
 	if (
