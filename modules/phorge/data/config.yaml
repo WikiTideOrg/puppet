@@ -22,14 +22,6 @@ storage.mysql-engine.max-size: 10000000
 
 metamta.single-reply-handler-prefix: 'phorge'
 
-# Search (OpenSearch)
-cluster.search:
-  type: 'elasticsearch'
-  hosts:
-    host: 'os1.wikitide.net'
-    port: 9200
-    protocol: 'https'
-
 # Auth
 auth.lock-config: true
 auth.require-approval: false
