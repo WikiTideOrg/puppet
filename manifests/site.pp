@@ -51,6 +51,11 @@ node 'ldap1.wikitide.net' {
     include role::openldap
 }
 
+node 'matomo1.wikitide.net' {
+    include base
+    include role::matomo
+}
+
 node 'mem1.wikitide.net' {
     include base
     include role::memcached

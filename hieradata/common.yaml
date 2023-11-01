@@ -59,6 +59,11 @@ varnish::backends:
     probe: false
     pool: false
     ip_address: 2604:4300:a:24::110
+  matomo1:
+    port: 8203
+    probe: false
+    pool: false
+    ip_address: 2604:4300:a:24::119
 
 # Logging
 base::syslog::syslog_daemon: syslog
