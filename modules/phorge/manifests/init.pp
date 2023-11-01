@@ -202,6 +202,7 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
                     'user'     => lookup('passwords::mail::noreply_username'),
                     'password' => lookup('passwords::mail::noreply'),
                     'protocol' => 'tls',
+                    'message-id' => true,
                 },
             },
         ],

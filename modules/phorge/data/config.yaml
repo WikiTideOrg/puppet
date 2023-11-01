@@ -22,9 +22,17 @@ storage.mysql-engine.max-size: 10000000
 
 metamta.single-reply-handler-prefix: 'phorge'
 
+# Search (OpenSearch)
+cluster.search:
+  type: 'elasticsearch'
+  hosts:
+    host: 'os1.wikitide.net'
+    port: 9200
+    protocol: 'https'
+
 # Auth
 auth.lock-config: true
-auth.require-approval: true
+auth.require-approval: false
 auth.require-email-verification: true
 
 # Phabricator
@@ -75,6 +83,11 @@ maniphest.statuses:
     transaction.icon: 'fa-check-circle'
     prefixes: [closed, closes, close, fix, fixes, fixed, resolve, resolves, resolved]
     suffixes: ['as resolved', 'as fixed']
+  'in-progress':
+    name: 'In progress'
+    name.full: 'Open, In progress'
+    transaction.icon: 'fa-forward-step'
+    claim: true
   'invalid':
     name: 'Invalid'
     name.full: 'Closed, Invalid'
@@ -116,7 +129,7 @@ phabricator.uninstalled-applications:
   PhabricatorFactApplication: true # we don't have fact sources to graph
   PhabricatorFundApplication: true # we don't need to fund single projects
   PhabricatorHarbormasterApplication: true # we don't need local CI / we don't have resources
-  PhabricatorLegalpadApplication: true # we are not a law firm
+#  PhabricatorLegalpadApplication: true # we are not a law firm
   PhabricatorMacroApplication: true # we don't need a macro databases
   PhabricatorMultimeterApplication: true # performance sampling we don't have
   PhabricatorNuanceApplication: true # we're not a call center
