@@ -8,6 +8,7 @@ class role::db (
 
     $mediawiki_password = lookup('passwords::db::mediawiki')
     $wikiadmin_password = lookup('passwords::db::wikiadmin')
+    $matomo_password = lookup('passwords::db::matomo')
     $phorge_password = lookup('passwords::db::phorge')
 
     ssl::wildcard { 'db wildcard':
