@@ -11,6 +11,7 @@ script-src:
   - "'unsafe-eval'"
   - '*.wikiforge.net'
   - '*.wikitide.org'
+  - 'analytics.wikitide.net'
   - '*.wikimedia.org'
   - '*.wikipedia.org'
   - '*.wikibooks.org'
