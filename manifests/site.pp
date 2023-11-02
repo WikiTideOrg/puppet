@@ -13,9 +13,14 @@ node 'bots1.wikitide.net' {
     include base
 }
 
-node /^cp[123456]\.wikitide\.net$/ {
+node /^cp[12456]\.wikitide\.net$/ {
     include base
     include role::varnish
+}
+
+node 'cp3.wikitide.net' {
+    include base
+    include role::dns
 }
 
 node 'db1.wikitide.net' {
