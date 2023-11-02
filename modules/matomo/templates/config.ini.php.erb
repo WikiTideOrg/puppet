@@ -18,6 +18,9 @@ noreply_email_address = "noreply@wikitide.org"
 enable_load_data_infile = 0
 salt = "<%= @salt %>"
 trusted_hosts[] = "analytics.wikitide.net"
+proxy_client_headers[] = HTTP_X_FORWARDED_FOR
+proxy_host_headers[] = HTTP_X_FORWARDED_HOST
+proxy_ip_read_last_in_list = 0
 
 [mail]
 transport = "smtp"
