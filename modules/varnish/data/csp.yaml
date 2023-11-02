@@ -130,6 +130,7 @@ connect-src:
   - "'self'"
   - '*.wikiforge.net'
   - '*.wikitide.org'
+  - 'analytics.wikitide.net'
   - 'www.wikidata.org'
   - '*.wikipedia.org'
   - 'www.mediawiki.org'
