@@ -34,6 +34,9 @@ $wmgRedisPassword = '<%= @redis_password %>';
 // Shellbox secret key
 $wgShellboxSecretKey = '<%= @shellbox_secretkey %>';
 
+// Matomo token
+$wgMatomoAnalyticsTokenAuth = "<%= @matomotoken %>";
+
 // Miscellaneous
 
 // External Data credentials for cslmodswikitide
