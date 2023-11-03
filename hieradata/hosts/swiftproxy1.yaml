@@ -19,6 +19,6 @@ swift::accounts:
         access:       '.admin'
         account_name: 'AUTH_dispersion'
         auth:         'http://swift-lb.wikitide.net'
-        user:         'swift:dispersion
+        user:         'swift:dispersion'
 
 puppetserver_hostname: 'puppet1.wikitide.net'
