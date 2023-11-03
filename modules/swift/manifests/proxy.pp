@@ -25,7 +25,7 @@ class swift::proxy (
     }
 
     # Supports bullseye
-    file { '/usr/local/lib/python3.9/dist-packages/wikitide/':
+    file { '/usr/local/lib/python3.11/dist-packages/wikitide/':
         owner   => 'root',
         group   => 'root',
         mode    => '0444',
