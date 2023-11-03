@@ -1,0 +1,3 @@
+swift_ac_enable: true
+
+puppetserver_hostname: 'puppet1.wikitide.net'

@@ -110,6 +110,21 @@ node 'services1.wikitide.net' {
     include role::services
 }
 
+node 'swiftac1.wikitide.net' {
+    include base
+    include role::swift
+}
+
+node 'swiftobject1.wikitide.net' {
+    include base
+    include role::swift
+}
+
+node 'swiftproxy1.wikitide.net' {
+    include base
+    include role::swift
+}
+
 node 'test1.wikitide.net' {
     include base
     include role::mediawiki

@@ -1,0 +1,24 @@
+nginx::client_max_body_size: "0"
+nginx::logrotate_number: 2
+
+swift_proxy_enable: true
+swift::proxy::num_workers: 72
+
+swift::accounts:
+    super_admin:
+        access:       '.admin .reseller_admin'
+        account_name: 'AUTH_admin'
+        auth:         'http://swift-lb.wikitide.net'
+        user:         'admin:admin'
+    mw_media:
+        access:       '.admin'
+        account_name: 'AUTH_mw'
+        auth:         'http://swift-lb.wikitide.net'
+        user:         'mw:media'
+    dispersion:
+        access:       '.admin'
+        account_name: 'AUTH_dispersion'
+        auth:         'http://swift-lb.wikitide.net'
+        user:         'swift:dispersion
+
+puppetserver_hostname: 'puppet1.wikitide.net'
