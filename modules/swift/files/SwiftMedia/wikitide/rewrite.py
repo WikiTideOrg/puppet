@@ -22,7 +22,7 @@ class DumbRedirectHandler(urllib.request.HTTPRedirectHandler):
         return None
 
 
-class _MirahezeRewriteContext(WSGIContext):
+class _WikiTideRewriteContext(WSGIContext):
     """
     Rewrite Media Store URLs so that swift knows how to deal with them.
     """
@@ -75,8 +75,8 @@ class _MirahezeRewriteContext(WSGIContext):
                     r'^http://(?P<host>[^/]+)/(?P<proj>[^-/]+)/thumb/(?P<path>.+)',
                     encodedurl)
             if match:
-                proj = match.group('proj').removesuffix("wiki")
-                hostname = '%s.miraheze.org' % (proj)
+                proj = match.group('proj').removesuffix("wikitide")
+                hostname = '%s.wikitide.net' % (proj)
                 # ok, replace the URL with just the part starting with thumb/
                 # take off the first two parts of the path.
                 encodedurl = 'https://%s/w/thumb_handler.php/%s' % (
@@ -188,19 +188,19 @@ class _MirahezeRewriteContext(WSGIContext):
         # (d) global-data-repo-zone.shard (if sharded)
         #
         # Rewrite wiki-global URLs of these forms:
-        # (a) http://static.miraheze.org/<proj>/math/<relpath>
+        # (a) http://static.wikitide.net/<proj>/math/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/math/<relpath>
-        # (b) http://static.miraheze.org/<proj>/<relpath>
+        # (b) http://static.wikitide.net/<proj>/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/<relpath>
-        # (c) http://static.miraheze.org/<proj>/archive/<relpath>
+        # (c) http://static.wikitide.net/<proj>/archive/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/archive/<relpath>
-        # (d) http://static.miraheze.org/<proj>/thumb/<relpath>
+        # (d) http://static.wikitide.net/<proj>/thumb/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/thumb/<relpath>
-        # (e) https://static.miraheze.org/<proj>/temp/<relpath>
+        # (e) https://static.wikitide.net/<proj>/temp/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/temp/<relpath>
-        # (f) https://static.miraheze.org/<proj>/transcoded/<relpath>
+        # (f) https://static.wikitide.net/<proj>/transcoded/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/transcoded/<relpath>
-        # (g) https://static.miraheze.org/<proj>/timeline/<relpath>
+        # (g) https://static.wikitide.net/<proj>/timeline/<relpath>
         #         => http://127.0.0.1:8080/v1/AUTH_<hash>/<container>/<proj>/timeline/<relpath>
 
         zone = ''
@@ -339,9 +339,9 @@ class _MirahezeRewriteContext(WSGIContext):
             # Create a path to our object's name.
             # Make the correct unicode string we want
             if zone:
-                 container = "miraheze-%s-%s-%s" % (proj, repo, zone)
+                 container = "wikitide-%s-%s-%s" % (proj, repo, zone)
             else:
-                 container = "miraheze-%s-%s" % (proj, repo)
+                 container = "wikitide-%s-%s" % (proj, repo)
             newpath = "/v1/%s/%s/%s" % (self.account, container,
                                         urllib.parse.unquote(obj,
                                                              errors='strict'))
@@ -373,7 +373,7 @@ class _MirahezeRewriteContext(WSGIContext):
             return resp(env, start_response)
 
 
-class MirahezeRewrite(object):
+class WikiTideRewrite(object):
 
     def __init__(self, app, conf):
         self.app = app
@@ -390,7 +390,7 @@ class MirahezeRewrite(object):
         if path.startswith('/auth') or path.startswith('/v1/AUTH_'):
             return self.app(env, start_response)
 
-        context = _MirahezeRewriteContext(self, self.conf)
+        context = _WikiTideRewriteContext(self, self.conf)
         return context.handle_request(env, start_response)
 
 
@@ -398,9 +398,9 @@ def filter_factory(global_conf, **local_conf):
     conf = global_conf.copy()
     conf.update(local_conf)
 
-    def mirahezerewrite_filter(app):
-        return MirahezeRewrite(app, conf)
+    def WikiTideRewrite_filter(app):
+        return WikiTideRewrite(app, conf)
 
-    return mirahezerewrite_filter
+    return WikiTideRewrite_filter
 
 # vim: set expandtab tabstop=4 shiftwidth=4 autoindent:

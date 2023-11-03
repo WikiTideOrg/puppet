@@ -60,16 +60,16 @@ class grafana (
 
     ssl::wildcard { 'grafana wildcard': }
 
-    nginx::site { 'grafana.miraheze.org':
+    nginx::site { 'grafana.wikitide.net':
         ensure => present,
         source => 'puppet:///modules/grafana/nginx/grafana.conf',
     }
 
-#    monitoring::services { 'grafana.miraheze.org HTTPS':
+#    monitoring::services { 'grafana.wikitide.net HTTPS':
 #        check_command => 'check_http',
 #        vars          => {
 #            http_ssl   => true,
-#            http_vhost => 'grafana.miraheze.org',
+#            http_vhost => 'grafana.wikitide.net',
 #        },
 #    }
 }

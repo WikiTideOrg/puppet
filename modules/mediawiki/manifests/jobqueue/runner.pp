@@ -144,6 +144,6 @@ class mediawiki::jobqueue::runner (
 
     monitoring::nrpe { 'JobRunner Service':
         command => '/usr/lib/nagios/plugins/check_procs -a redisJobRunnerService -c 1:1',
-        docs    => 'https://meta.miraheze.org/wiki/Tech:Icinga/MediaWiki_Monitoring#JobRunner_Service'
+        docs    => 'https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#JobRunner_Service'
     }
 }

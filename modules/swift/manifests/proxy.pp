@@ -25,11 +25,11 @@ class swift::proxy (
     }
 
     # Supports bullseye
-    file { '/usr/local/lib/python3.9/dist-packages/miraheze/':
+    file { '/usr/local/lib/python3.9/dist-packages/wikitide/':
         owner   => 'root',
         group   => 'root',
         mode    => '0444',
-        source  => 'puppet:///modules/swift/SwiftMedia/miraheze/',
+        source  => 'puppet:///modules/swift/SwiftMedia/wikitide/',
         recurse => 'remote',
         notify  => Service['swift-proxy'],
     }
@@ -58,7 +58,7 @@ class swift::proxy (
         check_command => 'check_http',
         vars          => {
             address6         => $facts['ipaddress6'],
-            http_vhost       => 'swift-lb.miraheze.org',
+            http_vhost       => 'swift-lb.wikitide.net',
             http_ignore_body => true,
             # We redirect / in varnish so the 404 is expected in the backend.
             # We don't serve index page.
@@ -70,7 +70,7 @@ class swift::proxy (
         check_command => 'check_http',
         vars          => {
             address6         => $facts['ipaddress6'],
-            http_vhost       => 'swift-lb.miraheze.org',
+            http_vhost       => 'swift-lb.wikitide.net',
             http_ssl         => true,
             http_ignore_body => true,
             # We redirect / in varnish so the 404 is expected in the backend.
@@ -82,7 +82,7 @@ class swift::proxy (
     monitoring::services { 'Swift Proxy':
         check_command => 'tcp',
         vars          => {
-            tcp_address => $::ipaddress6,
+            tcp_address => $facts['networking']['ip6'],
             tcp_port    => '80',
         },
     }
