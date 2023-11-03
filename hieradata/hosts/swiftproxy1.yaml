@@ -21,6 +21,8 @@ swift::accounts:
         auth:         'http://swift-lb.wikitide.net'
         user:         'swift:dispersion'
 
+swift_enable_memcache: true
+
 role::memcached::threads: ~
 role::memcached::version: 'present'
 role::memcached::growth_factor: 1.05
