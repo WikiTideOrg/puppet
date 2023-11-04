@@ -136,12 +136,13 @@ class mediawiki {
     $noreply_password              = lookup('passwords::mail::noreply')
     $noreply_username              = lookup('passwords::mail::noreply_username')
     $mediawiki_upgradekey          = lookup('passwords::mediawiki::upgradekey')
-    $mediawiki_wikitide_secretkey = lookup('passwords::mediawiki::wikitide::secretkey')
+    $mediawiki_wikitide_secretkey  = lookup('passwords::mediawiki::wikitide::secretkey')
     $hcaptcha_secretkey            = lookup('passwords::hcaptcha::secretkey')
     $shellbox_secretkey            = lookup('passwords::shellbox::secretkey')
     $matomotoken                   = lookup('passwords::mediawiki::matomotoken')
     $discord_experimental_webhook  = lookup('mediawiki::discord_experimental_webhook')
     $global_discord_webhook_url    = lookup('mediawiki::global_discord_webhook_url')
+    $swift_password                = lookup('mediawiki::swift_password')
     $aws_s3_access_key             = lookup('mediawiki::aws_s3_access_key')
     $aws_s3_access_secret_key      = lookup('mediawiki::aws_s3_access_secret_key')
     $mediawiki_externaldata_cslmodswikitide             = lookup('mediawiki::externaldata_cslmodswikitide')
@@ -211,6 +212,12 @@ class mediawiki {
         privileges => [
             'ALL = (www-data) NOPASSWD: ALL',
         ],
+    }
+
+    file { '/etc/swift-env.sh':
+        ensure  => 'present',
+        content => template('mediawiki/swift-env.sh.erb'),
+        mode    => '0755',
     }
 
     file { '/etc/s3-env.sh':
