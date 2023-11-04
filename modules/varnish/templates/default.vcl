@@ -111,21 +111,28 @@ sub mobile_detection {
 
 # Rate limiting logic
 sub rate_limit {
-	# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
-	# Exempts rate limit for IABot
-	if (
-		((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikitide.org") || req.url ~ "^/(w/)?(api|index)\.php")
-		&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
-	) {
-		if (req.url ~ "^/(wiki/)?\S+\:MathShowImage\?hash=[0-9a-z]+&mode=mathml") {
-			# The Math extension at Special:MathShowImage may cause lots of requests, which should not fail
-			if (vsthrottle.is_denied("math:" + req.http.X-Real-IP, 120, 10s)) {
-				return (synth(429, "Varnish Rate Limit Exceeded"));
-			}
-		} else {
-			# Fallback
-			if (vsthrottle.is_denied("mwrtl:" + req.http.X-Real-IP, 24, 2s)) {
-				return (synth(429, "Varnish Rate Limit Exceeded"));
+	# Allow higher limits for static.wikitide.net
+	if (req.http.Host == "static.wikitide.net") {
+		if (vsthrottle.is_denied("static:" + req.http.X-Real-IP, 1000, 1s)) {
+			return (synth(429, "Varnish Rate Limit Exceeded"));
+		}
+	} else {
+		# Do not limit /w/load.php, /w/resources, /favicon.ico, etc
+		# Exempts rate limit for IABot
+		if (
+			((req.url ~ "^/(wiki)?" && req.url !~ "^/w/" && req.url !~ "^/(1\.\d{2,})/" && req.http.Host != "wikitide.org") || req.url ~ "^/(w/)?(api|index)\.php")
+			&& (req.http.X-Real-IP != "185.15.56.22" && req.http.User-Agent !~ "^IABot/2")
+		) {
+			if (req.url ~ "^/(wiki/)?\S+\:MathShowImage\?hash=[0-9a-z]+&mode=mathml") {
+				# The Math extension at Special:MathShowImage may cause lots of requests, which should not fail
+				if (vsthrottle.is_denied("math:" + req.http.X-Real-IP, 120, 10s)) {
+					return (synth(429, "Varnish Rate Limit Exceeded"));
+				}
+			} else {
+				# Fallback
+				if (vsthrottle.is_denied("mwrtl:" + req.http.X-Real-IP, 24, 2s)) {
+					return (synth(429, "Varnish Rate Limit Exceeded"));
+				}
 			}
 		}
 	}
@@ -133,25 +140,47 @@ sub rate_limit {
 
 # Artificial error handling/redirects within Varnish
 sub vcl_synth {
-	if (resp.status == 752) {
-		set resp.http.Location = resp.reason;
-		set resp.status = 302;
-		return (deliver);
-	}
+	if (req.method != "PURGE") {
+		set resp.http.X-CDIS = "int";
 
-	// Homepage redirect to commons
-	if (resp.reason == "Commons Redirect") {
-		set resp.reason = "Moved Permanently";
-		set resp.http.Location = "https://commons.wikitide.org/";
-		set resp.http.Connection = "keep-alive";
-		set resp.http.Content-Length = "0";
-	}
+		if (resp.status == 752) {
+			set resp.http.Location = resp.reason;
+			set resp.status = 302;
+			return (deliver);
+		}
 
-	if (resp.reason == "Main Page Redirect") {
-		set resp.reason = "Moved Permanently";
-		set resp.http.Location = "https://wikitide.org/";
-		set resp.http.Connection = "keep-alive";
-		set resp.http.Content-Length = "0";
+		// Homepage redirect to commons
+		if (resp.reason == "Commons Redirect") {
+			set resp.reason = "Moved Permanently";
+			set resp.http.Location = "https://commons.wikitide.org/";
+			set resp.http.Connection = "keep-alive";
+			set resp.http.Content-Length = "0";
+		}
+
+		if (resp.reason == "Main Page Redirect") {
+			set resp.reason = "Moved Permanently";
+			set resp.http.Location = "https://wikitide.org/";
+			set resp.http.Connection = "keep-alive";
+			set resp.http.Content-Length = "0";
+		}
+
+		// Handle CORS preflight requests
+		if (
+			req.http.Host == "static.wikitide.net" &&
+			resp.reason == "CORS Preflight"
+		) {
+			set resp.reason = "OK";
+			set resp.http.Connection = "keep-alive";
+			set resp.http.Content-Length = "0";
+	
+			// allow Range requests, and avoid other CORS errors when debugging with X-WikiTide-Debug
+			set resp.http.Access-Control-Allow-Origin = "*";
+			set resp.http.Access-Control-Allow-Headers = "Range,X-WikiTide-Debug";
+			set resp.http.Access-Control-Allow-Methods = "GET, HEAD, OPTIONS";
+			set resp.http.Access-Control-Max-Age = "86400";
+		} else {
+			call add_upload_cors_headers;
+		}
 	}
 }
 
@@ -189,15 +218,94 @@ sub mw_request {
 		set req.backend_hint = mediawiki.backend();
 	}
 
-	# Don't cache a non-GET or HEAD request
-	if (req.method != "GET" && req.method != "HEAD") {
-		return (pass);
+	# Rewrite hostname to static.miraheze.org for caching
+	if (req.url ~ "^/static/") {
+		set req.http.Host = "static.wikitide.net";
+	}
+
+	# Numerous static.miraheze.org specific code
+	if (req.http.Host == "static.wikitide.net") {
+		unset req.http.X-Range;
+
+		if (req.http.Range) {
+			set req.hash_ignore_busy = true;
+		}
+
+		# We can do this because static.miraheze.org should not be capable of serving such requests anyway
+		# This could also increase cache hit rates as Cookies will be stripped entirely
+		unset req.http.Cookie;
+		unset req.http.Authorization;
+
+		# CORS Prelight
+		if (req.method == "OPTIONS" && req.http.Origin) {
+			return (synth(200, "CORS Preflight"));
+		}
+
+		# From Wikimedia: https://gerrit.wikimedia.org/r/c/operations/puppet/+/120617/7/templates/varnish/upload-frontend.inc.vcl.erb
+		# required for Extension:MultiMediaViewer: T10285
+		if (req.url ~ "(?i)(\?|&)download(=|&|$)") {
+			set req.http.X-Content-Disposition = "attachment";
+		}
+
+		// Strip away all query parameters
+		set req.url = regsub(req.url, "\?.*$", "");
+		
+		// Replace double slashes
+		set req.url = regsuball(req.url, "/{2,}", "/");
+
+		// Thumb fixups
+		if (req.url ~ "(?i)/thumb/") {
+			// Normalize end of thumbnail URL (redundant filename)
+			// Lowercase last part of the URL, to avoid case variations on extension or thumbnail parameters
+			// eg. /metawiki/thumb/0/06/Foo.jpg/120px-FOO.JPG => /metawiki/thumb/0/06/Foo.jpg/120px-foo.jpg
+			set req.url = regsub(req.url, "^(.+/)[^/]+$", "\1") + std.tolower(regsub(req.url, "^.+/([^/]+)$", "\1"));
+
+			// Copy canonical filename from beginning of URL to thumbnail parameters at the end
+			// eg. /metawiki/thumb/0/06/Foo.jpg/120px-bar.jpg => /metawiki/thumb/0/06/Foo.jpg/120px-Foo.jpg.jpg
+			// Skips timestamps for archived files
+			// eg. /metawiki/thumb/archive/0/06/20231023012934!Foo.jpg/120px-bar.jpg => /metawiki/thumb/archive/0/06/20231023012934!Foo.jpg/120px-Foo.jpg.jpg
+			set req.url = regsub(req.url, "/(archive/\w/\w\w/\d{14}(?:%21|!))?([^/]+)/((?:qlow-)?(?:lossy-)?(?:lossless-)?(?:page\d+-)?(?:lang[0-9a-z-]+-)?\d+px-[-]?(?:(?:seek=|seek%3d)\d+-)?)[^/]+\.(\w+)$", "/\1\2/\3\2.\4");
+
+			// Last pass, clean up any redundant extension
+			// .jpg.jpg => .jpg, .JPG.jpg => .JPG
+			// eg. /metawiki/thumb/0/06/Foo.jpg/120px-Foo.jpg.jpg => /metawiki/thumb/0/06/Foo.jpg/120px-Foo.jpg
+			if (req.url ~ "(?i)(.*)(\.\w+)\2$") {
+				set req.url = regsub(req.url, "(?i)(.*)(\.\w+)\2$", "\1\2");
+			}
+		}
+
+		// Fixup borked client Range: headers
+		if (req.http.Range ~ "(?i)bytes:") {
+			set req.http.Range = regsub(req.http.Range, "(?i)bytes:\s*", "bytes=");
+		}
 	}
 
 	# If a user is logged out, do not give them a cached page of them logged in
 	if (req.http.If-Modified-Since && req.http.Cookie ~ "LoggedOut") {
 		unset req.http.If-Modified-Since;
 	}
+
+	# Don't cache a non-GET or HEAD request
+	if (req.method != "GET" && req.method != "HEAD") {
+		return (pass);
+	}
+
+	# Do not cache dumps and also pipe requests.
+	if ( req.http.Host == "static.wikitide.net" && req.url ~ "^/.*wiki/dumps" ) {
+		return (pipe);
+	}
+
+	# Don't cache certain things on static
+	if (
+		req.http.Host == "static.wikitide.net" &&
+		(
+			req.url !~ "^/.*wiki" || # If it isn't a wiki folder, don't cache it
+			req.url ~ "^/(.+)wiki/sitemaps" # Do not cache sitemaps
+		)
+	) {
+		return (pass);
+	}
+
 
 	# We can rewrite those to one domain name to increase cache hits
 	if (req.url ~ "^/(1\.\d{2,})/(skins|resources|extensions)/" ) {
@@ -230,6 +338,10 @@ sub vcl_recv {
 
 	if (req.http.host == "meta.wikitide.org" && req.url == "/wiki/WikiTide_Meta" && req.http.User-Agent ~ "(G|g)ooglebot") {
 		return (synth(301, "Main Page Redirect"));
+	}
+
+	if (req.http.host == "static.wikitide.net" && req.url == "/") {
+		return (synth(301, "Commons Redirect"));
 	}
 
 	# Normalise Accept-Encoding for better cache hit ratio
@@ -335,6 +447,24 @@ sub vcl_backend_fetch {
 		set bereq.http.Range = bereq.http.X-Range;
 		unset bereq.http.X-Range;
 	}
+}
+
+sub mf_admission_policies {
+    // hit-for-pass objects >= 8388608 size. Do cache if Content-Length is missing.
+    if (bereq.http.Host == "static.wikitide.net" && std.integer(beresp.http.Content-Length, 0) >= 262144) {
+        // HFP
+        set beresp.http.X-CDIS = "pass";
+        return(pass(beresp.ttl));
+    }
+
+    // hit-for-pass objects >= 67108864 size. Do cache if Content-Length is missing.
+    if (bereq.http.Host != "static.wikitide.net" && std.integer(beresp.http.Content-Length, 0) >= 67108864) {
+        // HFP
+        set beresp.http.X-CDIS = "pass";
+        return(pass(beresp.ttl));
+    }
+
+    return (deliver);
 }
 
 # Backend response, defines cacheability
