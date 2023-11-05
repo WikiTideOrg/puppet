@@ -398,9 +398,9 @@ def filter_factory(global_conf, **local_conf):
     conf = global_conf.copy()
     conf.update(local_conf)
 
-    def WikiTideRewrite_filter(app):
+    def wikitiderewrite_filter(app):
         return WikiTideRewrite(app, conf)
 
-    return WikiTideRewrite_filter
+    return wikitiderewrite_filter
 
 # vim: set expandtab tabstop=4 shiftwidth=4 autoindent:
