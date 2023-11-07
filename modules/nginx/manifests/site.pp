@@ -27,7 +27,6 @@
 #
 define nginx::site(
     VMlib::Ensure                $ensure  = 'present',
-    Boolean                      $monitor = true,
     Optional[String]             $content = undef,
     Optional[Stdlib::Filesource] $source  = undef,
 ) {
@@ -58,7 +57,7 @@ define nginx::site(
         default => 'absent',
     }
 
-    if !defined(Monitoring::Services['HTTPS']) {
+    #if !defined(Monitoring::Services['HTTPS']) {
         #monitoring::services { 'HTTPS':
         #    ensure        => $monitor_service,
         #    check_command => 'check_curl',
@@ -69,5 +68,5 @@ define nginx::site(
         #        http_ignore_body => true,
         #    },
         # }
-    }
+    # }
 }
