@@ -26,13 +26,6 @@ class ssl {
         require => File['/var/www/.well-known/acme-challenge'],
     }
 
-    file { '/root/ssl':
-        ensure => directory,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0770',
-    }
-
     file { '/root/ssl-certificate':
         ensure => present,
         owner  => 'root',
@@ -90,6 +83,15 @@ class ssl {
             File['/var/lib/nagios/id_ed25519.pub'],
             File['/srv/ssl'],
         ],
+    }
+
+    file { '/root/ssl':
+        ensure  => link,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0770',
+        target  => '/srv/ssl/ssl',
+        require => File['/srv/ssl/ssl'],
     }
 
     # We do not need to run the ssl renewal cron,
