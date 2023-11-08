@@ -59,11 +59,6 @@ varnish::backends:
     probe: false
     pool: false
     ip_address: 2604:4300:a:24::110
-  mon1:
-    port: 8203
-    probe: false
-    pool: false
-    ip_address: 2604:4300:a:24::111
   matomo1:
     port: 8204
     probe: false

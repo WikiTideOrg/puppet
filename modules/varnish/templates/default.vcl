@@ -389,8 +389,6 @@ sub vcl_recv {
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "monitoring.wikitide.net" || req.http.Host == "grafana.wikitide.net") {
-		set req.backend_hint = mon1;
-
 		if (req.http.upgrade ~ "(?i)websocket") {
 			return (pipe);
 		}
