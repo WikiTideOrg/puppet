@@ -71,7 +71,7 @@ def check_records(hostname):
         root_domain = extracted.domain + '.' + root_domain
 
     dns_resolver = resolver.Resolver(configure=False)
-    dns_resolver.nameservers = ['2606:4700:4700::1111']
+    dns_resolver.nameservers = ['1.1.1.1']
 
     try:
         nameserversans = dns_resolver.resolve(root_domain, 'NS')
@@ -86,7 +86,7 @@ def check_records(hostname):
             )
             cname_check_impossible = nameserver.endswith(flatten_manadatory_providers)
 
-        if sorted(list(nameservers)) == sorted(['ns1.wikiforge.net.', 'ns2.wikiforge.net.']):
+        if sorted(list(nameservers)) == sorted(['ns1.wikitide.net.', 'ns2.wikitide.net.']):
             return 'NS'
     except resolver.NoAnswer:
         nameservers = None
@@ -96,7 +96,7 @@ def check_records(hostname):
     except resolver.NoAnswer:
         cname = None
 
-    if cname == 'cf-lb.wikiforge.net.':
+    if cname == 'mw-lb.wikitide.net.':
         return 'CNAME'
     elif cname is None and cname_check_impossible:
         return 'CNAMEFLAT'
@@ -112,7 +112,7 @@ def get_reverse_dnshostname(hostname):
 
     try:
         dns_resolver = resolver.Resolver(configure=False)
-        dns_resolver.nameservers = ['2606:4700:4700::1111']
+        dns_resolver.nameservers = ['1.1.1.1']
 
         resolved_ip_addr = str(dns_resolver.resolve(hostname, 'AAAA')[0])
         ptr_record = reversename.from_address(resolved_ip_addr)
