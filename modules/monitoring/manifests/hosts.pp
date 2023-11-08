@@ -7,7 +7,6 @@ define monitoring::hosts (
         import  => ['generic-host'],
         address => $facts['networking']['hostname'] ? {
             'cloud1'   => $facts['networking']['interfaces']['vmbr1']['ip'],
-            'puppet1'   => $facts['networking']['interfaces']['ens19']['ip'],
             default    => $facts['networking']['ip'],
         },
 #        address6 => $facts['networking']['ip6'],
