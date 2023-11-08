@@ -218,12 +218,12 @@ sub mw_request {
 		set req.backend_hint = mediawiki.backend();
 	}
 
-	# Rewrite hostname to static.miraheze.org for caching
+	# Rewrite hostname to static.wikitide.net for caching
 	if (req.url ~ "^/static/") {
 		set req.http.Host = "static.wikitide.net";
 	}
 
-	# Numerous static.miraheze.org specific code
+	# Numerous static.wikitide.net specific code
 	if (req.http.Host == "static.wikitide.net") {
 		unset req.http.X-Range;
 
@@ -231,7 +231,7 @@ sub mw_request {
 			set req.hash_ignore_busy = true;
 		}
 
-		# We can do this because static.miraheze.org should not be capable of serving such requests anyway
+		# We can do this because static.wikitide.net should not be capable of serving such requests anyway
 		# This could also increase cache hit rates as Cookies will be stripped entirely
 		unset req.http.Cookie;
 		unset req.http.Authorization;

@@ -6,7 +6,6 @@ ConditionFileNotEmpty=/etc/swift/account.ring.gz
 ConditionFileNotEmpty=/etc/swift/container.ring.gz
 Documentation=man:swift-proxy-server(1)
 
-
 [Service]
 ExecStart=/usr/bin/swift-proxy-server /etc/swift/proxy-server.conf
 Restart=on-failure
