@@ -114,7 +114,7 @@ def get_reverse_dnshostname(hostname):
         dns_resolver = resolver.Resolver(configure=False)
         dns_resolver.nameservers = ['1.1.1.1']
 
-        resolved_ip_addr = str(dns_resolver.resolve(hostname, 'AAAA')[0])
+        resolved_ip_addr = str(dns_resolver.resolve(hostname, 'A')[0])
         ptr_record = reversename.from_address(resolved_ip_addr)
         rev_host = str(dns_resolver.resolve(ptr_record, 'PTR')[0]).rstrip('.')
 
