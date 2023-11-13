@@ -32,7 +32,7 @@ class role::opensearch (
             'plugins.security.nodes_dn'                             => ['CN=*.wikitide.net'],
             'plugins.security.restapi.roles_enabled'                => ['all_access', 'security_rest_api_access'],
         },
-        version     => '2.10.0',
+        version     => '2.11.0',
         manage_repo => true,
         jvm_options => [ '-Xms2g', '-Xmx2g' ],
         templates   => {
