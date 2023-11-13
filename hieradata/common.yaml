@@ -66,8 +66,7 @@ varnish::backends:
     ip_address: 2604:4300:a:24::119
 
 # Logging
-base::syslog::syslog_daemon: syslog
-base::syslog::syslog_host: []
+base::syslog::syslog_host: [ 'graylog1.wikitide.net:12210' ]
 
 # Swift
 # TODO: Add support for class based hiera
