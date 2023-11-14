@@ -65,6 +65,7 @@ img-src:
   - "'self'"
   - 'data:'
   - 'static.your.wf'
+  - 'static.wikiforge.net'
   - 'static.wikitide.net'
   - '*.wikitide.org'
   - 'upload.wikimedia.org'
