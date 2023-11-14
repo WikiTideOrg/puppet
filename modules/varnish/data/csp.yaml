@@ -64,7 +64,8 @@ img-src:
   - 'blob:'
   - "'self'"
   - 'data:'
-  - '*.wikiforge.net'
+  - 'static.your.wf'
+  - 'static.wikitide.net'
   - '*.wikitide.org'
   - 'upload.wikimedia.org'
   - 'wikimedia.org'
