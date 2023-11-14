@@ -92,7 +92,7 @@ http {
 	<%- if @use_graylog -%>
 	access_log syslog:server=127.0.0.1:10514 graylog2_json;
 	error_log syslog:server=127.0.0.1:10514 error;
-	<%- end -%
+	<%- end -%>
 
 	access_log /var/log/nginx/access.log wikitide;
 	error_log /var/log/nginx/error.log error;
