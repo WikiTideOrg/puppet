@@ -73,9 +73,9 @@ class puppetserver(
     }
 
     git::clone { 'services':
-        ensure    => latest,
+        ensure    => absent,
         directory => '/etc/puppetlabs/puppet/services',
-        origin    => 'https://github.com/WikiForge/services',
+        origin    => 'https://github.com/WikiTideOrg/services',
         require   => Package['puppet-agent'],
     }
 
@@ -204,6 +204,7 @@ class puppetserver(
     }
 
     cron { 'services-git':
+        ensure  => absent,
         command => '/usr/bin/git -C /etc/puppetlabs/puppet/services pull > /dev/null 2>&1',
         user    => 'root',
         hour    => '*',
@@ -260,6 +261,13 @@ class puppetserver(
         minute  => 0,
     }
 
+    monitoring::services { 'puppetserver':
+        check_command => 'tcp',
+        vars          => {
+            tcp_port    => '8140',
+        },
+    }
+
     # Backups
     cron { 'backups-sslkeys':
         ensure  => present,
@@ -270,6 +278,12 @@ class puppetserver(
         weekday => '0',
     }
 
+    monitoring::nrpe { 'Backups SSLKeys':
+        command  => '/usr/lib/nagios/plugins/check_file_age -w 864000 -c 1209600 -f /var/log/sslkeys-backup.log',
+        docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
+        critical => true
+    }
+
     cron { 'backups-private':
         ensure  => present,
         command => '/usr/local/bin/wikiforge-backup backup private > /var/log/private-backup.log',
@@ -277,5 +291,11 @@ class puppetserver(
         minute  => '0',
         hour    => '3',
         weekday => '0',
+    }
+
+    monitoring::nrpe { 'Backups Private':
+        command  => '/usr/lib/nagios/plugins/check_file_age -w 864000 -c 1209600 -f /var/log/private-backup.log',
+        docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
+        critical => true
     }
 }
