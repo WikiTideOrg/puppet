@@ -124,7 +124,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
             except KeyboardInterrupt:
                 sys.exit()
             generate_script = {
-                'wikiforge': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=hubwiki --extension={args.extension}',
+                'wikiforge': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiForgeMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawikitide --extension={args.extension}',
                 'wikitide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawikitide --extension={args.extension}',
                 'nexttide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metanexttide --extension={args.extension}',
             }
