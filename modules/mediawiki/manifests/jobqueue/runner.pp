@@ -83,7 +83,7 @@ class mediawiki::jobqueue::runner (
 
             cron { 'generate sitemap index':
                 ensure  => present,
-                command => "/usr/bin/python3 /srv/mediawiki/${version}/extensions/WikiTideMagic/py/generateSitemapIndex.py -B static.wikiforge.net -K ${aws_s3_access_key} -S ${aws_s3_access_secret_key} >> /var/log/mediawiki/cron/generate-wikitide-sitemap-index.log",
+                command => "/usr/bin/python3 /srv/mediawiki/${version}/extensions/WikiTideMagic/py/generateSitemapIndex.py -B static.wikiforge.net -K ${aws_s3_access_key} -S ${aws_s3_access_secret_key} >> /var/log/mediawiki/cron/generate-sitemap-index.log",
                 user    => 'www-data',
                 minute  => '0',
                 hour    => '0',
