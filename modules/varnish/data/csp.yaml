@@ -3,6 +3,7 @@ default-src:
   - "'self'"
   - '*.wikiforge.net'
   - '*.wikitide.org'
+  - '*.your.wf'
 
 script-src:
   - 'blob:'
