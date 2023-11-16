@@ -3,7 +3,7 @@
 
 error_reporting( 0 );
 
-require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
+require_once '/srv/mediawiki/config/initialize/WikiTideFunctions.php';
 
 if ( ( $argv[1] ?? false ) === 'all' ) {
 	echo json_encode( WikiTideFunctions::MEDIAWIKI_VERSIONS );

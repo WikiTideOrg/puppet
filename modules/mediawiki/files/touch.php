@@ -4,7 +4,7 @@
 
 define( 'MW_NO_SESSION', 1 );
 
-require_once '/srv/mediawiki/config/initialise/WikiTideFunctions.php';
+require_once '/srv/mediawiki/config/initialize/WikiTideFunctions.php';
 require WikiTideFunctions::getMediaWiki( 'includes/WebStart.php' );
 
 use MediaWiki\MediaWikiServices;
