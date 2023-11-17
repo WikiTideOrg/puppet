@@ -192,7 +192,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
         up = True
     if not up:
         print(f'Status: {req.status_code}')
-        print(f'Text: {"wikiforge" in req.text} \n {req.text}')
+        print(f'Text: {"wikitide" in req.text} \n {req.text}')
         if 'X-Served-By' not in req.headers:
             req.headers['X-Served-By'] = 'None'
         print(f'Debug: {(Debug is None or Debug in req.headers["X-Served-By"])}')
