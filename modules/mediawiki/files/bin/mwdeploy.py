@@ -173,23 +173,41 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
         os.environ['PYTHONWARNINGS'] = 'ignore:Unverified HTTPS request'
     if not Debug and not Host:
         raise Exception('Host or Debug must be specified')
+    
+    headers = {}
     if Debug:
         server = f'{Debug}.wikitide.net'
-        headers = {'X-WikiTide-Debug': server}
+        headers['X-WikiTide-Debug'] = server
         location = f'{domain}@{server}'
+
+        debug_access_key = os.getenv('DEBUG_ACCESS_KEY')
+        
+        # Check if DEBUG_ACCESS_KEY is set and add it to headers
+        if debug_access_key:
+            headers['X-WikiTide-Debug-Access-Key'] = debug_access_key
     else:
         os.environ['NO_PROXY'] = 'localhost'
         domain = 'localhost'
-        headers = {'host': f'{Host}'}
+        headers['host'] = f'{Host}'
         location = f'{Host}@{domain}'
+
     up = False
     if port == 443:
         proto = 'https://'
     else:
         proto = 'http://'
+    
     req = requests.get(f'{proto}{domain}:{port}/w/api.php?action=query&meta=siteinfo&formatversion=2&format=json', headers=headers, verify=verify)
+
+    if 'X-WikiTide-Debug-Access-Key' in headers:
+        # Remove the sensitive header before printing
+        headers_without_sensitive = {key: value for key, value in headers.items() if key != 'X-WikiTide-Debug-Access-Key'}
+    else:
+        headers_without_sensitive = headers
+
     if req.status_code == 200 and 'wikitide' in req.text and (Debug is None or Debug in req.headers['X-Served-By']):
         up = True
+
     if not up:
         print(f'Status: {req.status_code}')
         print(f'Text: {"wikitide" in req.text} \n {req.text}')
@@ -206,6 +224,10 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
             else:
                 os.system(message)
             exit(3)
+    
+    # Print headers without sensitive information
+    print(f'Headers: {headers}')
+    
     return up
 
 
