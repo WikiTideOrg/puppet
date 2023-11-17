@@ -15,7 +15,7 @@ mw_versions = os.popen('getMWVersions').read().strip()
 versions = {'version': 'version'}
 if mw_versions:
     versions = json.loads(mw_versions)
-repos = {**versions, 'config': 'config', 'errorpages': 'ErrorPages', 'wikitide-landing': 'wikitide-landing'}
+repos = {**versions, 'config': 'config', 'errorpages': 'ErrorPages', 'landing': 'landing'}
 
 del mw_versions
 
@@ -173,14 +173,22 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
         os.environ['PYTHONWARNINGS'] = 'ignore:Unverified HTTPS request'
     if not Debug and not Host:
         raise Exception('Host or Debug must be specified')
+
+    headers = {}
     if Debug:
         server = f'{Debug}.wikitide.net'
-        headers = {'X-WikiTide-Debug': server}
+        headers['X-WikiTide-Debug'] = server
         location = f'{domain}@{server}'
+
+        debug_access_key = os.getenv('DEBUG_ACCESS_KEY')
+
+        # Check if DEBUG_ACCESS_KEY is set and add it to headers
+        if debug_access_key:
+            headers['X-WikiTide-Debug-Access-Key'] = debug_access_key
     else:
         os.environ['NO_PROXY'] = 'localhost'
         domain = 'localhost'
-        headers = {'host': f'{Host}'}
+        headers['host'] = f'{Host}'
         location = f'{Host}@{domain}'
     up = False
     if port == 443:
@@ -192,7 +200,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
         up = True
     if not up:
         print(f'Status: {req.status_code}')
-        print(f'Text: {"wikiforge" in req.text} \n {req.text}')
+        print(f'Text: {"wikitide" in req.text} \n {req.text}')
         if 'X-Served-By' not in req.headers:
             req.headers['X-Served-By'] = 'None'
         print(f'Debug: {(Debug is None or Debug in req.headers["X-Served-By"])}')
@@ -303,7 +311,7 @@ def run(args: argparse.Namespace, start: float) -> None:  # pragma: no cover
 
 def run_process(args: argparse.Namespace, start: float, version: str = '') -> None:  # pragma: no cover
     envinfo = get_environment_info()
-    options = {'config': args.config and not version, 'world': args.world and version, 'wikitide-landing': args.wikitide_landing and not version, 'errorpages': args.errorpages and not version}
+    options = {'config': args.config and not version, 'world': args.world and version, 'landing': args.landing and not version, 'errorpages': args.errorpages and not version}
     exitcodes = []
     loginfo = {}
     rsyncpaths = []
@@ -643,7 +651,7 @@ if __name__ == '__main__':
     parser.add_argument('--upgrade-vendor', dest='upgrade_vendor', action='store_true')
     parser.add_argument('--config', dest='config', action='store_true')
     parser.add_argument('--world', dest='world', action='store_true')
-    parser.add_argument('--wikitide-landing', dest='wikitide_landing', action='store_true')
+    parser.add_argument('--landing', dest='landing', action='store_true')
     parser.add_argument('--errorpages', dest='errorpages', action='store_true')
     parser.add_argument('--l10n', '--i18n', dest='l10n', action='store_true')
     parser.add_argument('--extension-list', dest='extension_list', action='store_true')
