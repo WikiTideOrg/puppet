@@ -226,6 +226,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
             exit(3)
 
     # Print headers without sensitive information
+    print(f'Headers without sensitive: {headers_without_sensitive}')
     print(f'Headers: {headers}')
 
     return up
