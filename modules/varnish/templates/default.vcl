@@ -202,13 +202,15 @@ sub mw_request {
 	
 	# Assigning a backend
 
-	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || client.ip ~ debug) {
+	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || std.ip(req.http.X-Real-IP, "0.0.0.0") ~ debug) {
 <%- @backends.each_pair do | name, property | -%>
 		if (req.http.X-WikiTide-Debug == "<%= name %>.wikitide.net") {
 			set req.backend_hint = <%= name %>;
 			return (pass);
 		}
 <%- end -%>
+	} else {
+	    unset req.http.X-WikiTide-Debug;
 	}
 
 	# Handling thumb_handler.php requests
