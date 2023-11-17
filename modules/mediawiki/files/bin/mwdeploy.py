@@ -199,12 +199,6 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
 
     req = requests.get(f'{proto}{domain}:{port}/w/api.php?action=query&meta=siteinfo&formatversion=2&format=json', headers=headers, verify=verify)
 
-    if 'X-WikiTide-Debug-Access-Key' in headers:
-        # Remove the sensitive header before printing
-        headers_without_sensitive = {key: value for key, value in headers.items() if key != 'X-WikiTide-Debug-Access-Key'}
-    else:
-        headers_without_sensitive = headers
-
     if req.status_code == 200 and 'wikitide' in req.text and (Debug is None or Debug in req.headers['X-Served-By']):
         up = True
 
@@ -224,8 +218,6 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
             else:
                 os.system(message)
 
-            # Print headers without sensitive information
-            print(f'Headers without sensitive: {headers_without_sensitive}')
             print(f'Headers: {headers}')
             exit(3)
 
