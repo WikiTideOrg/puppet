@@ -57,7 +57,7 @@ sub vcl_init {
 # Debug ACL: those exempt from requiring an access key
 acl debug {
 	# localhost
-	"127.0.0.1";
+#	"127.0.0.1";
 
 <%- @backends.each_pair.with_index do |(name, property), index| -%>
 	# <%= name %>
@@ -205,7 +205,7 @@ sub mw_request {
 	
 	# Assigning a backend
 
-	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || client.ip ~ debug) {
+	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || std.ip(req.http.X-Real-IP, "0.0.0.0") ~ debug) {
 <%- @backends.each_pair do | name, property | -%>
 		if (req.http.X-WikiTide-Debug == "<%= name %>.wikitide.net") {
 			set req.backend_hint = <%= name %>;
