@@ -56,7 +56,7 @@ server {
 	listen [::]:443 ssl http2;
 
 	server_name wikitide.org;
-	root /srv/mediawiki/wikitide-landing;
+	root /srv/mediawiki/landing;
 	index index.php index.html;
 
 	if ($http_user_agent ~* "WordPress") {
