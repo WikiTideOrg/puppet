@@ -190,18 +190,14 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
         domain = 'localhost'
         headers['host'] = f'{Host}'
         location = f'{Host}@{domain}'
-
     up = False
     if port == 443:
         proto = 'https://'
     else:
         proto = 'http://'
-
     req = requests.get(f'{proto}{domain}:{port}/w/api.php?action=query&meta=siteinfo&formatversion=2&format=json', headers=headers, verify=verify)
-
     if req.status_code == 200 and 'wikitide' in req.text and (Debug is None or Debug in req.headers['X-Served-By']):
         up = True
-
     if not up:
         print(f'Status: {req.status_code}')
         print(f'Text: {"wikitide" in req.text} \n {req.text}')
@@ -217,10 +213,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
                 print(message)
             else:
                 os.system(message)
-
-            print(f'Headers: {headers}')
             exit(3)
-
     return up
 
 
