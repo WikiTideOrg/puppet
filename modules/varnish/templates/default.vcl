@@ -56,6 +56,9 @@ sub vcl_init {
 
 # Debug ACL: those exempt from requiring an access key
 acl debug {
+	# cloud1
+	"63.141.240.2";
+
 <%- @backends.each_pair.with_index do |(name, property), index| -%>
 	# <%= name %>
 	"<%= property['ip_address'] %>";
