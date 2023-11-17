@@ -283,12 +283,6 @@ server {
 	location = /sitemap.xml {
 		rewrite ^(.*)$ /sitemap.php;
 	}
-<%- if name == "wikitide" -%>
-
-	location = /sitemap-index.xml {
-		rewrite ^(.*)$ /wikitide-sitemap-index.php;
-	}
-<%- end -%>
 }
 
 <%- end -%>
