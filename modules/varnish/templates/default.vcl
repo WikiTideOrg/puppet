@@ -210,7 +210,7 @@ sub mw_request {
 		}
 <%- end -%>
 	} else {
-	    unset req.http.X-Debug;
+	    unset req.http.X-WikiTide-Debug;
 	}
 
 	# Handling thumb_handler.php requests
