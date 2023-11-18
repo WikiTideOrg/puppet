@@ -417,7 +417,7 @@ GlobalCssJs:
 GlobalNewFiles:
   branch: master
   path: extensions/GlobalNewFiles
-  repo_url: https://github.com/WikiForge/GlobalNewFiles
+  repo_url: https://github.com/WikiTideOrg/GlobalNewFiles
 GlobalPreferences:
   branch: _branch_
   path: extensions/GlobalPreferences
