@@ -351,6 +351,7 @@ EventStreamConfig:
   branch: _branch_
   path: extensions/EventStreamConfig
   repo_url: https://github.com/wikimedia/mediawiki-extensions-EventStreamConfig
+  removed: true
 ExternalData:
   branch: master
   path: extensions/ExternalData
@@ -797,7 +798,7 @@ OpenIDConnect:
   branch: _branch_
   path: extensions/OpenIDConnect
   repo_url: https://github.com/wikimedia/mediawiki-extensions-OpenIDConnect
-  composer: true
+  removed: true
 OrphanedTalkPages:
   branch: _branch_
   path: extensions/OrphanedTalkPages
