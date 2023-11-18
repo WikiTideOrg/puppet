@@ -14,7 +14,7 @@ import requests
 from fabric import Connection
 from datetime import datetime
 
-parser = argparse.ArgumentParser(description='Provides backup and download functionality for WikiForge backups from PCA.')
+parser = argparse.ArgumentParser(description='Provides backup and download functionality for WikiTide backups from PCA.')
 parser.add_argument('action', choices=['backup', 'download', 'find', 'unfreeze'], help='Action to be ran')
 parser.add_argument('type', choices=['private', 'sslkeys', 'phorge', 'sql', 'mediawiki-xml'], help='Type of backup to handle using the action')
 parser.add_argument('--date', dest='date', help='Date for backup to download', metavar='YYYY-MM-DD')
@@ -43,7 +43,7 @@ def pca_web(method: str, url: str, expiry: int):
     elif method == 'HEAD':
         return requests.head(url, headers=headers)
     else:
-        raise Exception('Method is not currently implemented in WikiForge-Backup')
+        raise Exception('Method is not currently implemented in WikiTide-Backup')
 
 
 def backup_private(dt: str):

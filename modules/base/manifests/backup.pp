@@ -4,8 +4,8 @@ class base::backup (
 ) {
     ensure_packages(['python3-fabric', 'python3-decorator'])
 
-    file { '/usr/local/bin/wikiforge-backup':
+    file { '/usr/local/bin/wikitide-backup':
         mode    => '0555',
-        content => template('base/backups/wikiforge-backup.py.erb'),
+        content => template('base/backups/wikitide-backup.py.erb'),
     }
 }

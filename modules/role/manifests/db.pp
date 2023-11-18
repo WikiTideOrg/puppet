@@ -96,7 +96,7 @@ class role::db (
     }
     cron { 'backups-sql':
         ensure   => present,
-        command  => '/usr/local/bin/wikiforge-backup backup sql > /var/log/backup-logs/sql-backup.log 2>&1',
+        command  => '/usr/local/bin/wikitide-backup backup sql > /var/log/backup-logs/sql-backup.log 2>&1',
         user     => 'root',
         minute   => '0',
         hour     => '3',
@@ -112,7 +112,7 @@ class role::db (
     $weekly_misc.each |String $db| {
         cron { "backups-${db}":
             ensure  => present,
-            command => "/usr/local/bin/wikiforge-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-weekly.log 2>&1",
+            command => "/usr/local/bin/wikitide-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-weekly.log 2>&1",
             user    => 'root',
             minute  => '0',
             hour    => '5',
@@ -129,7 +129,7 @@ class role::db (
     $fortnightly_misc.each |String $db| {
         cron { "backups-${db}":
             ensure   => present,
-            command  => "/usr/local/bin/wikiforge-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-fortnightly.log 2>&1",
+            command  => "/usr/local/bin/wikitide-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-fortnightly.log 2>&1",
             user     => 'root',
             minute   => '0',
             hour     => '5',
@@ -146,7 +146,7 @@ class role::db (
     $monthly_misc.each |String $db| {
         cron { "backups-${db}":
             ensure   => present,
-            command  => "/usr/local/bin/wikiforge-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-monthly.log 2>&1",
+            command  => "/usr/local/bin/wikitide-backup backup sql --database=${db} > /var/log/backup-logs/sql-${db}-backup-monthly.log 2>&1",
             user     => 'root',
             minute   => '0',
             hour     => '5',

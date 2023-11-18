@@ -237,7 +237,7 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
 
     cron { 'backups-phorge':
         ensure   => present,
-        command  => '/usr/local/bin/wikiforge-backup backup phorge > /var/log/phorge-backup.log',
+        command  => '/usr/local/bin/wikitide-backup backup phorge > /var/log/phorge-backup.log',
         user     => 'root',
         minute   => '0',
         hour     => '1',
