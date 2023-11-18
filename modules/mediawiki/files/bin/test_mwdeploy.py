@@ -292,8 +292,8 @@ def test_UpgradePackAction():
     parser.add_argument('--upgrade-skins', action='store_const', const=True, default=False)
     parser.add_argument('--versions', action='store', default=None)
     parser.add_argument('--upgrade-pack', action=UpgradePackAction)
-    namespace = parser.parse_args(['--upgrade-pack', 'wikiforge'])
-    assert namespace.upgrade_extensions == ['CreateWiki', 'DataDump', 'FileStorageMonitor', 'GlobalNewFiles', 'ImportDump', 'IncidentReporting', 'ManageWiki', 'PDFEmbed', 'RemovePII', 'RottenLinks', 'SearchVue', 'SpriteSheet', 'WikiDiscover', 'WikiForgeMagic', 'WikiTideMagic', 'YouTube']
+    namespace = parser.parse_args(['--upgrade-pack', 'wikitide'])
+    assert namespace.upgrade_extensions == ['CreateWiki', 'DataDump', 'GlobalNewFiles', 'ImportDump', 'IncidentReporting', 'ManageWiki', 'MatomoAnalytics', 'PDFEmbed', 'RemovePII', 'RottenLinks', 'SpriteSheet', 'WikiDiscover', 'WikiTideMagic', 'YouTube']
 
 
 def test_LangAction():
