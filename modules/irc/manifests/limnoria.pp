@@ -6,12 +6,6 @@ class irc::limnoria {
 
     ensure_packages(
         'limnoria',
-        'setuptools',
-        'chardet',
-        'pyxmpp2-scram',
-        'cryptography',
-        'feedparser',
-        'python-dateutil',
         {
             ensure   => present,
             provider => 'pip3',
