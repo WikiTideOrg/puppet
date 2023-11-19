@@ -25,7 +25,7 @@ class irc::cvtbot {
         require   => File[$install_path],
     }
 
-    file { "${install_path}/CVTBot.ini":
+    file { "${install_path}/src/CVTBot.ini":
         ensure  => present,
         owner   => 'root',
         group   => 'root',
