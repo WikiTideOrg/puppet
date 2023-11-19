@@ -1,13 +1,14 @@
 # class: irc::cvtbot
 class irc::cvtbot {
-    $install_path = '/srv/cvtbot/src'
+    $git_path = '/srv/cvtbot'
+    $install_path = "$git_path/src"
 
     # FIXME: should be cvtbot, using relaybot for now
     $irc_password = lookup('passwords::irc::relaybot::irc_password')
 
     ensure_packages('mono-complete')
 
-    file { $install_path:
+    file { $git_path:
         ensure => 'directory',
         owner  => 'irc',
         group  => 'irc',
@@ -18,11 +19,11 @@ class irc::cvtbot {
     git::clone { 'CVTBot':
         ensure    => present,
         origin    => 'https://github.com/Universal-Omega/CVTBot',
-        directory => '/srv/cvtbot',
+        directory => $git_path,
         owner     => 'irc',
         group     => 'irc',
         mode      => '0755',
-        require   => File[$install_path],
+        require   => File[$git_path],
     }
 
     file { "${install_path}/CVTBot.ini":
