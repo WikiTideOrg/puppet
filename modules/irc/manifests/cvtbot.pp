@@ -27,6 +27,7 @@ class irc::cvtbot {
 
     file { [
         "${install_path}/src/CVTBot.ini",
+        "${install_path}/src/CVTBot-sample.ini",
         "${install_path}/src/CVTBot/bin/Release/CVTBot.ini"
     ]:
         ensure  => present,
