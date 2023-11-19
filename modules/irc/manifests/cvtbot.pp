@@ -1,5 +1,5 @@
-# class: irc::relaybot
-class irc::relaybot {
+# class: irc::cvtbot
+class irc::cvtbot {
     $install_path = '/srv/cvtbot'
 
     # FIXME: should be cvtbot, using relaybot for now
