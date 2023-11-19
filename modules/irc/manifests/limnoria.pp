@@ -2,7 +2,7 @@
 class irc::limnoria {
     $install_path = '/srv/limnoria'
 
-    $irc_password = lookup('passwords::irc::relaybot::irc_password')
+    $irc_password = lookup('passwords::irc::wikitidebots')
 
     ensure_packages(
         'limnoria',
