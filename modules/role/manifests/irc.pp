@@ -2,6 +2,8 @@
 class role::irc {
     include irc::irclogbot
     include irc::relaybot
+    include irc::cvtbot
+    include irc::limnoria
 
     class { 'irc::ircrcbot':
         nickname     => 'WikiTideRC',
