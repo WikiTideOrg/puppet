@@ -11,6 +11,7 @@ node 'bast1.wikitide.net' {
 }
 node 'bots1.wikitide.net' {
     include base
+    include role::irc
 }
 
 node /^cp[12456]\.wikitide\.net$/ {
@@ -43,7 +44,6 @@ node 'graylog1.wikitide.net' {
 node 'jobrunner1.wikitide.net' {
     include base
     include role::mediawiki
-    include role::irc
 }
 
 node 'mail1.wikitide.net' {
