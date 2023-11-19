@@ -5,7 +5,7 @@ Description=WikiTide IRC CVT bot
 Type=simple
 User=irc
 SyslogIdentifier=cvtbot
-ExecStart=/usr/bin/dotnet run --project <%= @install_path %>/CVTBot/CVTBot.csproj --configuration Release
+ExecStart=/usr/bin/dotnet run --project <%= @install_path %>/src/CVTBot/CVTBot.csproj --configuration Release
 Restart=on-failure
 WorkingDirectory=<%= @install_path %>
 Environment=HOME=<%= @install_path %>
