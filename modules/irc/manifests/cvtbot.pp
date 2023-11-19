@@ -42,7 +42,7 @@ class irc::cvtbot {
         require => [
             Git::Clone['CVTBot'],
             Package['mono-complete'],
-            File["${install_path}/CVTBot.ini"],
+            File["${install_path}/src/CVTBot.ini"],
         ],
     }
 }
