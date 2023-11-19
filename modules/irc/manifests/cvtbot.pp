@@ -12,6 +12,7 @@ class irc::cvtbot {
         owner  => 'irc',
         group  => 'irc',
         mode   => '0755',
+        recurse => true,
     }
 
     git::clone { 'CVTBot':
