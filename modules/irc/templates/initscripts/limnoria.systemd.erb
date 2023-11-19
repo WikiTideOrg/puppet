@@ -1,0 +1,12 @@
+[Unit]
+Description=Limnoria IRC Bot
+
+[Service]
+Type=simple
+User=irc
+SyslogIdentifier=limnoria
+ExecStart=/usr/local/bin/limnoria /srv/limnoria/WikiTide.conf
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
