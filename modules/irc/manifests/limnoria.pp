@@ -35,4 +35,8 @@ class irc::limnoria {
         restart => true,
         require => File["${install_path}/WikiTide.conf"],
     }
+
+    monitoring::nrpe { 'IRC Limnoria Bot':
+        command => '/usr/lib/nagios/plugins/check_procs -a limnoria -c 1:1'
+    }
 }
