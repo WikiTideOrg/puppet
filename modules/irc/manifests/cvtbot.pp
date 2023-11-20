@@ -8,11 +8,12 @@ class irc::cvtbot {
     ensure_packages('mono-complete')
 
     file { $install_path:
-        ensure => 'directory',
-        owner  => 'irc',
-        group  => 'irc',
-        mode   => '0644',
-        recurse => true,
+        ensure    => 'directory',
+        owner     => 'irc',
+        group     => 'irc',
+        mode      => '0644',
+        recurse   => true,
+        max_files => 1500,
     }
 
     git::clone { 'CVTBot':
