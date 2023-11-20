@@ -11,7 +11,7 @@ class irc::cvtbot {
         ensure => 'directory',
         owner  => 'irc',
         group  => 'irc',
-        mode   => '0755',
+        mode   => '0644',
         recurse => true,
     }
 
@@ -21,14 +21,13 @@ class irc::cvtbot {
         directory => $install_path,
         owner     => 'irc',
         group     => 'irc',
-        mode      => '0755',
+        mode      => '0644',
         require   => File[$install_path],
     }
 
     file { [
         "${install_path}/src/CVTBot.ini",
-        "${install_path}/src/CVTBot-sample.ini",
-        "${install_path}/src/CVTBot/bin/Release/CVTBot.ini"
+        "${install_path}/src/CVTBot-sample.ini"
     ]:
         ensure  => present,
         owner   => 'root',
