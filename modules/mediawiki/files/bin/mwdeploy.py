@@ -43,8 +43,8 @@ prod: Environment = {
     ],
 }
 test: Environment = {
-    'wikidbname': 'test1wiki',
-    'wikiurl': 'test1.wikitide.net',
+    'wikidbname': 'testwikitide',
+    'wikiurl': 'test.wikitide.org',
     'servers': ['test1'],
 }
 ENVIRONMENTS: EnvironmentList = {
