@@ -10,7 +10,7 @@ class irc {
     ensure_packages(
         'git+https://github.com/anisse/irc',
         {
-            ensure   => present,
+            ensure   => installed,
             provider => 'pip3',
             require  => Package['python3-pip'],
         },
