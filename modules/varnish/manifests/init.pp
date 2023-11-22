@@ -4,6 +4,7 @@ class varnish (
     String $cache_file_size = '22G',
 ) {
     include varnish::nginx
+    include prometheus::exporter::varnish
 
     ensure_packages(['varnish', 'varnish-modules'])
 
