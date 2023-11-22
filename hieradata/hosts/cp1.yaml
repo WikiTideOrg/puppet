@@ -1,4 +1,5 @@
 varnish::cache_file_size: '45G'
+varnish::thread_pool_max: 15000
 nginx::worker_processes: 4
 puppetserver_hostname: 'puppet1.wikitide.net'
 

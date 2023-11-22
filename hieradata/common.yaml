@@ -31,18 +31,19 @@ varnish::backends:
     port: 8100
     probe: mwhealth
     pool: true
-    thumb: true
+    xdebug: true
     ip_address: 2604:4300:a:24::101
   mw2:
     port: 8101
     probe: mwhealth
     pool: true
-    thumb: true
+    xdebug: true
     ip_address: 2604:4300:a:24::102
   test1:
     port: 8180
     probe: false
-    thumb: true
+    pool: false
+    xdebug: true
     ip_address: 2604:4300:a:24::107
   phorge1:
     port: 8200
