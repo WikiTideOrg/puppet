@@ -70,8 +70,8 @@ class mediawiki::jobqueue::runner (
         }
 
         if $wiki == 'metawikitide' {
-            $aws_s3_access_key = lookup('mediawiki::aws_s3_access_key')
-            $aws_s3_access_secret_key = lookup('mediawiki::aws_s3_access_secret_key')
+            $swift_password = lookup('mediawiki::swift_password')
+
             ensure_packages(
                 'boto3',
                 {
@@ -83,7 +83,7 @@ class mediawiki::jobqueue::runner (
 
             cron { 'generate sitemap index':
                 ensure  => present,
-                command => "/usr/bin/python3 /srv/mediawiki/${version}/extensions/WikiTideMagic/py/generateSitemapIndex.py -B static.wikiforge.net -K ${aws_s3_access_key} -S ${aws_s3_access_secret_key} >> /var/log/mediawiki/cron/generate-sitemap-index.log",
+                command => "/usr/bin/python3 /srv/mediawiki/w/extensions/WikiTideMagic/py/generateSitemapIndex.py -A https://swift-lb.wikitide.net/auth/v1.0 -U mw:media -K ${swift_password} >> /var/log/mediawiki/cron/generate-sitemap-index.log",
                 user    => 'www-data',
                 minute  => '0',
                 hour    => '0',
