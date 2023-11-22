@@ -4,10 +4,6 @@
 $wgDBadminpassword = '<%= @wikiadmin_password %>';
 $wgDBpassword = '<%= @mediawiki_password %>';
 
-// Extension:AWS AWS S3 credentials
-$wmgAWSAccessKey = '<%= @aws_s3_access_key %>';
-$wmgAWSAccessSecretKey = '<%= @aws_s3_access_secret_key %>';
-
 // Extension:DiscordNotifications global webhook
 $wmgGlobalDiscordWebhookUrl = '<%= @global_discord_webhook_url %>';
 $wmgDiscordExperimentalWebhook = '<%= @discord_experimental_webhook %>';

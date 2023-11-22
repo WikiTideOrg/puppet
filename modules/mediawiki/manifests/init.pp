@@ -137,8 +137,6 @@ class mediawiki {
     $discord_experimental_webhook  = lookup('mediawiki::discord_experimental_webhook')
     $global_discord_webhook_url    = lookup('mediawiki::global_discord_webhook_url')
     $swift_password                = lookup('mediawiki::swift_password')
-    $aws_s3_access_key             = lookup('mediawiki::aws_s3_access_key')
-    $aws_s3_access_secret_key      = lookup('mediawiki::aws_s3_access_secret_key')
     $mediawiki_externaldata_cslmodswikitide             = lookup('mediawiki::externaldata_cslmodswikitide')
 
     file { '/srv/mediawiki/config/PrivateSettings.php':
@@ -211,12 +209,6 @@ class mediawiki {
     file { '/etc/swift-env.sh':
         ensure  => 'present',
         content => template('mediawiki/swift-env.sh.erb'),
-        mode    => '0755',
-    }
-
-    file { '/etc/s3-env.sh':
-        ensure  => present,
-        content => template('mediawiki/s3-env.sh.erb'),
         mode    => '0755',
     }
 
