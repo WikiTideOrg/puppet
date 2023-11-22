@@ -18,7 +18,7 @@ server {
 	# XSS Protection
 	add_header x-xss-protection "1; mode=block" always;
 
-	add_header X-Frame-Options "ALLOW-FROM static.your.wf";
+	add_header X-Frame-Options "ALLOW-FROM static.wikitide.net";
 
 	error_page 400 /ErrorPages/400.html;
 	error_page 401 /ErrorPages/401.html;
@@ -73,7 +73,7 @@ server {
 	# XSS Protection
 	add_header x-xss-protection "1; mode=block" always;
 
-	add_header X-Frame-Options "ALLOW-FROM static.your.wf";
+	add_header X-Frame-Options "ALLOW-FROM static.wikitide.net";
 
 	location ~ ^/(\.git|config) {
 		deny all;
@@ -258,7 +258,7 @@ server {
 	# XSS Protection
 	add_header x-xss-protection "1; mode=block" always;
 
-	add_header X-Frame-Options "ALLOW-FROM static.your.wf";
+	add_header X-Frame-Options "ALLOW-FROM static.wikitide.net";
 
 	error_page 400 /ErrorPages/400.html;
 	error_page 401 /ErrorPages/401.html;
