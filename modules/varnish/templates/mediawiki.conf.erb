@@ -9,6 +9,7 @@ server {
 	listen [::]:<%= property['port'] %> deferred backlog=16384 reuseport;
 
 	server_name localhost;
+
 	access_log  off;
 
 	location / {
