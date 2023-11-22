@@ -641,7 +641,7 @@ sub vcl_deliver {
 		unset resp.http.X-Content-Range;
 	}
 
-	if ( req.http.Host == "static.wikiforge.net" ) {
+	if ( req.http.Host == "static.wikitide.net" ) {
 		unset resp.http.Set-Cookie;
 		unset resp.http.Cache-Control;
 
@@ -812,7 +812,7 @@ sub vcl_backend_error {
 		<div class="container" style="padding: 70px 0; text-align: center;">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
-				<img src="https://static.wikiforge.net/commonswikitide/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
+				<img src="https://static.wikitide.net/commonswikitide/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
 				<h1>Something went wrong</h1>
 				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikitide.org/docs/errors/503">Learn more</a>.</p>
 				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>
