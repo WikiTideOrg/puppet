@@ -487,7 +487,7 @@ sub vcl_backend_response {
 		set beresp.http.X-Content-Range = beresp.http.Content-Range;
 	}
 
-	# T9808: Assign restrictive Cache-Control if one is missing
+	# Assign restrictive Cache-Control if one is missing
 	if (!beresp.http.Cache-Control) {
 		set beresp.http.Cache-Control = "private, s-maxage=0, max-age=0, must-revalidate";
 		set beresp.ttl = 0s;
