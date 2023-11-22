@@ -563,9 +563,9 @@ sub vcl_backend_response {
 	# Cache non-modified robots.txt for 12 hours, otherwise 5 minutes
 	if (bereq.url == "/robots.txt") {
 		if (beresp.http.X-WikiTide-Robots == "Custom") {
-		    set beresp.ttl = 300s;
+			set beresp.ttl = 300s;
 		} else {
-		    set beresp.ttl = 43200s;
+			set beresp.ttl = 43200s;
 		}
 	}
 
@@ -581,7 +581,7 @@ sub vcl_backend_response {
 	// https://webmasters.stackexchange.com/questions/31750/what-is-recommended-minimum-object-size-for-gzip-performance-benefits
 	if (beresp.http.content-type ~ "json|text|html|script|xml|icon|ms-fontobject|ms-opentype|x-font|sla"
 		&& (!beresp.http.Content-Length || std.integer(beresp.http.Content-Length, 0) >= 860)) {
-		    set beresp.do_gzip = true;
+			set beresp.do_gzip = true;
 	}
 
 	// SVGs served by MediaWiki are part of the interface. That makes them
