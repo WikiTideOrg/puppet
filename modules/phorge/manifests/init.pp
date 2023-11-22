@@ -136,7 +136,7 @@ $wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wi
     git::clone { 'errorpages':
         ensure    => present,
         directory => '/srv/phorge/ErrorPages',
-        origin    => 'https://github.com/WikiForge/ErrorPages',
+        origin    => 'https://github.com/WikiTideOrg/ErrorPages',
         require   => File['/srv/phorge'],
     }
 
