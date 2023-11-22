@@ -5,7 +5,7 @@ class irc::cvtbot {
     # FIXME: should be cvtbot, using relaybot for now
     $irc_password = lookup('passwords::irc::relaybot::irc_password')
 
-    ensure_packages('mono-complete')
+    stdlib::ensure_packages('mono-complete')
 
     file { $install_path:
         ensure    => 'directory',

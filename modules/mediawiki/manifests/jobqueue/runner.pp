@@ -15,7 +15,7 @@ class mediawiki::jobqueue::runner (
     }
 
     $wiki = lookup('mediawiki::jobqueue::wiki')
-    ensure_packages('python3-xmltodict')
+    stdlib::ensure_packages('python3-xmltodict')
 
     systemd::service { 'jobrunner':
         ensure    => present,
@@ -72,7 +72,7 @@ class mediawiki::jobqueue::runner (
         if $wiki == 'metawikitide' {
             $swift_password = lookup('mediawiki::swift_password')
 
-            ensure_packages(
+            stdlib::ensure_packages(
                 'boto3',
                 {
                     ensure   => '1.26.144',

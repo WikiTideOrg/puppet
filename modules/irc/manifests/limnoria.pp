@@ -4,7 +4,7 @@ class irc::limnoria {
 
     $irc_password = lookup('passwords::irc::wikitidebots')
 
-    ensure_packages(
+    stdlib::ensure_packages(
         'limnoria',
         {
             ensure   => present,

@@ -10,7 +10,7 @@ class php(
     Hash $extensions                          = {}
 ) {
     if $version != '7.4' and !defined(Apt::Source['php_apt']) {
-        ensure_packages(
+        stdlib::ensure_packages(
             'php7.4-common',
             {
                 ensure => purged,
@@ -45,7 +45,7 @@ class php(
     }
 
     # We need php-common everywhere
-    ensure_packages(["php${version}-common", "php${version}-opcache"])
+    stdlib::ensure_packages(["php${version}-common", "php${version}-opcache"])
 
     $config_dir = "/etc/php/${version}"
 

@@ -2,7 +2,7 @@
 class swift::storage (
     Optional[Integer] $object_server_default_workers = lookup('swift::storage::object_server_default_workers', {'default_value' => undef})
 ) {
-    ensure_packages(['swift-object'])
+    stdlib::ensure_packages(['swift-object'])
 
     systemd::service { 'rsync':
         ensure   => present,

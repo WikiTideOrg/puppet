@@ -6,7 +6,7 @@ class swift::proxy (
     Hash                 $accounts_keys = lookup('swift::accounts_keys'),
 ){
 
-    ensure_packages(['swift-proxy'])
+    stdlib::ensure_packages(['swift-proxy'])
 
     file { '/etc/swift/proxy-server.conf':
         ensure  => present,
