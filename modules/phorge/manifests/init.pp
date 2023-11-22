@@ -4,8 +4,8 @@ class phorge (
 ) {
     ensure_packages(['mariadb-client', 'python3-pygments', 'subversion'])
 
-$wikitide_s3_access                = lookup('phorge::aws_s3_access_key_wikitide')
-$wikitide_s3_secret                = lookup('phorge::aws_s3_access_secret_key_wikitide')
+    $wikitide_s3_access = lookup('phorge::aws_s3_access_key_wikitide')
+    $wikitide_s3_secret = lookup('phorge::aws_s3_access_secret_key_wikitide')
 
     $fpm_config = {
         'include_path'                    => '".:/usr/share/php"',
