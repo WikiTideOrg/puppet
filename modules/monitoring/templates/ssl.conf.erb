@@ -2,7 +2,7 @@ apply Service "wc.wikitide.org" {
   import "generic-service"
   check_command = "check_ssl_expire"
   notes_url = "https://meta.wikitide.org/wiki/Tech:Icinga/MediaWiki_Monitoring#SSL_Validity_Checks"
-  vars.host = "wikiforge.org"
+  vars.host = "wikitide.org"
   vars.time = "30"
 
   assign where "sslchecks" in host.groups
