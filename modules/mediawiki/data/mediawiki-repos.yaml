@@ -149,11 +149,6 @@ Citizen:
   branch: main
   path: skins/Citizen
   repo_url: https://github.com/StarCitizenTools/mediawiki-skins-Citizen
-Citoid:
-  branch: _branch_
-  path: extensions/Citoid
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-Citoid
-  removed: true
 CleanChanges:
   branch: _branch_
   path: extensions/CleanChanges
@@ -170,11 +165,6 @@ CollapsibleVector:
   branch: _branch_
   path: extensions/CollapsibleVector
   repo_url: https://github.com/wikimedia/mediawiki-extensions-CollapsibleVector
-Collection:
-  branch: _branch_
-  path: extensions/Collection
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-Collection
-  removed: true
 CologneBlue:
   branch: _branch_
   path: skins/CologneBlue
@@ -326,11 +316,6 @@ Elastica:
   path: extensions/Elastica
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Elastica
   composer: true
-ElectronPdfService:
-  branch: _branch_
-  path: extensions/ElectronPdfService
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-ElectronPdfService
-  removed: true
 EmbedSpotify:
   branch: master
   path: extensions/EmbedSpotify
@@ -343,20 +328,10 @@ EventLogging:
   branch: _branch_
   path: extensions/EventLogging
   repo_url: https://github.com/wikimedia/mediawiki-extensions-EventLogging
-EventStreamConfig:
-  branch: _branch_
-  path: extensions/EventStreamConfig
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-EventStreamConfig
-  removed: true
 ExternalData:
   branch: master
   path: extensions/ExternalData
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ExternalData
-FileStorageMonitor:
-  branch: master
-  path: extensions/FileStorageMonitor
-  repo_url: https://github.com/WikiForge/FileStorageMonitor
-  removed: true
 FlaggedRevs:
   branch: _branch_
   path: extensions/FlaggedRevs
@@ -790,11 +765,6 @@ OpenGraphMeta:
   branch: _branch_
   path: extensions/OpenGraphMeta
   repo_url: https://github.com/wikimedia/mediawiki-extensions-OpenGraphMeta
-OpenIDConnect:
-  branch: _branch_
-  path: extensions/OpenIDConnect
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-OpenIDConnect
-  removed: true
 OrphanedTalkPages:
   branch: _branch_
   path: extensions/OrphanedTalkPages
@@ -980,20 +950,10 @@ SandboxLink:
   branch: _branch_
   path: extensions/SandboxLink
   repo_url: https://github.com/wikimedia/mediawiki-extensions-SandboxLink
-Score:
-  branch: _branch_
-  path: extensions/Score
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-Score
-  removed: true
 Scribunto:
   branch: _branch_
   path: extensions/Scribunto
   repo_url: https://github.com/wikimedia/mediawiki-extensions-Scribunto
-SearchVue:
-  branch: _branch_
-  path: extensions/SearchVue
-  repo_url: https://github.com/WikiForge/mediawiki-extensions-SearchVue
-  removed: true
 SecureLinkFixer:
   branch: _branch_
   path: extensions/SecureLinkFixer
@@ -1220,11 +1180,6 @@ UserFunctions:
   branch: _branch_
   path: extensions/UserFunctions
   repo_url: https://github.com/wikimedia/mediawiki-extensions-UserFunctions
-UserMerge:
-  branch: _branch_
-  path: extensions/UserMerge
-  repo_url: https://github.com/wikimedia/mediawiki-extensions-UserMerge
-  removed: true
 UserPageEditProtection:
   branch: _branch_
   path: extensions/UserPageEditProtection
