@@ -170,13 +170,21 @@ if !enabled
 end
 
 if failcount > 0
-    report = YAML.safe_load(File.read(reportfile))
-    failed_resources = report.resource_statuses.select { |_, r| r.failed }.map { |_, r| r.resource }
-    failed_resources = failed_resources[0..PRINT_FAILED_RESOURCES_NO]
-    puts "CRITICAL: Puppet has #{failcount} failures. " +
-             "Last run #{human_time_since_last_run} ago with #{failcount} failures. " +
-             "Failed resources (up to #{PRINT_FAILED_RESOURCES_NO} shown): #{failed_resources.join(',')}"
-    exit 2
+  # Read the report file as plain text
+  report_text = File.read(reportfile)
+
+  # Replace occurrences of '!ruby/object:Puppet::Transaction::Report' with '!ruby/object:PuppetTransactionReportHandler'
+  report_text.gsub!('!ruby/object:Puppet::Transaction::Report', '!ruby/object:PuppetTransactionReportHandler')
+
+  # Load the YAML with the replaced text
+  report = YAML.safe_load(report_text)
+
+  failed_resources = report.resource_statuses.select { |_, r| r.failed }.map { |_, r| r.resource }
+  failed_resources = failed_resources[0..PRINT_FAILED_RESOURCES_NO]
+  puts "CRITICAL: Puppet has #{failcount} failures. " +
+       "Last run #{human_time_since_last_run} ago with #{failcount} failures. " +
+       "Failed resources (up to #{PRINT_FAILED_RESOURCES_NO} shown): #{failed_resources.join(',')}"
+  exit 2
 end
 
 if time_since_last_run >= crit
