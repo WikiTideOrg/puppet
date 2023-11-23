@@ -12,6 +12,29 @@ require 'optparse'
 require 'puppet'
 require 'yaml'
 
+class PuppetTransactionReportHandler
+    def initialize(data)
+        @data = data
+    end
+
+    def to_yaml_type
+        '!puppet/transaction/report'
+    end
+
+    def encode_with(coder)
+        coder.tag = nil
+        coder.map = @data
+    end
+
+    def self.from_yaml(loader, node)
+        data = loader.load(node)
+        new(data)
+    end
+end
+
+# Register the handler for the custom YAML tag
+YAML.add_tag('!puppet/transaction/report', PuppetTransactionReportHandler)
+
 PRINT_FAILED_RESOURCES_NO = 3 # Number of failed resources to print. Don't set this high
 
 runlockfile = "/opt/puppetlabs/server/data/puppetserver/state/agent_catalog_run.lock"
@@ -63,8 +86,8 @@ if warn.zero? || crit.zero?
 end
 
 if File.exist?(adminlockfile)
-       enabled = false
-       disabled_message = YAML.safe_load(File.read(adminlockfile))["disabled_message"]
+    enabled = false
+    disabled_message = YAML.safe_load(File.read(adminlockfile))["disabled_message"]
 end
 
 if File.exist?(summaryfile)
@@ -79,16 +102,12 @@ if File.exist?(summaryfile)
             last_disabled_check = summary["time"]["last_disabled_check"]
         end
 
-        # machines that outright failed to run like on missing dependencies
-        # are treated as huge failures. The yaml file will be valid but
-        # it wont have anything but last_run in it
         if summary.include?("events")
             failcount = summary["events"]["failure"]
         else
             failcount = :failed
         end
         if failcount == 0 && summary["resources"]["total"] == 0
-            # When Puppet fails due to a dependency cycle all counters are zero, treat it as a failure.
             failcount = :failed_no_resources
         end
 
@@ -101,24 +120,24 @@ else
 end
 
 def time_ago(s)
-  units = {
-    24 * 60 * 60 => 'day',
-    60 * 60      => 'hour',
-    60           => 'minute',
-    1            => 'second',
-  }
-  if s.zero?
-    return "0 seconds"
-  end
-  units.sort.reverse.each do |len, unit|
-    return "#{s / len} #{unit}#{'s' if s / len > 1}" if s >= len
-  end
-  "Indeterminate amount of time (see time_ago)"
+    units = {
+        24 * 60 * 60 => 'day',
+        60 * 60 => 'hour',
+        60 => 'minute',
+        1 => 'second',
+    }
+    if s.zero?
+        return "0 seconds"
+    end
+    units.sort.reverse.each do |len, unit|
+        return "#{s / len} #{unit}#{'s' if s / len > 1}" if s >= len
+    end
+    "Indeterminate amount of time (see time_ago)"
 end
 
 if failcount == :failed_no_resources
     puts "CRITICAL: Failed to apply catalog, zero resources tracked by Puppet. " +
-         "It might be a dependency cycle."
+             "It might be a dependency cycle."
     exit 2
 end
 
@@ -140,7 +159,7 @@ if last_disabled_check && enabled
 end
 human_time_since_last_run = time_ago(time_since_last_run)
 
-if enabled_only && enabled == false
+if enabled_only && !enabled
     puts "OK: Puppet is currently disabled, not alerting. Last run #{human_time_since_last_run} ago with #{failcount} failures"
     exit 0
 end
@@ -151,14 +170,12 @@ if !enabled
 end
 
 if failcount > 0
-    YAML.psych_set_option('safe' => true)
-    YAML.psych_set_option('whitelisted_classes' => [Puppet::Transaction::Report])
     report = YAML.safe_load(File.read(reportfile))
     failed_resources = report.resource_statuses.select { |_, r| r.failed }.map { |_, r| r.resource }
     failed_resources = failed_resources[0..PRINT_FAILED_RESOURCES_NO]
     puts "CRITICAL: Puppet has #{failcount} failures. " +
-        "Last run #{human_time_since_last_run} ago with #{failcount} failures. " +
-        "Failed resources (up to #{PRINT_FAILED_RESOURCES_NO} shown): #{failed_resources.join','}"
+             "Last run #{human_time_since_last_run} ago with #{failcount} failures. " +
+             "Failed resources (up to #{PRINT_FAILED_RESOURCES_NO} shown): #{failed_resources.join(',')}"
     exit 2
 end
 
