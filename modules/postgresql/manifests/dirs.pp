@@ -27,8 +27,7 @@ class postgresql::dirs(
     $_pgversion = $pgversion ? {
         undef   => $facts['os']['distro']['codename'] ? {
             'bookworm' => 15,
-            'bullseye' => 13,
-            default   => 11,
+            default   => 15,
         },
         default => $pgversion,
     }
