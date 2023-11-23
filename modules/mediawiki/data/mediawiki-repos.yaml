@@ -1258,6 +1258,7 @@ WikiTideMagic:
   branch: master
   path: extensions/WikiTideMagic
   repo_url: https://github.com/WikiTideOrg/WikiTideMagic
+  latest: true
 Wikibase:
   branch: _branch_
   path: extensions/Wikibase
