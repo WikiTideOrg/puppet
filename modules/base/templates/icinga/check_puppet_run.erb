@@ -13,30 +13,18 @@ require 'puppet'
 require 'yaml'
 
 class PuppetTransactionReportHandler
-  def self.yaml_load(yaml)
-    data = YAML.load(yaml)
-    handle_objects(data)
+  def initialize(data)
+    @data = data
   end
 
-  def self.handle_objects(obj)
-    case obj
-    when Hash
-      obj.each { |key, value| obj[key] = handle_objects(value) }
-    when Array
-      obj.map! { |item| handle_objects(item) }
-    when String
-      handle_string(obj)
-    else
-      obj
-    end
+  def encode_with(coder)
+    coder.tag = nil
+    coder.map = @data
   end
 
-  def self.handle_string(str)
-    if str.start_with?('!ruby/object:Puppet::Transaction::Report')
-      YAML.load(str.gsub('!ruby/object:Puppet::Transaction::Report', ''))
-    else
-      str
-    end
+  def self.from_yaml(loader, node)
+    data = loader.load(node)
+    new(data)
   end
 end
 
@@ -178,8 +166,11 @@ if failcount > 0
   # Read the report file as plain text
   report_text = File.read(reportfile)
 
-  # Use the custom handler to load the YAML with the replaced text
-  report = PuppetTransactionReportHandler.yaml_load(report_text)
+  # Replace occurrences of '!ruby/object:Puppet::Transaction::Report'
+  report_text.gsub!('!ruby/object:Puppet::Transaction::Report', '!ruby/object:PuppetTransactionReportHandler')
+
+  # Load the YAML with the replaced text
+  report = YAML.safe_load(report_text)
 
   failed_resources = report.resource_statuses.select { |_, r| r.failed }.map { |_, r| r.resource }
   failed_resources = failed_resources[0..PRINT_FAILED_RESOURCES_NO]
