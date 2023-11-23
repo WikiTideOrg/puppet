@@ -13,27 +13,32 @@ require 'puppet'
 require 'yaml'
 
 class PuppetTransactionReportHandler
-    def initialize(data)
-        @data = data
-    end
+  def self.yaml_load(yaml)
+    data = YAML.load(yaml)
+    handle_objects(data)
+  end
 
-    def to_yaml_type
-        '!puppet/transaction/report'
+  def self.handle_objects(obj)
+    case obj
+    when Hash
+      obj.each { |key, value| obj[key] = handle_objects(value) }
+    when Array
+      obj.map! { |item| handle_objects(item) }
+    when String
+      handle_string(obj)
+    else
+      obj
     end
+  end
 
-    def encode_with(coder)
-        coder.tag = nil
-        coder.map = @data
+  def self.handle_string(str)
+    if str.start_with?('!ruby/object:Puppet::Transaction::Report')
+      YAML.load(str.gsub('!ruby/object:Puppet::Transaction::Report', ''))
+    else
+      str
     end
-
-    def self.from_yaml(loader, node)
-        data = loader.load(node)
-        new(data)
-    end
+  end
 end
-
-# Register the handler for the custom YAML tag
-YAML.add_tag('!puppet/transaction/report', PuppetTransactionReportHandler)
 
 PRINT_FAILED_RESOURCES_NO = 3 # Number of failed resources to print. Don't set this high
 
