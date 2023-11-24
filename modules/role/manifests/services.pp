@@ -5,7 +5,7 @@ class role::services {
     include services::citoid
     include services::mathoid
     include services::proton
-    include services::restbase
+    # include services::restbase
 
     $firewall_mediawiki_rules_str = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and (Class[Role::Mediawiki] or Class[Role::Services])", ['networking'])
