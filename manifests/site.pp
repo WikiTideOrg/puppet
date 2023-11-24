@@ -74,6 +74,7 @@ node 'mon1.wikitide.net' {
     include role::grafana
     include role::icinga2
 }
+
 node /^mw[12]\.wikitide\.net$/ {
     include base
     include role::mediawiki
@@ -106,6 +107,11 @@ node 'puppet1.wikitide.net' {
     include role::puppetserver
     include role::salt
     include role::ssl
+}
+
+node 'reports1.wikitide.net' {
+    include base
+    include role::reports
 }
 
 node 'services1.wikitide.net' {
