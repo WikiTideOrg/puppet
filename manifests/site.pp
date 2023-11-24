@@ -9,6 +9,7 @@ node 'bast1.wikitide.net' {
     include base
     include role::bastion
 }
+
 node 'bots1.wikitide.net' {
     include base
     include role::irc
@@ -32,6 +33,7 @@ node 'db1.wikitide.net' {
 
 node 'jobchron1.wikitide.net' {
     include base
+    include role::poolcounter
     include role::redis
     include mediawiki::jobqueue::chron
 }
@@ -130,6 +132,7 @@ node 'test1.wikitide.net' {
     include base
     include role::mediawiki
     include role::memcached
+    include role::poolcounter
     include role::redis
     include mediawiki::jobqueue::chron
 }
