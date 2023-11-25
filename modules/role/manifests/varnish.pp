@@ -17,7 +17,7 @@ class role::varnish {
     $firewall_rules_str = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Mediawiki]", ['networking'])
         .map |$key, $value| {
-            "${value['networking']['interfaces']['ens18']['ip']} ${value['networking']['interfaces']['ens19']['ip']}"
+            "${value['networking']['ip']} ${value['networking']['ip6']}"
         }
         .flatten()
         .unique()
