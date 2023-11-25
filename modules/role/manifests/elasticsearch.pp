@@ -65,7 +65,7 @@ class role::elasticsearch {
         $firewall_rules_str = join(
             query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Mediawiki] or Class[Role::Icinga2] or Class[Role::Graylog] or Class[Role::Elasticsearch]", ['networking'])
             .map |$key, $value| {
-                $value['networking']['ip6']
+                "${value['networking']['ip']} ${value['networking']['ip6']}"
             }
             .flatten()
             .unique()
