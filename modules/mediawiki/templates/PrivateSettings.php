@@ -12,10 +12,10 @@ $wmgDiscordExperimentalWebhook = '<%= @discord_experimental_webhook %>';
 $wgHCaptchaSecretKey = '<%= @hcaptcha_secretkey %>';
 
 // LDAP 'write-user' password
-$wmgLdapPassword = "<%= @ldap_password %>";
+$wmgLdapPassword = '<%= @ldap_password %>';
 
 // Swift password for mw
-$wmgSwiftPassword = "<%= @swift_password %>";
+$wmgSwiftPassword = '<%= @swift_password %>';
 
 // MediaWiki secret keys
 $wgUpgradeKey = '<%= @mediawiki_upgradekey %>';
@@ -31,7 +31,7 @@ $wmgRedisPassword = '<%= @redis_password %>';
 $wgShellboxSecretKey = '<%= @shellbox_secretkey %>';
 
 // Matomo token
-$wgMatomoAnalyticsTokenAuth = "<%= @matomotoken %>";
+$wgMatomoAnalyticsTokenAuth = '<%= @matomotoken %>';
 
 // Miscellaneous
 
