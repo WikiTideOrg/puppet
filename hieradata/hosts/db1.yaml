@@ -1,2 +1,2 @@
 puppetserver_hostname: 'puppet1.wikitide.net'
-role::db::weekly_misc: ['wfglobal', 'wtglobal']
+role::db::weekly_misc: ['wtglobal']
