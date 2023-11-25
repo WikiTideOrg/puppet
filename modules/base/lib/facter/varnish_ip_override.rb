@@ -1,4 +1,3 @@
-# modules/your_module/lib/facter/varnish_ip_override.rb
 
 Facter.add('varnish_ip_override') do
   setcode do
