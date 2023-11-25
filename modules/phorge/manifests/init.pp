@@ -199,7 +199,7 @@ class phorge (
                 'options'      => {
                     'host'     => 'mail.wikitide.net',
                     'port'     => 587,
-                    'user'     => lookup('passwords::mail::noreply_username'),
+                    'user'     => 'noreply',
                     'password' => lookup('passwords::mail::noreply'),
                     'protocol' => 'tls',
                     'message-id' => true,

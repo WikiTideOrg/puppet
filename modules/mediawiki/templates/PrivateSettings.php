@@ -17,18 +17,12 @@ $wmgLdapPassword = "<%= @ldap_password %>";
 // Swift password for mw
 $wmgSwiftPassword = "<%= @swift_password %>";
 
-// Swift temp URL key for mw
-$wmgSwiftTempUrlKey = "<%= @swift_temp_url_key %>";
-
 // MediaWiki secret keys
 $wgUpgradeKey = '<%= @mediawiki_upgradekey %>';
-$wgSecretKey = $wi->wikifarm === 'wikitide' ?
-	'<%= @mediawiki_wikitide_secretkey %>' :
-	'<%= @mediawiki_wikitide_secretkey %>';
+$wgSecretKey = '<%= @mediawiki_secretkey %>';
 
 // Noreply authentication
 $wmgSMTPPassword = '<%= @noreply_password %>';
-$wmgSMTPUsername = '<%= @noreply_username %>';
 
 // Redis AUTH password
 $wmgRedisPassword = '<%= @redis_password %>';
