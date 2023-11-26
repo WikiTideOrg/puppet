@@ -9,7 +9,11 @@ class role::mediawiki (
         $firewall_rules_str = join(
             query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Mediawiki] or Class[Role::Varnish] or Class[Role::Services] or Class[Role::Icinga2] or Class[Role::Prometheus]", ['networking'])
             .map |$key, $value| {
-                "${value['networking']['ip']} ${value['networking']['ip6']}"
+                if $value['networking']['interfaces']['ens19'] {
+                    $value['networking']['interfaces']['ens19']['ip6']
+                } else {
+                    "${value['networking']['ip']} ${value['networking']['ip6']}"
+                }
             }
             .flatten()
             .unique()

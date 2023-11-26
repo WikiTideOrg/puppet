@@ -33,7 +33,11 @@ class base::firewall (
     $firewall_rules_str = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Icinga2]", ['networking'])
         .map |$key, $value| {
-            "${value['networking']['ip']} ${value['networking']['ip6']}"
+            if $value['networking']['interfaces']['ens19'] {
+                "${value['networking']['interfaces']['ens19']['ip']} ${value['networking']['interfaces']['ens19']['ip6']}"
+            } else {
+                "${value['networking']['ip']} ${value['networking']['ip6']}"
+            }
         }
         .flatten()
         .unique()
@@ -43,8 +47,11 @@ class base::firewall (
     ferm::service { 'nrpe':
         proto  => 'tcp',
         port   => '5666',
-        srange => "(${firewall_rules_str})",
+        # srange => "(${firewall_rules_str})",
     }
+
+    $use_public_bastion = lookup('base::firewall::use_public_bastion', { 'default_value' => false })
+    $bastion_public_ips = lookup('base::firewall::bastion_public_ips', { 'default_value' => [] })
 
     $firewall_bastion_hosts = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Base]", ['networking'])
@@ -56,10 +63,16 @@ class base::firewall (
         .sort(),
         ' '
     )
+    
+    $firewall_bastion_hosts_with_public_ips = $use_public_bastion ? {
+        true  => join([$firewall_bastion_hosts, $bastion_public_ips], ' '),
+        false => $firewall_bastion_hosts,
+    }
+    
     ferm::service { 'ssh':
         proto  => 'tcp',
         port   => '22',
-        srange => "(${firewall_bastion_hosts})",
+        srange => "(${firewall_bastion_hosts_with_public_ips})",
     }
 
     class { '::ulogd': }
