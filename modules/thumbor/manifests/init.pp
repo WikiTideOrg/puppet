@@ -1,4 +1,4 @@
-iki# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: Apache-2.0
 # == Class: Thumbor
 #
 # This Puppet class installs and configures a Thumbor server.
