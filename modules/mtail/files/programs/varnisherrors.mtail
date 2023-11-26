@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: Apache-2.0
+counter varnish_errors by type
+
+const MSG /[ \.:a-zA-Z\(\)0-9]+\t/
+
+/\terror / + MSG {
+    varnish_errors["Error"]++
+}
+
+/\tfetcherror / + MSG {
+    varnish_errors["FetchError"]++
+}
+

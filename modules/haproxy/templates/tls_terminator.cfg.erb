@@ -1,0 +1,227 @@
+global
+
+<%
+    htsets = @facts['numa']['device_to_htset'][@numa_iface]
+    cpus = htsets.flatten.join(' ')
+-%>
+<%- if @haproxy_version == 'haproxy24' -%>
+    nbproc 1
+<%- end -%>
+    cpu-map 1/1- <%= cpus %>
+
+<%- if @lua_scripts -%>
+<%- @lua_scripts.each do |lua_script| -%>
+    lua-load <%= lua_script %>
+<%- end -%>
+<%- end -%>
+
+    ssl-default-bind-options ssl-min-ver <%= @min_tls_version -%> ssl-max-ver <%= @max_tls_version %>
+    ssl-default-bind-ciphers <%= @tls_ciphers %>
+    ssl-default-bind-ciphersuites <%= @tls13_ciphers %>
+    ssl-dh-param-file <%= @tls_dh_param_path %>
+    tune.ssl.cachesize <%= @tls_cachesize %>
+    tune.ssl.lifetime <%= @tls_session_lifetime %>
+    maxconn 200000
+
+
+    tune.h2.header-table-size <%= @h2settings['header_table_size'] %>
+    tune.h2.initial-window-size <%= @h2settings['initial_window_size'] %>
+    tune.h2.max-concurrent-streams <%= @h2settings['max_concurrent_streams'] %>
+
+<%- if @sticktables -%>
+# Pseudo-backends used only for statistics tracking.
+<%- @sticktables.each do |table| -%>
+backend <%= table['name'] %>
+    stick-table type <%= table['type'] %> size <%= table['size'] %> <%= table['expire'] ? "expire " + table['expire'] : "" %> <%= table['store'] ? "store " + table['store'].join(',') : "" %>
+<%- end -%>
+<%- end -%>
+
+listen tls
+    log global
+    maxconn 199000
+    bind :<%= @port -%> tfo ssl crt-list <%= @crt_list_path %><%- if @tls_ticket_keys_path -%> tls-ticket-keys <%= @tls_ticket_keys_path %><%- end %>
+
+    bind :::<%= @port -%> tfo v6only ssl crt-list <%= @crt_list_path %><%- if @tls_ticket_keys_path -%> tls-ticket-keys <%= @tls_ticket_keys_path %><%- end %>
+
+    http-reuse <%= @http_reuse %>
+
+    # time to wait for a complete HTTP request, It only applies to the header part of the HTTP request (unless option http-buffer-request is used)
+    timeout http-request <%= @timeout['http_request'] %>s
+    # set the maximum allowed time to wait for a new HTTP request to appear
+    timeout http-keep-alive <%= @timeout['keep_alive'] %>s
+    # set the maximum inactivity time on the client side
+    timeout client <%= @timeout['client'] %>s
+    # inactivity timeout on the client side for half-closed connections
+    timeout client-fin <%= @timeout['client_fin'] %>s
+    # connect timeout against a backend server
+    timeout connect <%= @timeout['connect'] %>s
+    # set the maximum inactivity time on the server side
+    timeout server <%= @timeout['server'] %>s
+    # timeout used after upgrading a connection (websockets) or after the first response when no keepalive/close option is specified
+    timeout tunnel <%= @timeout['tunnel'] %>s
+
+    # TODO: refactor to a more configurable approach
+    capture response header X-Cache-Status len 10
+    capture request header Host len 25
+
+<%- if @vars and @vars['tls'] -%>
+<%- @vars['tls'].each do |var| -%>
+<%- if var['acl'] == nil -%>
+    http-<%= var['direction'] %> set-var(<%= var['name'] %>) <%= var['value'] %>
+<%- end -%>
+<%- end -%>
+<%- end -%>
+
+<%- if @pre_acl_actions and @pre_acl_actions['tls'] -%>
+<%- @pre_acl_actions['tls'].each do |action| -%>
+    <%= action['context'] %> <%= action['verb'] %> <%= action['condition'] or "" %><%= action['comment'] ? "   # " + action['comment'] : "" %>
+<%- end -%>
+<%- end -%>
+
+<%- if @acls and @acls['tls'] -%>
+<%- @acls['tls'].each do |acl| -%>
+    acl <%= acl['name'] %> <%= acl['criterion'] %> <%= acl['operator'] %> <%= acl['value'] %>
+<%- end -%>
+<%- end -%>
+
+<%- if @vars and @vars['tls'] -%>
+<%- @vars['tls'].each do |var| -%>
+<%- if var['acl'] -%>
+    http-<%= var['direction'] %> set-var(<%= var['name'] %>) <%= var['value'] %> if <%= var['acl'] %>
+<%- end -%>
+<%- end -%>
+<%- end -%>
+
+<%- if @add_headers and @add_headers['tls'] -%>
+<%- @add_headers['tls'].each do |add_header| -%>
+<%- if add_header['value'] -%>
+    http-<%= add_header['direction'] %> set-header <%= add_header['name'] %> "<%= add_header['value'] %>"
+<%- end -%>
+<%- end -%>
+<%- end -%>
+<%- if @del_headers and @del_headers['tls'] -%>
+<%- @del_headers['tls'].each do |del_header| -%>
+    http-<%= del_header['direction'] %> del-header <%= del_header['name'] %> <%- if del_header['acl'] %> if <%= del_header['acl'] %> <%- end %>
+<%- end -%>
+<%- end -%>
+
+<%- if @post_acl_actions and @post_acl_actions['tls'] -%>
+<%- @post_acl_actions['tls'].each do |action| -%>
+    <%= action['context'] %> <%= action['verb'] %> <%= action['condition'] or "" %><%= action['comment'] ? "   # " + action['comment'] : "" %>
+<%- end -%>
+<%- end -%>
+
+
+<%- @backends.each_with_index do |backend, backend_index| -%>
+<%- if backend['prefix'] == 'unix' -%>
+    server backend_server_<%= backend_index %> unix@<%= backend['address'] %><%- if backend['maxconn'] -%> maxconn <%= backend['maxconn'] %><%- end -%>
+
+<%- else -%>
+    server backend_server_<%= backend_index %> <%= backend['prefix'] %>@<%= backend['address'] %>:<%= backend['port'] %><%- if backend['maxconn'] -%> maxconn <%= backend['maxconn'] %><%- end -%>
+
+<%- end -%>
+<%- end -%>
+    option forwardfor
+
+<%- if @prometheus_port -%>
+frontend stats
+    no log
+    maxconn 1000
+    bind :<%= @prometheus_port %>
+    bind :::<%= @prometheus_port %> v6only
+    http-request use-service prometheus-exporter if { path /metrics }
+    stats enable
+    stats uri /stats
+    stats refresh 10s
+    # Explicitly avoid keep-alive to prevent Prometheus scrapers from
+    # reusing indefinitelly the same TCP connection. See T343000
+    http-after-response set-header Connection Close
+<%- end -%>
+
+<%- if @http_redirection_port -%>
+frontend http
+    log global
+    maxconn 2000
+    bind :<%= @http_redirection_port %>
+    bind :::<%= @http_redirection_port %> v6only
+
+    # Needed for logging purposes
+    capture request header Host len 25
+    # declare a capture slot with id 0 for X-Cache-Status
+    declare capture response len 10
+
+    # we can be rather aggresive regarding timeouts here as only impact http to https redirections
+    # time to wait for a complete HTTP request, It only applies to the header part of the HTTP request (unless option http-buffer-request is used)
+<%- if @redirection_timeout -%>
+    timeout http-request <%= @redirection_timeout['http_request'] %>s
+    # set the maximum allowed time to wait for a new HTTP request to appear
+    timeout http-keep-alive <%= @redirection_timeout['keep_alive'] %>s
+    # set the maximum inactivity time on the client side
+    timeout client <%= @redirection_timeout['client'] %>s
+    # inactivity timeout on the client side for half-closed connections
+    timeout client-fin <%= @redirection_timeout['client_fin'] %>s
+<%- end -%>
+<%# vars -%>
+<%- if @vars and @vars['http'] -%>
+<%- @vars['http'].each do |var| -%>
+<%- if var['acl'] == nil -%>
+    http-<%= var['direction'] %> set-var(<%= var['name'] %>) <%= var['value'] %>
+<%- end -%>
+<%- end -%>
+<%- end -%>
+<%# pre_acl_actions -%>
+<%- if @pre_acl_actions and @pre_acl_actions['http'] -%>
+<%- @pre_acl_actions['http'].each do |action| -%>
+    <%= action['context'] %> <%= action['verb'] %> <%= action['condition'] or "" %><%= action['comment'] ? "   # " + action['comment'] : "" %>
+<%- end -%>
+<%- end -%>
+<%# acls -%>
+<%- if @acls and @acls['http'] -%>
+<%- @acls['http'].each do |acl| -%>
+    acl <%= acl['name'] %> <%= acl['criterion'] %> <%= acl['operator'] %> <%= acl['value'] %>
+<%- end -%>
+<%- end -%>
+<%# vars (with acls) -%>
+<%- if @vars and @vars['http'] -%>
+<%- @vars['http'].each do |var| -%>
+<%- if var['acl'] -%>
+    http-<%= var['direction'] %> set-var(<%= var['name'] %>) <%= var['value'] %> if <%= var['acl'] %>
+<%- end -%>
+<%- end -%>
+<%- end -%>
+<%# add_headers -%>
+<%- if @add_headers and @add_headers['http'] -%>
+<%- @add_headers['http'].each do |add_header| -%>
+<%- if add_header['value'] -%>
+    http-<%= add_header['direction'] %> set-header <%= add_header['name'] %> "<%= add_header['value'] %>"
+<%- end -%>
+<%- end -%>
+<%- end -%>
+<%# del_headers -%>
+<%- if @del_headers and @del_headers['http'] -%>
+<%- @del_headers['http'].each do |del_header| -%>
+    http-<%= del_header['direction'] %> del-header <%= del_header['name'] %> <%- if del_header['acl'] %> if <%= del_header['acl'] %> <%- end %>
+<%- end -%>
+<%- end -%>
+<%# post_acl_actions -%>
+<%- if @post_acl_actions and @post_acl_actions['http'] -%>
+<%- @post_acl_actions['http'].each do |action| -%>
+    <%= action['context'] %> <%= action['verb'] %> <%= action['condition'] or "" %><%= action['comment'] ? "   # " + action['comment'] : "" %>
+<%- end -%>
+<%- end -%>
+
+    # Provide Server header
+    http-after-response set-header Server HAProxy
+    # Provide X-Cache headers
+    http-after-response set-header X-Cache "<%= @hostname %> int"
+    http-after-response set-header X-Cache-Status "int-tls"
+    http-after-response capture hdr(X-Cache-Status) id 0
+<%- if @http_disable_keepalive -%>
+    # Explicitly avoid keep-alive
+    http-after-response set-header Connection Close
+<%- end -%>
+    # METH_GET is a predefined ACL that includes GET and HEAD requests
+    # http://docs.haproxy.org/2.6/configuration.html#7.4
+    http-request redirect scheme https code 301 if METH_GET
+    http-request deny status 403 content-type text/html file /etc/haproxy/tls-terminator-<%= @title %>-plaintext-error.html
+<%- end -%>
