@@ -7,9 +7,6 @@
 #   It will work only if 'log /dev/log local0 info' is set. This implementation
 #   will simply direct *all* haproxy logs.
 #
-#   Enabling this setting will also direct logs go logstash.wikimedia.org, making
-#   them visible to all staff and NDAs.
-#
 # [*monitor*]
 #   If set to false, monitoring will not be set up for icinga. Defaults to true.
 #   Useful for places where monitoring is not appropriate or impossible via icinga
@@ -112,26 +109,24 @@ class haproxy(
     }
 
     if $monitor {
-        file { '/usr/lib/nagios/plugins/check_haproxy':
-            ensure => absent,
-        }
+        $ensure_monitoring = bool2str($monitor_check_haproxy, 'present', 'absent')
 
-        nrpe::plugin { 'check_haproxy':
-            ensure  => bool2str($monitor_check_haproxy, 'present', 'absent'),
+        file { "/usr/local/lib/nagios/plugins/${title}":
+            ensure  => stdlib::ensure($ensure_monitoring, 'file'),
+            source  => $source,
             content => template('haproxy/check_haproxy.erb'),
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0555',
         }
 
-        nrpe::monitor_service { 'haproxy':
-            description  => 'haproxy process',
-            nrpe_command => '/usr/lib/nagios/plugins/check_procs -c 1: -C haproxy',
-            notes_url    => 'https://wikitech.wikimedia.org/wiki/HAProxy',
+        monitoring::nrpe { 'haproxy process':
+            command => '/usr/lib/nagios/plugins/check_procs -c 1: -C haproxy'
         }
 
-        nrpe::monitor_service { 'haproxy_alive':
-            ensure       => bool2str($monitor_check_haproxy, 'present', 'absent'),
-            description  => 'haproxy alive',
-            nrpe_command => '/usr/local/lib/nagios/plugins/check_haproxy --check=alive',
-            notes_url    => 'https://wikitech.wikimedia.org/wiki/HAProxy',
+        monitoring::nrpe { 'haproxy alive':
+            ensure  => bool2str($monitor_check_haproxy, 'present', 'absent'),
+            command => '/usr/bin/sudo /usr/local/lib/nagios/plugins/check_haproxy --check=alive'
         }
     }
 
