@@ -43,4 +43,18 @@ class cloud {
     }
 
     stdlib::ensure_packages(['freeipmi-tools'])
+
+    if ( $facts['dmi']['manufacturer'] == 'HP' ) {
+        monitoring::nrpe { 'IPMI Sensors':
+            command => '/usr/lib/nagios/plugins/check_ipmi_sensors --xT Memory'
+        }
+
+        monitoring::nrpe { 'SMART':
+            command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_smart -g /dev/sd[a-z] -i cciss,[0-6] -l -s'
+        }
+    } else {
+        monitoring::nrpe { 'IPMI Sensors':
+            command => '/usr/lib/nagios/plugins/check_ipmi_sensors --xT Drive_Slot,Entity_Presence'
+        }
+    }
 }
