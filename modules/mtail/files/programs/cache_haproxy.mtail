@@ -27,7 +27,7 @@ hidden gauge process_time
   }
   $client_ttfb >= 0 {
       haproxy_client_ttfb[cstatus][$http_status_family] = float($client_ttfb) * 0.001
-      $host =~ /^healthcheck\.wikimedia\.org$/ {
+      $host =~ /^health\.wikitide\.org$/ {
         haproxy_client_healthcheck_ttfb[cstatus][$http_status_family] = float($client_ttfb) * 0.001
       }
   }
