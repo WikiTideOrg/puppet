@@ -60,10 +60,14 @@ class base::firewall (
         .sort(),
         ' '
     )
+
+    # Add bast1 public IPv4 and IPv6 directly
+    $firewall_bastion_hosts_with_public_ips = "${firewall_bastion_hosts} 63.141.240.3 2604:4300:a:24::114"
+
     ferm::service { 'ssh':
         proto  => 'tcp',
         port   => '22',
-        srange => "(${firewall_bastion_hosts})",
+        srange => "(${firewall_bastion_hosts_with_public_ips})",
     }
 
     class { '::ulogd': }
