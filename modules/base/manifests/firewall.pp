@@ -49,6 +49,9 @@ class base::firewall (
         port   => '5666',
     }
 
+    $use_public_bastion = lookup('base::firewall::use_public_bastion', { 'default_value' => false })
+    $bastion_public_ips = lookup('base::firewall::bastion_public_ips', { 'default_value' => [] })
+
     $firewall_bastion_hosts = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Base]", ['networking'])
         .map |$key, $value| {
@@ -59,10 +62,12 @@ class base::firewall (
         .sort(),
         ' '
     )
-
-    # Add bast1 public IPv4 and IPv6 directly
-    $firewall_bastion_hosts_with_public_ips = "${firewall_bastion_hosts} 63.141.240.3 2604:4300:a:24::114"
-
+    
+    $firewall_bastion_hosts_with_public_ips = $use_public_bastion ? {
+        true  => join([$firewall_bastion_hosts, $bastion_public_ips], ' '),
+        false => $firewall_bastion_hosts,
+    }
+    
     ferm::service { 'ssh':
         proto  => 'tcp',
         port   => '22',
