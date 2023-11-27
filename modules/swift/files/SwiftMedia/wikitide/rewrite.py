@@ -33,9 +33,15 @@ class _WikiTideRewriteContext(WSGIContext):
         self.logger = rewrite.logger
 
         self.account = conf['account'].strip()
-        self.thumbhost = conf['thumbhost'].strip()
+        self.thumborhost = conf['thumborhost'].strip()
         self.user_agent = conf['user_agent'].strip()
         self.bind_port = conf['bind_port'].strip()
+
+    def thumborify_url(self, reqorig, host):
+        reqorig.host = host
+        thumbor_urlobj = list(urllib.parse.urlsplit(reqorig.url))
+        thumbor_urlobj[2] = urllib.parse.quote(thumbor_urlobj[2], '%/')
+        return urllib.parse.urlunsplit(thumbor_urlobj)
 
     def handle404(self, reqorig, url, container, obj):
         """
@@ -43,72 +49,40 @@ class _WikiTideRewriteContext(WSGIContext):
         host and returns it. Note also that the thumb host might write it out
         to Swift so it won't 404 next time.
         """
-        # go to the thumb media store for unknown files
-        reqorig.host = self.thumbhost
-        # upload doesn't like our User-agent.
-        proxy_handler = urllib.request.ProxyHandler({'http': self.thumbhost})
-        redirect_handler = DumbRedirectHandler()
-        opener = urllib.request.build_opener(redirect_handler, proxy_handler)
+        # upload doesn't like our User-agent, otherwise we could call it
+        # using urllib2.url()
+        thumbor_opener = urllib.request.build_opener(DumbRedirectHandler())
 
-        opener.addheaders = []
+        # Pass on certain headers from Varnish to Thumbor
+        thumbor_opener.addheaders = []
         if reqorig.headers.get('User-Agent') is not None:
-            opener.addheaders.append(('User-Agent', reqorig.headers.get('User-Agent')))
+            thumbor_opener.addheaders.append(('User-Agent', reqorig.headers.get('User-Agent')))
         else:
-            opener.addheaders.append(('User-Agent', self.user_agent))
+            thumbor_opener.addheaders.append(('User-Agent', self.user_agent))
         for header_to_pass in ['X-Forwarded-For', 'X-Forwarded-Proto',
-                               'Accept', 'Accept-Encoding', 'X-Original-URI']:
+                               'Accept', 'Accept-Encoding', 'X-Original-URI', 'X-Client-IP']:
             if reqorig.headers.get(header_to_pass) is not None:
-                opener.addheaders.append((header_to_pass, reqorig.headers.get(header_to_pass)))
+                header = (header_to_pass, reqorig.headers.get(header_to_pass))
+                thumbor_opener.addheaders.append(header)
 
         # At least in theory, we shouldn't be handing out links to originals
         # that we don't have (or in the case of thumbs, can't generate).
         # However, someone may have a formerly valid link to a file, so we
         # should do them the favor of giving them a 404.
         try:
-            # break apach the url, url-encode it, and put it back together
-            urlobj = list(urllib.parse.urlsplit(reqorig.url))
-            # encode the URL but don't encode %s and /s
-            urlobj[2] = urllib.parse.quote(urlobj[2], '%/')
-            encodedurl = urllib.parse.urlunsplit(urlobj)
-
-            match = re.match(
-                    r'^http://(?P<host>[^/]+)/(?P<proj>[^-/]+)/thumb/(?P<path>.+)',
-                    encodedurl)
-            if match:
-                proj = match.group('proj').removesuffix("wikitide")
-                hostname = '%s.wikitide.net' % (proj)
-                # ok, replace the URL with just the part starting with thumb/
-                # take off the first two parts of the path.
-                encodedurl = 'https://%s/w/thumb_handler.php/%s' % (
-                    hostname, match.group('path'))
-                # add in the X-Original-URI with the swift got (minus the hostname)
-                opener.addheaders.append(
-                    ('X-Original-URI', list(urllib.parse.urlsplit(reqorig.url))[2]))
-            else:
-                # ASSERT this code should never be hit since only thumbs
-                # should call the 404 handler
-                self.logger.warn("non-thumb in 404 handler! encodedurl = %s" % encodedurl)
-                resp = swob.HTTPNotFound('Unexpected error')
-                return resp
-
-            # ok, call the encoded url
-            upcopy = opener.open(encodedurl)
+            thumbor_encodedurl = self.thumborify_url(reqorig, self.thumborhost)
+            upcopy = thumbor_opener.open(thumbor_encodedurl)
         except urllib.error.HTTPError as error:
             # Wrap the urllib2 HTTPError into a swob HTTPException
             status = error.code
             body = error.fp.read()
-            headers = dict(list(error.hdrs.items()))
+            headers = list(error.hdrs.items())
             if status not in swob.RESPONSE_REASONS:
                 # Generic status description in case of unknown status reasons.
                 status = "%s Error" % status
-            # We're having itermittent issues with Transfer-Encoding,
-            # remove it from the headers. This is added from urllib anyways.
-            # See https://github.com/django/daphne/issues/371#issuecomment-862186611
-            if headers.get('Transfer-Encoding') is not None :
-                del headers['Transfer-Encoding']
             return swob.HTTPException(status=status, body=body, headers=headers)
         except urllib.error.URLError as error:
-            msg = 'There was a problem while contacting the image scaler: %s' % \
+            msg = 'There was a problem while contacting the thumbnailing service: %s' % \
                   error.reason
             return swob.HTTPServiceUnavailable(msg)
 
@@ -124,10 +98,16 @@ class _WikiTideRewriteContext(WSGIContext):
             'Last-Modified',
             'Accept-Ranges',
             'XKey',
+            'Thumbor-Engine',
             'Server',
             'Nginx-Request-Date',
-            'Nginx-Response-Date'
+            'Nginx-Response-Date',
+            'Thumbor-Processing-Time',
+            'Thumbor-Processing-Utime',
+            'Thumbor-Request-Id',
+            'Thumbor-Request-Date'
         ]
+
         # add in the headers if we've got them
         for header in headers_whitelist:
             if uinfo.get(header) is not None:

@@ -4,6 +4,8 @@ nginx::logrotate_number: 2
 swift_proxy_enable: true
 swift::proxy::num_workers: 72
 
+swift::proxy::thumborhost: 'thumbor31.wikitide.net:8800'
+
 swift::accounts:
     super_admin:
         access:       '.admin .reseller_admin'
@@ -15,6 +17,16 @@ swift::accounts:
         account_name: 'AUTH_mw'
         auth:         'http://swift-lb.wikitide.net'
         user:         'mw:media'
+    mw_thumbor:
+        access:       ''
+        account_name: 'AUTH_mw'
+        auth:         'http://swift-lb.wikitide.net'
+        user:         'mw:thumbor'
+    mw_thumbor-private:
+        access:       ''
+        account_name: 'AUTH_mw'
+        auth:         'http://swift-lb.wikitide.net'
+        user:         'mw:thumbor-private'
     dispersion:
         access:       '.admin'
         account_name: 'AUTH_dispersion'

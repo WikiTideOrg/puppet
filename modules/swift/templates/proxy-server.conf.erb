@@ -91,6 +91,6 @@ account = <%= @accounts['mw_media']['account_name'] %>
 user_agent = Mozilla/5.0
 
 # sending thumbnail requests to thumbor
-thumbhost = static.wikitide.net
+thumborhost = <%= @thumborhost %>
 
 paste.filter_factory = wikitide.rewrite:filter_factory
