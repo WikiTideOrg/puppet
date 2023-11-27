@@ -64,7 +64,7 @@ node 'matomo21.wikitide.net' {
     include role::matomo
 }
 
-node /^mem[23]1\.wikitide\.net$/ {
+node /^mem2[12]\.wikitide\.net$/ {
     include base
     include role::memcached
 }
