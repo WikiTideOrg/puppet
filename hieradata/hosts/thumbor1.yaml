@@ -1,0 +1,8 @@
+thumbor::memcached_servers:
+  - 10.0.0.106
+  thumbor::memcached_servers_nutcracker:
+  - 10.0.0.106:11211:1
+  thumbor::mediawiki::shared_secret: ''
+  thumbor::swift::swift_host: 'http://swift-lb.wikitide.net'
+
+puppetserver_hostname: 'puppet1.wikitide.net'
