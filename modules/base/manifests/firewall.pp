@@ -45,8 +45,8 @@ class base::firewall (
         ' '
     )
     ferm::service { 'nrpe':
-        proto  => 'tcp',
-        port   => '5666',
+        proto => 'tcp',
+        port  => '5666',
         # srange => "(${firewall_rules_str})",
     }
 
@@ -63,12 +63,12 @@ class base::firewall (
         .sort(),
         ' '
     )
-    
+
     $firewall_bastion_hosts_with_public_ips = $use_public_bastion ? {
         true  => join([$firewall_bastion_hosts, $bastion_public_ips], ' '),
         false => $firewall_bastion_hosts,
     }
-    
+
     ferm::service { 'ssh':
         proto  => 'tcp',
         port   => '22',
