@@ -25,7 +25,7 @@ class phpldapadmin::params {
 
   $ldap_host = '127.0.0.1'
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
       $config_path = '/etc/phpldapadmin'
       $config_group = 'www-data'
@@ -45,7 +45,7 @@ class phpldapadmin::params {
     }
 
     default: {
-      fail("Unsupported OS family ${::osfamily}")
+      fail("Unsupported OS family ${facts['os']['family']}")
     }
   }
 }
