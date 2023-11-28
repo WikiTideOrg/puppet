@@ -182,7 +182,7 @@ class role::openldap (
     }
 
     $firewall_rules = join(
-        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Mail] or Class[Role::Mediawiki] or Class[Role::Openldap]", ['networking'])
+        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Grafana] or Class[Role::Graylog] or Class[Role::Mail] or Class[Role::Matomo] or Class[Role::Mediawiki] or Class[Role::Openldap]", ['networking'])
         .map |$key, $value| {
             "${value['networking']['ip']} ${value['networking']['ip6']}"
         }
@@ -203,6 +203,16 @@ class role::openldap (
         minute  => fqdn_rand(60, $title),
         command => "/bin/ps -C slapd -o pmem= | awk '{sum+=\$1} END { if (sum <= 50.0) exit 1 }' \
         && /bin/systemctl restart slapd >/dev/null 2>/dev/null",
+    }
+
+    monitoring::services { 'LDAP':
+        check_command => 'ldap',
+        vars          => {
+            ldap_address => $facts['networking']['fqdn'],
+            ldap_base    => 'dc=wikitide,dc=org',
+            ldap_v3      => true,
+            ldap_ssl     => true,
+        },
     }
 
     motd::role { 'role::openldap':

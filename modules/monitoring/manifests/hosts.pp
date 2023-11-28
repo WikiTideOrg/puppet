@@ -6,8 +6,8 @@ define monitoring::hosts (
         ensure  => $ensure,
         import  => ['generic-host'],
         address => $facts['networking']['hostname'] ? {
-            'cloud1'   => $facts['networking']['interfaces']['vmbr1']['ip'],
-            default    => $facts['networking']['ip'],
+            'cloud1' => $facts['networking']['interfaces']['vmbr1']['ip'],
+            default  => $facts['networking']['ip'],
         },
 #        address6 => $facts['networking']['ip6'],
         target  => '/etc/icinga2/conf.d/puppet_hosts.conf',
