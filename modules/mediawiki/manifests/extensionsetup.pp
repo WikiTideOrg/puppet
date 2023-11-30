@@ -27,7 +27,7 @@ define mediawiki::extensionsetup (
             default => $version in split($params['versions'], /,\s?/),
         }
 
-		# lint:ignore:selector_inside_resource
+	# lint:ignore:selector_inside_resource
         git::clone { "MediaWiki-${branch} ${name}":
             ensure             => $params['removed'] ? {
                 true    => absent,
@@ -62,9 +62,9 @@ define mediawiki::extensionsetup (
             },
             require            => Git::Clone["MediaWiki-${branch} core"],
         }
-		# lint:endignore
+	# lint:endignore
 
-        if $shouldInstall {
+        if $should_install {
             if $params['composer'] {
                 exec { "${name}-${branch} composer":
                     command     => 'composer install --no-dev',
