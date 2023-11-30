@@ -8,7 +8,7 @@ import time
 import requests
 import socket
 import json
-from sys import exit
+import sys
 from langcodes import tag_is_valid
 
 mw_versions = os.popen('getMWVersions').read().strip()
@@ -163,7 +163,7 @@ def non_zero_code(ec: list[int], nolog: bool = True, leave: bool = True) -> bool
                 os.system('/usr/local/bin/logsalmsg DEPLOY ABORTED: Non-Zero Exit Code in prep, see output.')
             if leave:
                 print('Exiting due to non-zero status.')
-                exit(1)
+                sys.exit(1)
             return True
     return False
 
@@ -213,7 +213,7 @@ def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = Non
                 print(message)
             else:
                 os.system(message)
-            exit(3)
+            sys.exit(3)
     return up
 
 
@@ -407,7 +407,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                                         for schema in newschema:
                                             print(schema)
                                     print('Operation aborted by user')
-                                    exit(1)
+                                    sys.exit(1)
                         if args.show_tags:
                             tags = get_change_tags(f'extensions/{extension}', version)
                             if tags:
@@ -456,7 +456,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
                                         for schema in newschema:
                                             print(schema)
                                     print('Operation aborted by user')
-                                    exit(1)
+                                    sys.exit(1)
                         if args.show_tags:
                             tags = get_change_tags(f'skins/{skin}', version)
                             if tags:
@@ -563,7 +563,7 @@ def run_process(args: argparse.Namespace, start: float, version: str = '') -> No
     else:
         print(fintext)
     if failed:
-        exit(1)
+        sys.exit(1)
 
 
 class UpgradeExtensionsAction(argparse.Action):  # pragma: no cover
