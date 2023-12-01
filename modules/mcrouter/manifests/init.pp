@@ -85,7 +85,7 @@ class mcrouter(
 
     file { '/opt/mcrouter_2023.07.17.00-1_amd64.deb':
         ensure  => present,
-        source => 'puppet:///private/mcrouter/mcrouter_2023.07.17.00-1_amd64.deb',
+        source  => 'puppet:///private/mcrouter/mcrouter_2023.07.17.00-1_amd64.deb',
         require => [
             Package['libboost-program-options1.74.0'],
             Package['libboost-regex1.74.0-icu72'],
@@ -96,10 +96,10 @@ class mcrouter(
     }
 
     package { 'mcrouter':
-        ensure      => installed,
-        provider    => dpkg,
-        source      => '/opt/mcrouter_2023.07.17.00-1_amd64.deb',
-        require     => File['/opt/mcrouter_2023.07.17.00-1_amd64.deb'],
+        ensure   => installed,
+        provider => dpkg,
+        source   => '/opt/mcrouter_2023.07.17.00-1_amd64.deb',
+        require  => File['/opt/mcrouter_2023.07.17.00-1_amd64.deb'],
     }
 
     $config = { 'pools' => $pools, 'routes' => $routes }
