@@ -11,6 +11,10 @@ class role::db (
     $matomo_password = lookup('passwords::db::matomo')
     $phorge_password = lookup('passwords::db::phorge')
 
+    ssl::wildcard { 'db wildcard':
+        ssl_cert_key_private_group => 'mysql',
+    }
+
     file { '/etc/ssl/private':
         ensure => directory,
         owner  => 'root',
