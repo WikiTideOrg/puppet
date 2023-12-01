@@ -8,7 +8,7 @@ def test_get_command_simple():
     args.script = 'test.php'
     args.arguments = ['metawikitide']
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
 
 
 def test_get_command_extension():
@@ -16,7 +16,7 @@ def test_get_command_extension():
     args.script = 'extensions/CheckUser/test.php'
     args.arguments = ['metawikitide']
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/extensions/CheckUser/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/extensions/CheckUser/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
 
 
 @patch.dict(os.environ, {'LOGNAME': 'test'})
@@ -29,7 +29,7 @@ def test_get_command_extension_list(mock_input, mock_getlogin):
     args.script = 'test.php'
     args.extension = 'CheckUser'
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {
         'confirm': False,
         'command': f'sudo -u www-data /usr/local/bin/foreachwikiindblist /home/{os.environ["LOGNAME"]}/CheckUser.json /srv/mediawiki/1.39/maintenance/test.php',
         'generate': 'php /srv/mediawiki/1.39/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawikitide --extension=CheckUser',
@@ -43,7 +43,7 @@ def test_get_command_all():
     args.script = 'test.php'
     args.arguments = ['wikitide']
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json /srv/mediawiki/1.39/maintenance/test.php', 'generate': None, 'long': True, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json /srv/mediawiki/1.39/maintenance/test.php', 'generate': None, 'long': True, 'nolog': False}
 
 
 def test_get_command_args():
@@ -51,7 +51,7 @@ def test_get_command_args():
     args.script = 'test.php'
     args.arguments = ['metawikitide', '--test']
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/test.php --wiki=metawikitide --test', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/test.php --wiki=metawikitide --test', 'generate': None, 'long': False, 'nolog': False}
 
 
 def test_get_command_subdir():
@@ -59,7 +59,7 @@ def test_get_command_subdir():
     args.script = 'subdir/test.php'
     args.arguments = ['metawikitide']
     args.version = '1.39'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/subdir/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.39/maintenance/subdir/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
 
 
 def test_get_command_simple_runner():
@@ -67,7 +67,7 @@ def test_get_command_simple_runner():
     args.script = 'test.php'
     args.arguments = ['metawikitide']
     args.version = '1.40'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
 
 
 def test_get_command_extension_runner():
@@ -75,7 +75,7 @@ def test_get_command_extension_runner():
     args.script = 'extensions/CheckUser/test.php'
     args.arguments = ['metawikitide']
     args.version = '1.40'
-    assert mwscript.get_commands(args) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/extensions/CheckUser/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
+    assert mwscript.syscheck(mwscript.get_commands(args)) == {'confirm': False, 'command': 'sudo -u www-data php /srv/mediawiki/1.40/maintenance/run.php /srv/mediawiki/1.40/extensions/CheckUser/maintenance/test.php --wiki=metawikitide', 'generate': None, 'long': False, 'nolog': False}
 
 
 @patch.dict(os.environ, {'LOGNAME': 'test'})
