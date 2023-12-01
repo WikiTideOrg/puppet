@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
 import argparse
-from typing import Optional, Union, TypedDict
+from typing import TypedDict
 import os
 import re
 import time
@@ -168,7 +168,7 @@ def non_zero_code(ec: list[int], nolog: bool = True, leave: bool = True) -> bool
     return False
 
 
-def check_up(nolog: bool, Debug: Optional[str] = None, Host: Optional[str] = None, domain: str = 'meta.wikitide.org', verify: bool = True, force: bool = False, port: int = 443) -> bool:
+def check_up(nolog: bool, Debug: str | None = None, Host: str | None = None, domain: str = 'meta.wikitide.org', verify: bool = True, force: bool = False, port: int = 443) -> bool:
     if verify is False:
         os.environ['PYTHONWARNINGS'] = 'ignore:Unverified HTTPS request'
     if not Debug and not Host:
@@ -242,7 +242,7 @@ def _get_deployed_path(repo: str) -> str:
     return f'/srv/mediawiki/{repos[repo]}/'
 
 
-def _construct_rsync_command(time: Union[bool, str], dest: str, recursive: bool = True, local: bool = True, location: Optional[str] = None, server: Optional[str] = None) -> str:
+def _construct_rsync_command(time: bool | str, dest: str, recursive: bool = True, local: bool = True, location: str | None = None, server: str | None = None) -> str:
     if time:
         params = '--inplace'
     else:
@@ -261,7 +261,7 @@ def _construct_rsync_command(time: Union[bool, str], dest: str, recursive: bool 
     raise Exception(f'Error constructing command. Either server was missing or {location} != {dest}')
 
 
-def _construct_git_pull(repo: str, submodules: bool = False, branch: Optional[str] = None, quiet: bool = True, version: str = '') -> str:
+def _construct_git_pull(repo: str, submodules: bool = False, branch: str | None = None, quiet: bool = True, version: str = '') -> str:
     extrap = ' '
     if submodules:
         extrap += '--recurse-submodules '
