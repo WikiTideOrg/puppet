@@ -23,7 +23,7 @@ def syscheck(result: CommandInfo | int) -> CommandInfo:
     return result
 
 
-def get_commands(args: argparse.Namespace) -> CommandInfo:
+def get_commands(args: argparse.Namespace) -> CommandInfo | int:
     mw_versions = os.popen('getMWVersions all').read().strip()
     versions = {}
     if mw_versions:
