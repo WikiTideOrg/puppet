@@ -44,8 +44,6 @@ $warning_threshold = (int)$options['warning-threshold'];
 
 // Connect to the MySQL server
 $conn = mysqli_init();
-
-// Connect to the MySQL server
 $success = mysqli_real_connect( $conn, $host, $user, $pass, null, null, null, false );
 
 if ( !$success ) {
