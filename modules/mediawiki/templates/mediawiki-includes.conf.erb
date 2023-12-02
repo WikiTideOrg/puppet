@@ -81,9 +81,9 @@ location @wiki {
 location ~ ^/m/(.*) {
 	return 301 /wiki/Special:UrlRedirector/$1;
 }
-	
+
 location /sitemaps/ {
-	rewrite ^(.*)$ /sitemap.php;
+	rewrite ^/sitemaps/(.+)/sitemaps/(.+)$ https://static.wikitide.net/$1/sitemaps/$2 permanent;
 }
 
 location /static/ {
