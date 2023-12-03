@@ -203,12 +203,6 @@ class phorge (
         require => Git::Clone['phorge'],
     }
 
-    systemd::service { 'phd-wikitide':
-        ensure  => absent,
-        content => systemd_template('phd'),
-        require => File['/srv/phorge/phorge/conf/local/local.json'],
-    }
-
     systemd::service { 'phd':
         ensure  => present,
         content => systemd_template('phd'),
@@ -222,7 +216,7 @@ class phorge (
             http_expect => 'HTTP/1.1 200',
             http_ssl    => true,
             http_vhost  => 'phorge-static.wikitide.org',
-            http_uri    => 'https://phorge-static.wikitide.org/file/data/TODO'
+            http_uri    => 'https://phorge-static.wikitide.org/file/data/7sjwxbsvhvdefudvl2zy/PHID-FILE-xkbmfssquxx5jypongdr/logo'
         },
     }
 
