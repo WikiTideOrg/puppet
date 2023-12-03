@@ -1,5 +1,5 @@
 [Unit]
-Description=phorge-phd for wikitide
+Description=phorge-phd
 After=syslog.target network.target mysql.service
 Before=nginx.service
 
@@ -7,7 +7,6 @@ Before=nginx.service
 Type=forking
 User=www-data
 Group=www-data
-Environment=PHABRICATOR_ENV=custom/wikitide
 ExecStart=/srv/phorge/phorge/bin/phd start
 ExecStop=/srv/phorge/phorge/bin/phd stop --force
 RestartSec=10
