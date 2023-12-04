@@ -71,6 +71,7 @@ base::syslog::syslog_host: [ '10.0.0.117:10514' ]
 
 # Firewall
 base::firewall::bastion_public_ips:
+  - '63.141.240.2'
   - '63.141.240.3'
   - '2604:4300:a:24::114'
 
