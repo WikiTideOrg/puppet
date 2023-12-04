@@ -51,7 +51,7 @@ node 'jobrunner1.wikitide.net' {
 node 'mail1.wikitide.net' {
     include base
     include role::mail
-    include role::roundcubemail
+    include role::snappymail
 }
 
 node 'ldap1.wikitide.net' {
