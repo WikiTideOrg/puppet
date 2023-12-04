@@ -88,3 +88,6 @@ role::mediawiki::mcrouter::shards:
   wikitide:
     shard01:
       host: 10.0.0.106
+
+prometheus::exporter::mcrouter::mcrouter_port: 11213
+prometheus::exporter::mcrouter::listen_port: 9151
