@@ -89,7 +89,7 @@ class prometheus::exporter::node (
     }
 
     $firewall_rules_str = join(
-        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Prometheus] or Class[Role::Cloud]", ['networking'])
+        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Prometheus]", ['networking'])
         .map |$key, $value| {
             "${value['networking']['ip']} ${value['networking']['ip6']}"
         }
@@ -101,6 +101,6 @@ class prometheus::exporter::node (
     ferm::service { 'prometheus node-exporter':
         proto  => 'tcp',
         port   => '9100',
-        srange => "(${firewall_rules_str})",
+        srange => "(${firewall_rules_str} 63.141.240.2)",
     }
 }
