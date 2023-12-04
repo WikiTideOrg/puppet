@@ -18,4 +18,20 @@ class prometheus::exporter::nutcracker {
         ensure  => running,
         require => Package['prometheus-nutcracker-exporter'],
     }
+
+    $firewall_rules_str = join(
+        query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Prometheus]", ['networking'])
+        .map |$key, $value| {
+            "${value['networking']['ip']} ${value['networking']['ip6']}"
+        }
+        .flatten()
+        .unique()
+        .sort(),
+        ' '
+    )
+    ferm::service { 'prometheus nutcracker_exporter':
+        proto  => 'tcp',
+        port   => '9191',
+        srange => "(${firewall_rules_str})",
+    }
 }
