@@ -151,10 +151,10 @@ class snappymail (
     }
 
     file { '/var/lib/snappymail':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        mode    => '0640',
+        ensure => directory,
+        owner  => 'www-data',
+        group  => 'www-data',
+        mode   => '0640',
     }
 
     file { '/var/log/snappymail':

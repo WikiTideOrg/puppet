@@ -24,10 +24,10 @@ class role::snappymail (
 ) {
 
     class { 'snappymail':
-        db_host               => $db_host,
-        db_name               => $db_name,
-        db_user_name          => $db_user_name,
-        db_user_password      => $db_user_password ,
+        db_host          => $db_host,
+        db_name          => $db_name,
+        db_user_name     => $db_user_name,
+        db_user_password => $db_user_password ,
     }
 
     $firewall_rules_str = join(
