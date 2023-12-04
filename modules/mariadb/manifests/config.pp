@@ -10,6 +10,10 @@ class mariadb::config(
     String                      $icinga_password              = undef,
     Optional[Integer]           $server_id                    = undef,
 ) {
+    $exporter_password = lookup('passwords::db::exporter')
+    $ido_db_user_password = lookup('passwords::icinga_ido')
+    $icingaweb2_db_user_password = lookup('passwords::icingaweb2')
+    $roundcubemail_password = lookup('passwords::roundcubemail')
     $mariadb_replica_password = lookup('passwords::mariadb_replica_password')
 
     file { '/etc/my.cnf':
@@ -112,8 +116,6 @@ class mariadb::config(
             mysql_hostname => $facts['networking']['fqdn'],
             mysql_username => 'icinga',
             mysql_password => $icinga_password,
-            mysql_ssl      => true,
-            mysql_cacert   => '/etc/ssl/certs/ISRG_Root_X1.pem',
         },
     }
 
@@ -124,8 +126,6 @@ class mariadb::config(
             mysql_hostname  => $facts['networking']['fqdn'],
             mysql_username  => 'icinga',
             mysql_password  => $icinga_password,
-            mysql_ssl       => true,
-            mysql_cacert    => '/etc/ssl/certs/ISRG_Root_X1.pem', # Let's Encrypt
             warning         => '80%',
             critical        => '90%',
             max_connections => $max_connections,

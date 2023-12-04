@@ -70,6 +70,13 @@ class prometheus (
     $servers = query_nodes('Class[Base]')
               .flatten()
               .unique()
+              .map |$server| {
+                  if $server =~ /cp1|mw\d+|mail\d+|matomo\d+|ns\d+|phorge\d+/ {
+                      regsubst($server, '\.wikitide\.net', '-private.wikitide.net')
+                  } else {
+                      $server
+                  }
+              }
               .sort()
 
     file { '/etc/prometheus/targets/nodes.yaml':

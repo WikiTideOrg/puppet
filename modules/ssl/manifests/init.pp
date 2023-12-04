@@ -87,9 +87,9 @@ class ssl {
 
     file { '/root/ssl':
         ensure  => link,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0770',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0770',
         target  => '/srv/ssl/ssl',
         require => File['/srv/ssl/ssl'],
     }
