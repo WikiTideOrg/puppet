@@ -10,6 +10,10 @@ class mariadb::config(
     String                      $icinga_password              = undef,
     Optional[Integer]           $server_id                    = undef,
 ) {
+    $exporter_password = lookup('passwords::db::exporter')
+    $ido_db_user_password = lookup('passwords::icinga_ido')
+    $icingaweb2_db_user_password = lookup('passwords::icingaweb2')
+    $roundcubemail_password = lookup('passwords::roundcubemail')
     $mariadb_replica_password = lookup('passwords::mariadb_replica_password')
 
     file { '/etc/my.cnf':
