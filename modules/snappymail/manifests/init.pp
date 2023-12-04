@@ -48,7 +48,7 @@ class snappymail (
     $php_version = lookup('php::php_version', {'default_value' => '8.2'})
 
     # Install the runtime
-    class { '::php':
+    class { 'php':
         ensure         => present,
         version        => $php_version,
         sapis          => ['cli', 'fpm'],
@@ -65,7 +65,7 @@ class snappymail (
         }
     }
 
-    class { '::php::fpm':
+    class { 'php::fpm':
         ensure => present,
         config => {
             'emergency_restart_interval'  => '60s',
@@ -122,20 +122,11 @@ class snappymail (
         'nodejs',
     ])
 
-    git::clone { 'snappymail':
-        directory => '/srv/snappymail',
-        origin    => 'https://github.com/the-djmaze/snappymail',
-        branch    => 'v2.29.4', # Current stable
-        owner     => 'www-data',
-        group     => 'www-data',
-    }
-
     file { '/usr/share/snappymail/include.php':
         ensure  => present,
         content => template('snappymail/include.php.erb'),
         owner   => 'www-data',
         group   => 'www-data',
-        require => Git::Clone['snappymail'],
     }
 
     ssl::wildcard { 'snappymail wildcard': }
