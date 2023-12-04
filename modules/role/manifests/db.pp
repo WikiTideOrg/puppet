@@ -5,6 +5,7 @@ class role::db (
     Optional[Array[String]] $monthly_misc = lookup('role::db::monthly_misc', {'default_value' => []})
 ) {
     include mariadb::packages
+    include prometheus::exporter::mariadb
 
     $mediawiki_password = lookup('passwords::db::mediawiki')
     $wikiadmin_password = lookup('passwords::db::wikiadmin')
