@@ -3,10 +3,16 @@
 # == Properties
 #
 class role::mediawiki::mcrouter(
-    Integer      $num_proxies        = lookup('role::mediawiki::mcrouter::num_proxies', {'default_value' => 5}),
-    Integer      $timeouts_until_tko = lookup('role::mediawiki::mcrouter::timeouts_until_tko', {'default_value' => 10}),
-    Hash         $servers_by_dc      = lookup('role::mediawiki::mcrouter::shards')
+    Integer       $num_proxies        = lookup('role::mediawiki::mcrouter::num_proxies', {'default_value' => 5}),
+    Integer       $timeouts_until_tko = lookup('role::mediawiki::mcrouter::timeouts_until_tko', {'default_value' => 10}),
+    Hash          $servers_by_dc      = lookup('role::mediawiki::mcrouter::shards'),
+    Stdlib::Port  $mcrouter_port      = lookup('prometheus::exporter::mcrouter::mcrouter_port'),
+    Stdlib::Port  $listen_port        = lookup('prometheus::exporter::mcrouter::listen_port'),
 ) {
+
+    prometheus::exporter::mcrouter { 'default':
+        arguments => "-mcrouter.address localhost:${mcrouter_port} -web.listen-address :${listen_port} -mcrouter.server_metrics",
+    }
 
     # Server pools
     $pools = $servers_by_dc.map |$dc, $servers| {
