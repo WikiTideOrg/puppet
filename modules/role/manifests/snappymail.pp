@@ -20,7 +20,7 @@ class role::snappymail (
     String $db_host               = 'db1.wikitide.net',
     String $db_name               = 'snappymail',
     String $db_user_name          = 'snappymail',
-    String $db_user_password      = lookup('passwords::snappymail'),
+    String $db_user_password      = lookup('passwords::roundcubemail'),
 ) {
 
     class { 'snappymail':
