@@ -67,7 +67,7 @@ class prometheus (
         refreshonly => true,
     }
 
-    $servers = query_nodes("networking.domain='${facts['networking']['domain']}'", 'networking.fqdn')
+    $servers = query_nodes('Class[Base]')
               .flatten()
               .unique()
               .sort()
