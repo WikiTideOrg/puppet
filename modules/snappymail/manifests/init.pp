@@ -1,9 +1,4 @@
-class snappymail (
-    String $db_host               = 'db1.wikitide.net',
-    String $db_name               = 'snappymail',
-    String $db_user_name          = 'snappymail',
-    String $db_user_password      = undef,
-) {
+class snappymail {
     $config_cli = {
         'include_path'           => '".:/usr/share/php"',
         'error_log'              => 'syslog',
