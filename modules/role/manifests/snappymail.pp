@@ -2,33 +2,8 @@
 #
 # Sets up a web based mail server.
 #
-# = Parameters
-#
-# [*db_host*]
-#   The database hostname to connect to.
-#
-# [*db_name*]
-#   The database name to use.
-#
-# [*db_user_name*]
-#   The database user to use to connect to the database.
-#
-# [*db_user_password*]
-#   The database user password to use to connect to the datbase.
-#
-class role::snappymail (
-    String $db_host               = 'db1.wikitide.net',
-    String $db_name               = 'snappymail',
-    String $db_user_name          = 'snappymail',
-    String $db_user_password      = lookup('passwords::snappymail'),
-) {
-
-    class { 'snappymail':
-        db_host          => $db_host,
-        db_name          => $db_name,
-        db_user_name     => $db_user_name,
-        db_user_password => $db_user_password ,
-    }
+class role::snappymail {
+    include snappymail
 
     $firewall_rules_str = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Varnish] or Class[Role::Icinga2]", ['networking'])
