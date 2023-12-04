@@ -11,7 +11,6 @@ class base {
     include base::firewall
     include base::monitoring
     include base::backup
-    include base::monitoring
     include ssh
     include users
 
