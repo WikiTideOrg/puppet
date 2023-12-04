@@ -8,7 +8,7 @@ class matomo (
     git::clone { 'matomo':
         directory          => '/srv/matomo',
         origin             => 'https://github.com/matomo-org/matomo',
-        branch             => '4.15.1', # Current stable
+        branch             => '4.16.0', # Current stable
         recurse_submodules => true,
         owner              => 'www-data',
         group              => 'www-data',
@@ -180,13 +180,13 @@ class matomo (
 
     # Create concurrent archivers
     # https://matomo.org/faq/on-premise/how-to-set-up-auto-archiving-of-your-reports/
-    $concurrentHash = {
+    $concurrent_hash = {
         '1' => '*-*-* 00/8:00:00',
         '2' => '*-*-* 00/8:01:00',
         '3' => '*-*-* 00/8:02:00',
         '4' => '*-*-* 00/8:03:00',
     }
-    $concurrentHash.each | String $concurrent, String $interval | {
+    $concurrent_hash.each | String $concurrent, String $interval | {
         systemd::timer::job { "matomo-archiver-${concurrent}":
             description       => "Runs the Matomo's archive process.",
             command           => "/bin/bash -c '${archiver_command}'",

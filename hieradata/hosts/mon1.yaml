@@ -1,7 +1,5 @@
 icinga_ido_db_host: 'db1.wikitide.net'
 icingaweb_db_host: 'db1.wikitide.net'
-grafana_db_host: 'db1.wikitide.net'
-
 
 icinga2_api_bind_host: '::'
 
