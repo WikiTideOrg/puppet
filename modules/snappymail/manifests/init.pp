@@ -130,7 +130,7 @@ class snappymail (
         group     => 'www-data',
     }
 
-    file { '/srv/snappymail/include.php':
+    file { '/usr/share/snappymail/include.php':
         ensure  => present,
         content => template('snappymail/include.php.erb'),
         owner   => 'www-data',
