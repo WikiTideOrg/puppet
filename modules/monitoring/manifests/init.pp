@@ -13,8 +13,8 @@ class monitoring (
         'python3-dnspython',
         'python3-filelock',
         'python3-flask',
-        'python3-tldextract',
         'python3-phabricator',
+        'python3-tldextract',
     ])
 
     group { 'nagios':
