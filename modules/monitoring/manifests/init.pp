@@ -199,6 +199,13 @@ class monitoring (
         mode   => '0755',
     }
 
+    file { '/etc/icinga2/eventhandlers/raid_handler':
+        source  => 'puppet:///modules/monitoring/eventhandlers/raid_handler.py',
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
+    }
+
     file { '/etc/phorge_sre-monitoring-bot.conf':
         ensure  => 'present',
         content => template('monitoring/bot/phorge_sre-monitoring-bot.conf.erb'),
@@ -231,14 +238,6 @@ class monitoring (
 
     file { '/usr/lib/nagios/plugins/check_mysql_connections.php':
         source  => 'puppet:///modules/monitoring/check_mysql_connections.php',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        require => Package['nagios-nrpe-plugin'],
-    }
-
-    file { '/usr/lib/nagios/plugins/get-raid-status-perccli.py':
-        source  => 'puppet:///modules/raid/get-raid-status-perccli',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
