@@ -199,11 +199,19 @@ class monitoring (
         mode   => '0755',
     }
 
+    file { '/etc/icinga2/eventhandlers':
+        ensure => 'directory',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
+    }
+
     file { '/etc/icinga2/eventhandlers/raid_handler':
         source  => 'puppet:///modules/monitoring/eventhandlers/raid_handler.py',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
+        require => File['/etc/icinga2/eventhandlers'],
     }
 
     file { '/etc/phorge_sre-monitoring-bot.conf':
