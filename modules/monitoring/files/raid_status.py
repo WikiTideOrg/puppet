@@ -24,8 +24,8 @@ SKIP_STRINGS = ('timeout', 'timed out', 'connection refused', 'out of bounds',
                 'must have write cache policy', 'Could not complete SSL handshake',
                 r'Command check_raid_[^ ]+ not defined', 'Connection reset by peer')
 
-LOG_PATH = '/var/log/icinga/raid_handler.log'
-COMMAND_FILE = '/var/lib/icinga/rw/icinga.cmd'
+LOG_PATH = '/var/log/icinga2/raid_handler.log'
+IRC_LOG = '/var/log/icinga2/irc.log'
 CHECK_NRPE_PATH = '/usr/lib/nagios/plugins/check_nrpe'
 
 NRPE_REMOTE_COMMAND = 'get_raid_status_{}'
@@ -205,7 +205,7 @@ def acknowledge_nagios_alert(host, service_description, task_id):
     ).format(time=int(time.time()), host=host, service=service_description,
              message=ACK_MESSAGE.format(task_id=task_id))
 
-    with open(COMMAND_FILE, 'w') as f:
+    with open(IRC_LOG, 'a') as f:
         f.write(message)
 
     logger.debug('Acknowledged Nagios/Icinga alert: {}'.format(message))
