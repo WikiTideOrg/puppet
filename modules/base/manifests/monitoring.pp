@@ -1,5 +1,16 @@
 # base::monitoring
-class base::monitoring {
+class base::monitoring (
+    VMlib::Ensure                               $hardware_monitoring     = lookup('base::monitoring::hardware_monitoring'),
+    Boolean                                     $raid_check              = lookup('base::monitoring::raid_check'),
+    Optional[Enum['WriteThrough', 'WriteBack']] $raid_write_cache_policy = lookup('base::monitoring::raid_write_cache_policy'),
+) {
+    if $raid_check and $hardware_monitoring == 'present' {
+        # RAID checks
+        class { 'raid':
+            write_cache_policy => $raid_write_cache_policy,
+        }
+    }
+
     include prometheus::exporter::node
 
     $nagios_packages = [ 'monitoring-plugins', 'nagios-nrpe-server', ]
