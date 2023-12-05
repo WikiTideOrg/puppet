@@ -3,7 +3,7 @@
 class raid::perccli {
     include raid
 
-    ensure_packages('perccli')
+    stdlib::ensure_packages('perccli')
 
     file { '/usr/lib/nagios/plugins/get-raid-status-perccli.py':
         source  => 'puppet:///modules/raid/get-raid-status-perccli',
