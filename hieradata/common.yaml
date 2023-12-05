@@ -1,4 +1,6 @@
 base::monitoring::hardware_monitoring: "absent"
+base::monitoring::raid_check_interval: 10
+base::monitoring::raid_retry_interval: 10
 base::monitoring::raid_check: false
 base::monitoring::raid_write_cache_policy: ~
 
