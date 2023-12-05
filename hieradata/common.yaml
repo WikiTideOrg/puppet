@@ -1,3 +1,7 @@
+base::monitoring::hardware_monitoring: "absent"
+base::monitoring::raid_check: false
+base::monitoring::raid_write_cache_policy: ~
+
 jobrunner: false
 jobrunner::intensive: false
 
