@@ -14,8 +14,8 @@ mediawiki::multiversion::versions:
   '1.41':
     branch: 'REL1_41'
 
-puppetserver_hostname: puppet1.wikitide.net
-role::salt::minions::salt_master: 'puppet1.wikitide.net'
+puppetserver_hostname: puppet21.wikitide.net
+role::salt::minions::salt_master: 'puppet21.wikitide.net'
 mediawiki::use_staging: false
 mediawiki::is_canary: false
 mediawiki::default_sync: 'all'

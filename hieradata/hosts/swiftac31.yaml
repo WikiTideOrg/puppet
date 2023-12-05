@@ -131,4 +131,4 @@ prometheus::exporter::statsd_exporter::mappings:
       method: "$2"
       status: "$3"
 
-puppetserver_hostname: 'puppet1.wikitide.net'
+puppetserver_hostname: 'puppet21.wikitide.net'

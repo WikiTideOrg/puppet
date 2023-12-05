@@ -6,4 +6,4 @@ role::opensearch::master_hosts:
   - os1
 
 base::syslog::rsyslog_udp_localhost: true
-puppetserver_hostname: 'puppet1.wikitide.net'
+puppetserver_hostname: 'puppet21.wikitide.net'

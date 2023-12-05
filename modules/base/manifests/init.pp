@@ -44,7 +44,7 @@ class base {
         ensure     => present,
         uid        => 3100,
         ssh_keys   => [
-            'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA19+kKxtUbOfY2nnhlg7c1k+ZHQyxR2PVykYL3zQgB5 salt-user@puppet1'
+            'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA19+kKxtUbOfY2nnhlg7c1k+ZHQyxR2PVykYL3zQgB5 salt-user@puppet21'
         ],
         privileges => ['ALL = (ALL) NOPASSWD: ALL'],
     }
@@ -64,4 +64,13 @@ class base {
         mode   => '0444',
         source => 'puppet:///modules/base/environment/bash.bashrc',
     }
+
+    # Global bash defaults
+    file { '/etc/skel/.bashrc':
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0444',
+        source => 'puppet:///modules/base/environment/.bashrc',
+    }
+
 }

@@ -199,4 +199,4 @@ role::memcached::size: 128
 role::memcached::extended_options: []
 role::memcached::port: 11211
 
-puppetserver_hostname: 'puppet1.wikitide.net'
+puppetserver_hostname: 'puppet21.wikitide.net'
