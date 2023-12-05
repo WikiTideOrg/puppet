@@ -17,8 +17,8 @@ from phabricator import Phabricator
 SERVICE_STATES = ('OK', 'UNKNOWN', 'WARNING', 'CRITICAL')
 SERVICE_STATE_TYPES = ('SOFT', 'HARD')
 
-RAID_TYPES = ('megacli', 'hpssacli', 'mpt', 'md', 'perccli', 'ssacli', 'n/a')
-COMPRESSED_RAID_TYPES = ('megacli', 'hpssacli', 'ssacli')
+RAID_TYPES = ('megacli', 'perccli', 'n/a')
+COMPRESSED_RAID_TYPES = ('megacli')
 
 SKIP_STRINGS = ('timeout', 'timed out', 'connection refused', 'out of bounds',
                 'must have write cache policy', 'Could not complete SSL handshake',
