@@ -3,7 +3,7 @@
 class raid::megaraid {
     include raid
 
-    ensure_packages('megacli')
+    stdlib::ensure_packages('megacli')
 
     file { '/usr/lib/nagios/plugins/get_raid_status_megacli.py':
         source  => 'puppet:///modules/raid/get_raid_status_megacli',
