@@ -254,14 +254,13 @@ def main():
             command=NRPE_REMOTE_COMMAND.format(args.raid_type).replace('_', '-'),
             status=get_raid_status(args.host_address, args.raid_type))
 
-    # phorge_client = get_phorge_client()
-    # project_ids = get_phorge_project_ids(phorge_client)
+    phorge_client = get_phorge_client()
+    project_ids = get_phorge_project_ids(phorge_client)
 
     icinga_url = ICINGA_URL.format(
         host=args.host_address, service=args.service_description)
-    # task_id = open_phorge_task(phorge_client, project_ids, args.host_address,
-     #                               args.raid_type, raid_status, icinga_url)
-    task_id = -1
+    task_id = open_phorge_task(phorge_client, project_ids, args.host_address,
+                                   args.raid_type, raid_status, icinga_url)
     acknowledge_nagios_alert(
         args.host_address, args.service_description, task_id)
 
