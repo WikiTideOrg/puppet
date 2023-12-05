@@ -27,7 +27,7 @@ Facter.add('raid_mgmt_tools') do
   end
 end
 
-# Enable calling directly as a bypass
+# Enable calling directly
 if $PROGRAM_NAME == __FILE__
   require 'json'
   puts JSON.dump({ :raid => Facter.value('raid_mgmt_tools') })
