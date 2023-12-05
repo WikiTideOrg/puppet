@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Megaraid controler
-class raid::perccli {
+class raid::megaraid {
     include raid
 
     ensure_packages('megacli')
