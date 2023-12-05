@@ -30,7 +30,7 @@ CHECK_NRPE_PATH = '/usr/lib/nagios/plugins/check_nrpe'
 
 NRPE_REMOTE_COMMAND = 'get_raid_status_{}'
 ACK_MESSAGE = 'RAID handler auto-ack: https://issue-tracker.wikitide.org/T{task_id}'
-ICINGA_URL = ('https://monitoring.wikitide.net/cgi-bin/icinga/extinfo.cgi?type=2&'
+ICINGA_URL = ('https://monitoring.wikitide.net/dashboard#!/monitoring/service/show?'
               'host={host}&service={service}')
 
 PHORGE_CONFIG_FILE = '/etc/phorge_sre-monitoring-bot.conf'
