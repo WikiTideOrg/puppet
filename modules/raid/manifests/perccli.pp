@@ -12,8 +12,7 @@ class raid::perccli {
     }
 
     monitoring::nrpe { 'get_raid_status_perccli':
-        command   => '/usr/local/lib/nagios/plugins/get-raid-status-perccli',
-        sudo_user => 'root',
+        command => '/usr/local/lib/nagios/plugins/get-raid-status-perccli',
     }
 
     monitoring::services { 'Dell PowerEdge RAID Controller':
