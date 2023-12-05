@@ -1,7 +1,6 @@
 # class: role::cloud
 class role::cloud {
     include ::cloud
-    include raid::perccli
 
     $firewall_rules_str = join(
         query_facts("networking.domain='${facts['networking']['domain']}' and Class[Role::Cloud]", ['networking'])
