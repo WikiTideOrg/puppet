@@ -4,6 +4,7 @@ class monitoring (
     String $db_user               = 'icinga2',
     String $db_password           = undef,
     String $wikitidebots_password = undef,
+    String $phorge_token          = undef,
     String $ticket_salt           = '',
     Optional[String] $icinga2_api_bind_host = undef,
 ) {
@@ -13,6 +14,7 @@ class monitoring (
         'python3-filelock',
         'python3-flask',
         'python3-tldextract',
+        'python3-phabricator',
     ])
 
     group { 'nagios':
@@ -195,6 +197,15 @@ class monitoring (
         owner  => 'root',
         group  => 'root',
         mode   => '0755',
+    }
+
+    file { '/etc/phorge_sre-monitoring-bot.conf':
+        ensure  => 'present',
+        content => template('monitoring/bot/phorge_sre-monitoring-bot.conf.erb'),
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0664',
+        require => Package['python3-phabricator'],
     }
 
     # includes a irc bot to relay messages from icinga to irc
