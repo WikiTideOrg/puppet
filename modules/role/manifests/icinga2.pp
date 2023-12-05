@@ -19,9 +19,6 @@
 # [*wikitidebots_password*]
 #   IRCEcho password
 #
-# [*phorge_token*]
-#  Token for SRE monitoring bot on Phorge
-#
 # [*icingaweb2_db_host*]
 #   The database host that houses icingaweb2 database.
 #
@@ -55,7 +52,6 @@ class role::icinga2 (
     String $icinga2_db_user                 = lookup('icinga_ido_user_name', {'default_value' => 'icinga2'}),
     String $ido_db_user_password            = lookup('passwords::icinga_ido'),
     String $wikitidebots_password           = lookup('passwords::irc::wikitidebots'),
-    String $phorge_token                    = lookup('passwords::monitoring::phorge_token'),
     String $icingaweb2_db_host              = lookup('icingaweb_db_host', {'default_value' => 'db1.wikitide.net'}),
     String $icingaweb2_db_name              = lookup('icingaweb_db_name', {'default_value' => 'icingaweb2'}),
     String $icingaweb2_db_user_name         = lookup('icingaweb_user_name', {'default_value' => 'icingaweb2'}),
@@ -74,7 +70,6 @@ class role::icinga2 (
         db_password           => $ido_db_user_password ,
         icinga2_api_bind_host => $icinga2_api_bind_host,
         wikitidebots_password => $wikitidebots_password,
-        phorge_token          => $phorge_token,
         ticket_salt           => $ticket_salt,
     }
 
