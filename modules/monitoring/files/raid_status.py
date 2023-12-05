@@ -33,7 +33,7 @@ ACK_MESSAGE = 'RAID handler auto-ack: https://issue-tracker.wikitide.org/T{task_
 ICINGA_URL = ('https://monitoring.wikitide.net/cgi-bin/icinga/extinfo.cgi?type=2&'
               'host={host}&service={service}')
 
-PHORGE_CONFIG_FILE = '/etc/phorge-monitoring-bot.conf'
+PHORGE_CONFIG_FILE = '/etc/phorge_sre-monitoring-bot.conf'
 PHORGE_TAG = 'sre'
 PHORGE_TASK_TITLE = "Degraded RAID on {host}"
 PHORGE_TASK_DESCRIPTION_PREFIX = (
