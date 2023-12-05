@@ -72,15 +72,6 @@ class mediawiki::jobqueue::runner (
         if $wiki == 'metawikitide' {
             $swift_password = lookup('mediawiki::swift_password')
 
-            stdlib::ensure_packages(
-                'boto3',
-                {
-                    ensure   => '1.26.144',
-                    provider => 'pip3',
-                    require  => Package['python3-pip'],
-                },
-            )
-
             cron { 'generate sitemap index':
                 ensure  => present,
                 command => "/usr/bin/python3 /srv/mediawiki/${version}/extensions/WikiTideMagic/py/generateSitemapIndex.py -A https://swift-lb.wikitide.net/auth/v1.0 -U mw:media -K ${swift_password} >> /var/log/mediawiki/cron/generate-sitemap-index.log",
