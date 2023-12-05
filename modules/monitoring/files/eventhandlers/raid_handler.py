@@ -140,8 +140,7 @@ def get_phorge_client():
 def get_phorge_project_ids(phorge_client):
     """ Return a list of Phorge's projectPHID
 
-        Find the project IDs of the requested Phorge tag and add the one of
-        Operations group.
+        Find the project ID of the requested Phorge tag.
 
         Arguments:
         phorge_client -- a Phorge client instance
@@ -155,7 +154,7 @@ def get_phorge_project_ids(phorge_client):
             project_name, projects))
         raise RuntimeError("Unable to find PHID")
 
-    logger.debug("Found PHIDs '{}' for project '{}' and Operations".format(
+    logger.debug("Found PHID '{}' for project '{}'".format(
         list(projects.data.keys()), project_name))
 
     return list(projects.data.keys())
