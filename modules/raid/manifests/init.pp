@@ -15,6 +15,8 @@
 
 class raid (
     $write_cache_policy = undef,
+    $check_interval = 10,
+    $retry_interval = 10,
 ) {
 
 class raid {
