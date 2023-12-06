@@ -1,6 +1,10 @@
 # == Class: cloud
 
-class cloud {
+class cloud (
+    VMlib::Ensure $hardware_monitoring = lookup('base::monitoring::hardware_monitoring'),
+    Boolean       $check_ipmi          = lookup('cloud::check_ipmi'),
+    Boolean       $check_smart         = lookup('cloud::check_smart'),
+) {
     file { '/etc/apt/trusted.gpg.d/proxmox.gpg':
         ensure => present,
         source => 'puppet:///modules/cloud/key/proxmox.gpg',
@@ -44,17 +48,17 @@ class cloud {
 
     stdlib::ensure_packages(['freeipmi-tools'])
 
-    if ( $facts['dmi']['manufacturer'] == 'HP' ) {
-        monitoring::nrpe { 'IPMI Sensors':
-            command => '/usr/lib/nagios/plugins/check_ipmi_sensors --xT Memory'
+    if $hardware_monitoring == 'present' {
+        if $check_ipmi {
+            monitoring::nrpe { 'IPMI Sensors':
+                command => '/usr/lib/nagios/plugins/check_ipmi_sensors --xT Drive_Slot,Entity_Presence'
+            }
         }
 
-        monitoring::nrpe { 'SMART':
-            command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_smart -g /dev/sd[a-z] -i cciss,[0-6] -l -s'
-        }
-    } else {
-        monitoring::nrpe { 'IPMI Sensors':
-            command => '/usr/lib/nagios/plugins/check_ipmi_sensors --xT Drive_Slot,Entity_Presence'
+        if $check_smart {
+            monitoring::nrpe { 'SMART':
+                command => '/usr/bin/sudo /usr/lib/nagios/plugins/check_smart -g /dev/sd[a-z] -i cciss,[0-6] -l -s'
+            }
         }
     }
 }
