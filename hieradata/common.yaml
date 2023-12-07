@@ -23,7 +23,7 @@ mediawiki::use_shellbox: true
 mediawiki::jobqueue::wiki: 'metawikitide'
 mediawiki::monitoring::host: 'meta.wikitide.org'
 memcached_servers:
-  - 10.0.0.106:11211:1
+  - 10.0.2.4:11211:1
 varnish::interval-check: '5s'
 varnish::interval-timeout: '5s'
 varnish::backends:
