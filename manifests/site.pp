@@ -5,7 +5,7 @@ node /^cloud[1234]\.wikitide\.net$/ {
     include role::cloud
 }
 
-node 'bast21.wikitide.net' {
+node /^bast[23]1\.wikitide\.net$/ {
     include base
     include role::bastion
 }
@@ -26,7 +26,7 @@ node 'cp3.wikitide.net' {
     include role::varnish
 }
 
-node 'db21.wikitide.net' {
+node /^db[23]1\.wikitide\.net$/ {
     include base
     include role::db
 }
@@ -74,7 +74,7 @@ node 'mon21.wikitide.net' {
     include role::grafana
     include role::icinga2
 }
-node /^mw2[1234]\.wikitide\.net$/ {
+node /^mw[234][1234]\.wikitide\.net$/ {
     include base
     include role::mediawiki
 }
@@ -84,7 +84,7 @@ node 'ns1.wikitide.net' {
     include role::dns
 }
 
-node 'os21.wikitide.net' {
+node /^os[23]1\.wikitide\.net$/ {
     include base
     include role::opensearch
 }
