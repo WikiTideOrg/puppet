@@ -101,20 +101,20 @@ class mediawiki {
         require => File['/srv/mediawiki'],
     }
 
-    $wikiadmin_password                     = lookup('passwords::db::wikiadmin')
-    $mediawiki_password                     = lookup('passwords::db::mediawiki')
-    $redis_password                         = lookup('passwords::redis::master')
-    $ldap_password                          = lookup('profile::openldap::admin_password')
-    $noreply_password                       = lookup('passwords::mail::noreply')
-    $mediawiki_upgradekey                   = lookup('passwords::mediawiki::upgradekey')
-    $mediawiki_secretkey                    = lookup('passwords::mediawiki::wikitide::secretkey')
-    $hcaptcha_secretkey                     = lookup('passwords::hcaptcha::secretkey')
-    $shellbox_secretkey                     = lookup('passwords::shellbox::secretkey')
-    $matomotoken                            = lookup('passwords::mediawiki::matomotoken')
-    $discord_experimental_webhook           = lookup('mediawiki::discord_experimental_webhook')
-    $global_discord_webhook_url             = lookup('mediawiki::global_discord_webhook_url')
-    $swift_password                         = lookup('mediawiki::swift_password')
-    $mediawiki_externaldata_cslmodswikitide = lookup('mediawiki::externaldata_cslmodswikitide')
+    $wikiadmin_password                 = lookup('passwords::db::wikiadmin')
+    $mediawiki_password                 = lookup('passwords::db::mediawiki')
+    $redis_password                     = lookup('passwords::redis::master')
+    $ldap_password                      = lookup('profile::openldap::admin_password')
+    $noreply_password                   = lookup('passwords::mail::noreply')
+    $mediawiki_upgradekey               = lookup('passwords::mediawiki::upgradekey')
+    $mediawiki_secretkey                = lookup('passwords::mediawiki::wikitide::secretkey')
+    $hcaptcha_secretkey                 = lookup('passwords::hcaptcha::secretkey')
+    $shellbox_secretkey                 = lookup('passwords::shellbox::secretkey')
+    $matomotoken                        = lookup('passwords::mediawiki::matomotoken')
+    $discord_experimental_webhook       = lookup('mediawiki::discord_experimental_webhook')
+    $global_discord_webhook_url         = lookup('mediawiki::global_discord_webhook_url')
+    $swift_password                     = lookup('mediawiki::swift_password')
+    $mediawiki_externaldata_cslmodswiki = lookup('mediawiki::externaldata_cslmodswiki')
 
     file { '/srv/mediawiki/config/PrivateSettings.php':
         ensure  => 'present',
