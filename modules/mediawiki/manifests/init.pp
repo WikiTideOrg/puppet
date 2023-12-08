@@ -107,7 +107,7 @@ class mediawiki {
     $ldap_password                      = lookup('profile::openldap::admin_password')
     $noreply_password                   = lookup('passwords::mail::noreply')
     $mediawiki_upgradekey               = lookup('passwords::mediawiki::upgradekey')
-    $mediawiki_secretkey                = lookup('passwords::mediawiki::wikitide::secretkey')
+    $mediawiki_secretkey                = lookup('passwords::mediawiki::secretkey')
     $hcaptcha_secretkey                 = lookup('passwords::hcaptcha::secretkey')
     $shellbox_secretkey                 = lookup('passwords::shellbox::secretkey')
     $matomotoken                        = lookup('passwords::mediawiki::matomotoken')
