@@ -41,7 +41,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo | int:
     try:
         if args.extension:
             wiki = ''
-        elif args.arguments[0].endswith('wikitide') or args.arguments[0].endswith('nexttide') or args.arguments[0] in [*['all', 'wikitide', 'nexttide'], *validDBLists]:
+        elif args.arguments[0].endswith('wiki') or args.arguments[0].endswith('nexttide') or args.arguments[0] in [*['all', 'wikitide', 'nexttide'], *validDBLists]:
             wiki = args.arguments[0]
             args.arguments.remove(wiki)
             if args.arguments == []:
