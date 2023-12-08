@@ -6,7 +6,7 @@ mwservices: false
 
 jobrunner: true
 jobrunner::intensive: true
-mediawiki::jobqueue::runner::redis_ip: '10.0.0.105:6379'
+mediawiki::jobqueue::runner::redis_ip: '10.0.2.7:6379'
 
 mediawiki::is_canary: true
 mediawiki::use_staging: true
@@ -30,5 +30,3 @@ nginx::keepalive_timeout: 2
 nginx::keepalive_requests: 150
 nginx::logrotate_number: 2
 nginx::use_graylog: true
-
-puppetserver_hostname: 'puppet21.wikitide.net'

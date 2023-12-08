@@ -333,5 +333,5 @@ def test_ServersAction():
     parser.add_argument('--servers', action=ServersAction)
     with pytest.raises(SystemExit):
         parser.parse_args(['--servers', 'invalid_server'])
-    namespace = parser.parse_args(['--servers', 'mw1,mw2'])
-    assert namespace.servers == ['mw1', 'mw2']
+    namespace = parser.parse_args(['--servers', 'mw21,mw22'])
+    assert namespace.servers == ['mw21', 'mw22']
