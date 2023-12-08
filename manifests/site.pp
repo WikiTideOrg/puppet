@@ -123,7 +123,7 @@ node 'swiftobject31.wikitide.net' {
     include role::swift
 }
 
-node 'swiftproxy31.wikitide.net' {
+node 'swiftproxy21.wikitide.net' {
     include base
     include role::swift
 }
