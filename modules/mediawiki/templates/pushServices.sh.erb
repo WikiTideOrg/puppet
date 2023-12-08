@@ -12,7 +12,7 @@ git -C /srv/services/services/ config user.email "universalomega@wikitide.org"
 
 git -C /srv/services/services/ config user.name "WikiTideSSLBot"
 
-/usr/bin/php <%= @runner %>/srv/mediawiki/<%= @version %>/extensions/WikiTideMagic/maintenance/addWikiToServices.php --wiki=metawikitide
+/usr/bin/php <%= @runner %>/srv/mediawiki/<%= @version %>/extensions/WikiTideMagic/maintenance/addWikiToServices.php --wiki=metawiki
 
 git -C /srv/services/services/ add -A --all
 

@@ -34,7 +34,7 @@ class EnvironmentList(TypedDict):
 
 
 prod: Environment = {
-    'wikidbname': 'metawikitide',
+    'wikidbname': 'metawiki',
     'wikiurl': 'meta.wikitide.org',
     'servers': [
         'mw21',

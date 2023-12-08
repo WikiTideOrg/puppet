@@ -96,7 +96,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo | int:
             except KeyboardInterrupt:
                 sys.exit()
             list_script = {
-                'wikitide': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json {script}',
+                'wikitide': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases.json {script}',
                 'allfarms': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json {script}',
             }
             command_choice = list_script.get(list_choice)
@@ -123,7 +123,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo | int:
             except KeyboardInterrupt:
                 return 2
             generate_script = {
-                'wikitide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawikitide --extension={args.extension}',
+                'wikitide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension={args.extension}',
                 'nexttide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metanexttide --extension={args.extension}',
             }
             generate_choice = generate_script.get(farm_choice)

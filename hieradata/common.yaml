@@ -20,7 +20,7 @@ mediawiki::use_staging: false
 mediawiki::is_canary: false
 mediawiki::default_sync: 'all'
 mediawiki::use_shellbox: true
-mediawiki::jobqueue::wiki: 'metawikitide'
+mediawiki::jobqueue::wiki: 'metawiki'
 mediawiki::monitoring::host: 'meta.wikitide.org'
 memcached_servers:
   - 10.0.2.4:11211:1
