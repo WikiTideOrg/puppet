@@ -27,59 +27,58 @@ memcached_servers:
 varnish::interval-check: '5s'
 varnish::interval-timeout: '5s'
 varnish::backends:
-  mw1:
+  mw21:
     port: 8100
     probe: mwhealth
     pool: true
     xdebug: true
-    ip_address: 2604:4300:a:24::101
-  mw2:
+    ip_address: 23.95.103.21
+  mw22:
     port: 8101
     probe: mwhealth
     pool: true
     xdebug: true
-    ip_address: 2604:4300:a:24::102
-  test1:
+    ip_address: 23.95.103.22
+  test21:
     port: 8180
     probe: false
     pool: false
     xdebug: true
-    ip_address: 2604:4300:a:24::107
-  phorge1:
+    ip_address: 23.95.103.27
+  phorge21:
     port: 8200
     probe: false
     pool: false
-    ip_address: 2604:4300:a:24::108
-  puppet1:
+    ip_address: 23.95.103.26
+  puppet21:
     port: 8201
     probe: false
     pool: false
-    ip_address: 2604:4300:a:24::100
-  mail1:
+    ip_address: 23.95.103.20
+  mail21:
     port: 8202
     probe: false
     pool: false
-    ip_address: 2604:4300:a:24::110
-  matomo1:
+    ip_address: 23.95.103.24
+  matomo21:
     port: 8204
     probe: false
     pool: false
-    ip_address: 2604:4300:a:24::119
+    ip_address: 23.95.103.23
 
 # Logging
-base::syslog::syslog_host: [ '10.0.0.117:10514' ]
+base::syslog::syslog_host: [ '10.0.2.16:10514' ]
 
 # Firewall
 base::firewall::bastion_public_ips:
-  - '63.141.240.2'
-  - '63.141.240.3'
-  - '2604:4300:a:24::114'
+  - '23.95.103.18'
+  - '23.95.103.19'
 
 # Swift
 # TODO: Add support for class based hiera
 swift::storage::object_server_default_workers: 100
 
-role::swift::stats_reporter_host: swiftproxy1.wikitide.net
+role::swift::stats_reporter_host: swiftproxy21.wikitide.net
 
 swift::storage::devices:
   - sda

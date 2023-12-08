@@ -361,23 +361,23 @@ sub vcl_recv {
 		req.http.Host == "ssl.wikitide.net" ||
 		req.http.Host == "acme.wikitide.net"
 	) {
-		set req.backend_hint = puppet1;
+		set req.backend_hint = puppet21;
 		return (pass);
 	}
 
-	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikitide\.org)") {
-		set req.backend_hint = test1;
+	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test21|test)\.(wikitide\.org)") {
+		set req.backend_hint = test21;
 		return (pass);
 	}
 
 	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-	#	set req.backend_hint = test1;
+	#	set req.backend_hint = test21;
 	#	return (pass);
 	#}
 
 	# Only cache js files from Matomo
 	if (req.http.Host == "analytics.wikitide.net") {
-		set req.backend_hint = matomo1;
+		set req.backend_hint = matomo21;
 
 		# Yes, we only care about this file
 		if (req.url ~ "^/matomo.js") {
@@ -402,15 +402,15 @@ sub vcl_recv {
 	if (
 		req.http.Host == "issue-tracker.wikitide.org" ||
 		req.http.Host == "phorge-static.wikitide.org" ||
-		req.http.Host == "blog.wikitide.org"
+		req.http.Host == "tech.wikitide.org"
 	) {
-		set req.backend_hint = phorge1;
+		set req.backend_hint = phorge21;
 		return (pass);
 	}
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "webmail.wikitide.net") {
-		set req.backend_hint = mail1;
+		set req.backend_hint = mail21;
 		return (pass);
 	}
 
