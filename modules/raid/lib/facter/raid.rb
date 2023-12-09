@@ -15,10 +15,6 @@ Facter.add('raid_mgmt_tools') do
       words = line.split
       raids.push(pci_ids[words[1]]) if pci_ids.key?(words[1])
     end
-
-    if File.exists?('/proc/mdstat') && File.open('/proc/mdstat').grep(/md\d+\s+:\s+active/)
-      raids.push('md')
-    end
     raids.sort.uniq
   end
 end
