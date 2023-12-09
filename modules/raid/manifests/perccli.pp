@@ -6,10 +6,10 @@ class raid::perccli {
     stdlib::ensure_packages('perccli')
 
     file { '/usr/lib/nagios/plugins/get-raid-status-perccli':
-        source  => 'puppet:///modules/raid/get-raid-status-perccli.py',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
+        source => 'puppet:///modules/raid/get-raid-status-perccli.py',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
     }
 
     monitoring::nrpe { 'get_raid_status_perccli':
