@@ -33,8 +33,8 @@ class raid (
         warning('no raid controller detected')
     }
 
-    file { '/usr/lib/nagios/plugins/check-raid':
-        source => 'puppet:///modules/raid/check-raid.py',
+    file { '/usr/lib/nagios/plugins/check_raid':
+        source => 'puppet:///modules/raid/check_raid.py',
         owner  => 'root',
         group  => 'root',
         mode   => '0755',
