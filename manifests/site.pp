@@ -74,7 +74,7 @@ node 'mon21.wikitide.net' {
     include role::grafana
     include role::icinga2
 }
-node /^mw[234][1234]\.wikitide\.net$/ {
+node /^mw2[12]\.wikitide\.net$/ {
     include base
     include role::mediawiki
 }
