@@ -5,12 +5,11 @@ class raid::perccli {
 
     stdlib::ensure_packages('perccli')
 
-    file { '/usr/lib/nagios/plugins/get-raid-status-perccli.py':
-        source  => 'puppet:///modules/raid/get-raid-status-perccli',
+    file { '/usr/lib/nagios/plugins/get-raid-status-perccli':
+        source  => 'puppet:///modules/raid/get-raid-status-perccli.py',
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => Package['nagios-nrpe-plugin'],
     }
 
     monitoring::nrpe { 'get_raid_status_perccli':
@@ -18,7 +17,7 @@ class raid::perccli {
     }
 
     monitoring::services { 'Dell PowerEdge RAID Controller':
-        check_command  => '/usr/local/lib/nagios/plugins/get-raid-status-perccli',
+        check_command  => 'get_raid_status_perccli',
         check_interval => $raid::check_interval,
         retry_interval => $raid::retry_interval,
         event_command  => 'raid_handler',
