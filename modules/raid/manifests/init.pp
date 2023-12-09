@@ -38,6 +38,5 @@ class raid (
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => Package['nagios-nrpe-plugin'],
     }
 }
