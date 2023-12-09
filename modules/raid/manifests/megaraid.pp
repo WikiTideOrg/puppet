@@ -5,8 +5,8 @@ class raid::megaraid {
 
     stdlib::ensure_packages('megacli')
 
-    file { '/usr/lib/nagios/plugins/get_raid_status_megacli.py':
-        source => 'puppet:///modules/raid/get_raid_status_megacli',
+    file { '/usr/lib/nagios/plugins/get_raid_status_megacli':
+        source => 'puppet:///modules/raid/get_raid_status_megacli.py',
         owner  => 'root',
         group  => 'root',
         mode   => '0755',
