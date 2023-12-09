@@ -34,9 +34,9 @@ class raid (
     }
 
     file { '/usr/lib/nagios/plugins/check-raid':
-        source  => 'puppet:///modules/raid/check-raid.py',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
+        source => 'puppet:///modules/raid/check-raid.py',
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
     }
 }
