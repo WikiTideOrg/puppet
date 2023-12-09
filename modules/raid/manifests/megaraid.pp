@@ -10,7 +10,6 @@ class raid::megaraid {
         owner   => 'root',
         group   => 'root',
         mode    => '0755',
-        require => Package['nagios-nrpe-plugin'],
     }
 
     monitoring::nrpe { 'get_raid_status_megacli':
