@@ -19,8 +19,6 @@ class raid (
     $retry_interval = 10,
 ) {
 
-class raid {
-
     if empty($write_cache_policy) {
         $check_raid = '/usr/local/lib/nagios/plugins/check_raid'
     } else {
