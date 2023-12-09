@@ -17,7 +17,7 @@ class raid::perccli {
     }
 
     monitoring::services { 'Dell PowerEdge RAID Controller':
-        check_command  => 'get_raid_status_perccli',
+        check_command  => 'check_raid_perccli',
         check_interval => $raid::check_interval,
         retry_interval => $raid::retry_interval,
         event_command  => 'raid_handler',
