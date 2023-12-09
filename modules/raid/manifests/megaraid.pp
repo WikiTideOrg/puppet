@@ -17,7 +17,7 @@ class raid::megaraid {
     }
 
     monitoring::services { 'MegaRAID':
-        check_command  => 'check_raid_megacli',
+        check_command  => 'check_nrpe!check_raid_megacli!10',
         check_interval => $raid::check_interval,
         retry_interval => $raid::retry_interval,
         event_command  => 'raid_handler',
