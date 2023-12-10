@@ -75,7 +75,7 @@ class _WikiTideRewriteContext(WSGIContext):
                     r'^http://(?P<host>[^/]+)/(?P<proj>[^-/]+)/thumb/(?P<path>.+)',
                     encodedurl)
             if match:
-                proj = match.group('proj').removesuffix("wikitide")
+                proj = match.group('proj').removesuffix("wiki")
                 hostname = '%s.wikitide.net' % (proj)
                 # ok, replace the URL with just the part starting with thumb/
                 # take off the first two parts of the path.
