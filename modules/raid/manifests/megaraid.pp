@@ -23,8 +23,8 @@ class raid::megaraid {
         event_command  => 'raid_handler',
         vars           => {
             raid_controller => 'megacli',
-            nrpe_command => "check_get_raid_status_megacli",
-            nrpe_timeout => '60',
+            nrpe_command    => 'check_get_raid_status_megacli',
+            nrpe_timeout    => '60',
         },
     }
 }
