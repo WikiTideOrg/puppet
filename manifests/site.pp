@@ -5,7 +5,7 @@ node /^cloud[1234]\.wikitide\.net$/ {
     include role::cloud
 }
 
-node 'bast21.wikitide.net' {
+node /^bast[23]1\.wikitide\.net$/ {
     include base
     include role::bastion
 }
@@ -26,7 +26,7 @@ node 'cp3.wikitide.net' {
     include role::varnish
 }
 
-node 'db21.wikitide.net' {
+node /^db[23]1\.wikitide\.net$/ {
     include base
     include role::db
 }
@@ -51,7 +51,7 @@ node 'jobrunner21.wikitide.net' {
 node 'mail21.wikitide.net' {
     include base
     include role::mail
-    include role::roundcubemail
+    include role::snappymail
 }
 
 node 'ldap21.wikitide.net' {
@@ -74,17 +74,17 @@ node 'mon21.wikitide.net' {
     include role::grafana
     include role::icinga2
 }
-node /^mw2[1234]\.wikitide\.net$/ {
+node /^mw2[12]\.wikitide\.net$/ {
     include base
     include role::mediawiki
 }
 
-node 'ns21.wikitide.net' {
+node 'ns1.wikitide.net' {
     include base
     include role::dns
 }
 
-node 'os21.wikitide.net' {
+node /^os[23]1\.wikitide\.net$/ {
     include base
     include role::opensearch
 }
@@ -99,7 +99,7 @@ node 'prometheus21.wikitide.net' {
     include role::prometheus
 }
 
-node 'puppet1.wikitide.net' {
+node 'puppet21.wikitide.net' {
     include base
     include role::postgresql
     include puppetdb::database
@@ -123,7 +123,7 @@ node 'swiftobject31.wikitide.net' {
     include role::swift
 }
 
-node 'swiftproxy31.wikitide.net' {
+node 'swiftproxy21.wikitide.net' {
     include base
     include role::swift
 }

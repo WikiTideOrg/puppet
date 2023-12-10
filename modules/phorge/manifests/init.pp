@@ -4,8 +4,8 @@ class phorge (
 ) {
     stdlib::ensure_packages(['mariadb-client', 'python3-pygments', 'subversion'])
 
-    $wikitide_s3_access = lookup('phorge::aws_s3_access_key_wikitide')
-    $wikitide_s3_secret = lookup('phorge::aws_s3_access_secret_key_wikitide')
+    $s3_access = lookup('phorge::aws_s3_access_key_wikitide')
+    $s3_secret = lookup('phorge::aws_s3_access_secret_key_wikitide')
 
     $fpm_config = {
         'include_path'                    => '".:/usr/share/php"',
@@ -161,13 +161,6 @@ class phorge (
         group  => 'www-data',
     }
 
-    file { '/srv/phorge/repos/wikitide':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => File['/srv/phorge/repos'],
-    }
-
     file { '/srv/phorge/images':
         ensure => directory,
         mode   => '0755',
@@ -175,18 +168,11 @@ class phorge (
         group  => 'www-data',
     }
 
-    file { '/srv/phorge/phorge/conf/custom':
-        ensure  => directory,
-        owner   => 'www-data',
-        group   => 'www-data',
-        require => File['/srv/phorge'],
-    }
-
     $module_path = get_module_path($module_name)
     $phorge_yaml = loadyaml("${module_path}/data/config.yaml")
     $phorge_private = {
-        'amazon-s3.access-key' => $wikitide_s3_access,
-        'amazon-s3.secret-key' => $wikitide_s3_secret,
+        'amazon-s3.access-key' => $s3_access,
+        'amazon-s3.secret-key' => $s3_secret,
         'mysql.pass' => lookup('passwords::db::phorge'),
     }
 
@@ -212,27 +198,38 @@ class phorge (
 
     file { '/srv/phorge/phorge/conf/local/local.json':
         ensure  => present,
-        content => to_json_pretty($phorge_settings),
-        notify  => [
-            Service['phd-wikitide'],
-        ],
+        content => stdlib::to_json_pretty($phorge_settings),
+        notify  => Service['phd'],
         require => Git::Clone['phorge'],
     }
 
-    file { '/srv/phorge/phorge/conf/custom/wikitide.conf.php':
+    systemd::service { 'phd':
         ensure  => present,
-        source  => 'puppet:///modules/phorge/wikitide.conf.php',
-        notify  => [
-            Service['phd-wikitide'],
-        ],
-        require => Git::Clone['phorge'],
-    }
-
-    systemd::service { 'phd-wikitide':
-        ensure  => present,
-        content => systemd_template('phd-wikitide'),
+        content => systemd_template('phd'),
         restart => true,
         require => File['/srv/phorge/phorge/conf/local/local.json'],
+    }
+
+    monitoring::services { 'phorge-static.wikitide.org HTTPS':
+        check_command => 'check_http',
+        vars          => {
+            http_expect => 'HTTP/1.1 200',
+            http_ssl    => true,
+            http_vhost  => 'phorge-static.wikitide.org',
+            http_uri    => 'https://phorge-static.wikitide.org/file/data/7sjwxbsvhvdefudvl2zy/PHID-FILE-xkbmfssquxx5jypongdr/logo'
+        },
+    }
+
+    monitoring::services { 'issue-tracker.wikitide.org HTTPS':
+        check_command => 'check_http',
+        vars          => {
+            http_ssl   => true,
+            http_vhost => 'issue-tracker.wikitide.org',
+        },
+    }
+
+    monitoring::nrpe { 'phd':
+        command => '/usr/lib/nagios/plugins/check_procs -a phd -c 1:'
     }
 
     cron { 'backups-phorge':
@@ -242,5 +239,11 @@ class phorge (
         minute   => '0',
         hour     => '1',
         monthday => ['1', '15'],
+    }
+
+    monitoring::nrpe { 'Backups Phorge Static':
+        command  => '/usr/lib/nagios/plugins/check_file_age -w 1555200 -c 1814400 -f /var/log/phorge-backup.log',
+        docs     => 'https://meta.wikitide.org/wiki/Backups#General_backup_Schedules',
+        critical => true
     }
 }

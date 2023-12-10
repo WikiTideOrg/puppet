@@ -159,6 +159,8 @@ class SslCertificate:
         if self.private:
             print('Private key is being copied to /etc/puppetlabs/puppet/ssl-keys')
             os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /etc/puppetlabs/puppet/ssl-keys/{self.domain}.key')
+            print('Running chown to ensure /etc/puppetlabs/puppet/ssl-keys is owned by puppet:puppet')
+            os.system('chown -R puppet:puppet /etc/puppetlabs/puppet/ssl-keys')
 
     def renew_letsencrypt_certificate(self):
         self.newprivate = False
@@ -225,6 +227,8 @@ class SslCertificate:
         if self.private and self.newprivate is True:
             print('New private key is being copied to /etc/puppetlabs/puppet/ssl-keys')
             os.system(f'cp /etc/letsencrypt/live/{self.domain}/privkey.pem /etc/puppetlabs/puppet/ssl-keys/{domain}.key')
+            print('Running chown to ensure /etc/puppetlabs/puppet/ssl-keys is owned by puppet:puppet')
+            os.system('chown -R puppet:puppet /etc/puppetlabs/puppet/ssl-keys')
 
     def revoke_letsencrypt_certificate(self):
         if not self.quiet:

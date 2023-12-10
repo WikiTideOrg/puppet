@@ -1,0 +1,9 @@
+role::opensearch::master: true
+role::opensearch::data: true
+role::opensearch::discovery_host:
+  - os21.wikitide.net
+role::opensearch::master_hosts:
+  - os21
+
+base::syslog::rsyslog_udp_localhost: true
+puppetserver_hostname: 'puppet21.wikitide.net'

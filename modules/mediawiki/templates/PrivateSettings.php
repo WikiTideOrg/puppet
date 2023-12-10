@@ -35,5 +35,5 @@ $wgMatomoAnalyticsTokenAuth = '<%= @matomotoken %>';
 
 // Miscellaneous
 
-// External Data credentials for cslmodswikitide
-$wmgExternalDataCredsCslmodswikitide = '<%= @mediawiki_externaldata_cslmodswikitide %>';
+// External Data credentials for cslmodswiki
+$wmgExternalDataCredsCslmodswiki = '<%= @mediawiki_externaldata_cslmodswiki %>';

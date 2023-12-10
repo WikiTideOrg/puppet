@@ -31,10 +31,16 @@ class role::cloud {
         srange => "(${firewall_rules_str})",
     }
 
-    ferm::service { 'proxmox port 8006':
-        proto  => 'tcp',
-        port   => '8006',
+    ferm::service { 'proxmox port 4789':
+        proto  => 'udp',
+        port   => '4789',
         srange => "(${firewall_rules_str})",
+    }
+
+    ferm::service { 'proxmox port 8006':
+        proto => 'tcp',
+        port  => '8006',
+        # srange => "(${firewall_rules_str})", for now!
     }
 
     ferm::service { 'proxmox port 111':

@@ -20,9 +20,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install PyYAML
         run: pip3 install pyyaml
@@ -54,7 +54,7 @@ jobs:
   notify-irc:
     needs: check
     runs-on: ubuntu-latest
-    if: ${{ always() && github.repository_owner == 'WikiTideOrg' && ( github.ref	== 'refs/heads/master' || github.event_name == 'pull_request' ) }}
+    if: ${{ always() && github.repository_owner == 'WikiTideOrg' && ( github.ref == 'refs/heads/master' || github.event_name == 'pull_request' ) }}
     steps:
       - name: failed
         uses: technote-space/workflow-conclusion-action@v3

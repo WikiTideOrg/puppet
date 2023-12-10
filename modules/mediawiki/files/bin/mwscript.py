@@ -6,20 +6,24 @@ import argparse
 import os
 import json
 import sys
-from typing import TYPE_CHECKING, TypedDict
-if TYPE_CHECKING:
-    from typing import Optional
+from typing import TypedDict
 
 
 class CommandInfo(TypedDict):
     command: str
-    generate: Optional[str]
+    generate: str | None
     long: bool
     nolog: bool
     confirm: bool
 
 
-def get_commands(args: argparse.Namespace) -> CommandInfo:
+def syscheck(result: CommandInfo | int) -> CommandInfo:
+    if isinstance(result, int):
+        sys.exit(result)
+    return result
+
+
+def get_commands(args: argparse.Namespace) -> CommandInfo | int:
     mw_versions = os.popen('getMWVersions all').read().strip()
     versions = {}
     if mw_versions:
@@ -30,24 +34,24 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
     versionLists = tuple([f'{key}-wikis' for key in versions.keys()])
     validDBLists = ('active',) + versionLists
 
-    longscripts = ('compressOld.php', 'deleteBatch.php', 'importDump.php', 'importImages.php', 'nukeNS.php', 'rebuildall.php', 'rebuildImages.php', 'refreshLinks.php', 'runJobs.php', 'purgeList.php', 'cargoRecreateData.php')
+    longscripts = ('compressold', 'deletebatch', 'importdump', 'importimages', 'nukens', 'rebuildall', 'rebuildimages', 'refreshlinks', 'runjobs', 'purgelist', 'cargorecreatedata')
     long = False
     generate = None
 
     try:
         if args.extension:
             wiki = ''
-        elif args.arguments[0].endswith('wikitide') or args.arguments[0].endswith('nexttide') or args.arguments[0] in [*['all', 'wikitide', 'nexttide'], *validDBLists]:
+        elif args.arguments[0].endswith('wiki') or args.arguments[0].endswith('nexttide') or args.arguments[0] in [*['all', 'wikitide', 'nexttide'], *validDBLists]:
             wiki = args.arguments[0]
             args.arguments.remove(wiki)
             if args.arguments == []:
                 args.arguments = False
         else:
             print(f'First argument should be a valid wiki if --extension not given DEBUG: {args.arguments[0]} / {args.extension} / {[*["all"], *validDBLists]}')
-            sys.exit(2)
+            return 2
     except IndexError:
         print('Not enough Arguments given.')
-        sys.exit(2)
+        return 2
 
     if not args.version:
         dbname = wiki
@@ -58,34 +62,30 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
             args.version = versions.get(wiki[:-6])
 
     script = args.script
-    if not script.endswith('.php'):
-        if float(args.version) < 1.40:
-            print('Error: Use MediaWiki version 1.40 or greater (e.g. --version=1.40) to enable MaintenanceRunner')
-            sys.exit(2)
-        if float(args.version) >= 1.40 and not args.confirm:
-            print(f'WARNING: Please log usage of {longscripts}. Support for longscripts has not been added')
-            print('WARNING: Use of classes is not well tested. Please use with caution.')
-            if input(f"Type 'Y' to confirm (or any other key to stop - rerun without --version={args.version}): ").upper() != 'Y':
-                sys.exit(2)
+    if not script.endswith('.php') and float(args.version) < 1.40:
+        print('Error: Use MediaWiki version 1.40 or greater (e.g. --version=1.40) to use a class for MaintenanceRunner')
+        return 2
     if float(args.version) >= 1.40:
         runner = f'/srv/mediawiki/{args.version}/maintenance/run.php '
     else:
         runner = ''
     if script.endswith('.php'):  # assume class if not
         scriptsplit = script.split('/')
-        if script in longscripts:
+        if script.split('.')[0].lower() in longscripts:
             long = True
         if len(scriptsplit) == 1:
             script = f'{runner}/srv/mediawiki/{args.version}/maintenance/{script}'
         elif len(scriptsplit) == 2:
             script = f'{runner}/srv/mediawiki/{args.version}/maintenance/{scriptsplit[0]}/{scriptsplit[1]}'
-            if scriptsplit[1] in longscripts:
+            if scriptsplit[1].split('.')[0].lower() in longscripts:
                 long = True
         else:
             script = f'{runner}/srv/mediawiki/{args.version}/{scriptsplit[0]}/{scriptsplit[1]}/maintenance/{scriptsplit[2]}'
-            if scriptsplit[2] in longscripts:
+            if scriptsplit[2].split('.')[0].lower() in longscripts:
                 long = True
     else:
+        if script.lower() in longscripts:
+            long = True
         script = f'{runner}{script}'
 
     if wiki in ('all', 'wikitide', 'nexttide'):
@@ -96,7 +96,7 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
             except KeyboardInterrupt:
                 sys.exit()
             list_script = {
-                'wikitide': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-wikitide.json {script}',
+                'wikitide': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases.json {script}',
                 'allfarms': lambda: f'sudo -u www-data /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases-all.json {script}',
             }
             command_choice = list_script.get(list_choice)
@@ -121,9 +121,9 @@ def get_commands(args: argparse.Namespace) -> CommandInfo:
             try:
                 farm_choice = input("Please type 'wikitide' or 'nexttide', for what wiki farm you wish to run this script on: ")
             except KeyboardInterrupt:
-                sys.exit()
+                return 2
             generate_script = {
-                'wikitide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawikitide --extension={args.extension}',
+                'wikitide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metawiki --extension={args.extension}',
                 'nexttide': lambda: f'php {runner}/srv/mediawiki/{args.version}/extensions/WikiTideMagic/maintenance/generateExtensionDatabaseList.php --wiki=metanexttide --extension={args.extension}',
             }
             generate_choice = generate_script.get(farm_choice)
@@ -175,4 +175,4 @@ def get_args() -> argparse.Namespace:
 
 
 if __name__ == '__main__':
-    run(get_commands(get_args()))
+    run(syscheck(get_commands(get_args())))

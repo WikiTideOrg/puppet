@@ -259,21 +259,36 @@ class role::prometheus {
       },
     ]
 
-    prometheus::class{ 'statsd_exporter':
+    prometheus::class { 'statsd_exporter':
         dest   => '/etc/prometheus/targets/statsd_exporter.yaml',
         module => 'Prometheus::Exporter::Statsd_exporter',
         port   => 9112,
     }
 
+    $nutcracker_job = [
+        {
+            'job_name'        => 'nutcracker',
+            'scheme'          => 'http',
+            'file_sd_configs' => [
+                { 'files' => [ 'targets/nutcracker.yaml' ] },
+            ],
+        },
+    ]
+    prometheus::class { 'nutcracker_exporter':
+        dest   => '/etc/prometheus/targets/nutcracker.yaml',
+        module => 'Prometheus::Exporter::Nutcracker',
+        port   => 9191,
+    }
+
     $global_extra = {}
 
-    class { '::prometheus':
+    class { 'prometheus':
         global_extra => $global_extra,
         scrape_extra => [
             $blackbox_jobs, $fpm_job, $redis_job, $mariadb_job, $nginx_job,
             $puppetserver_job, $puppetdb_job, $memcached_job,
             $postfix_job, $openldap_job, $elasticsearch_job, $statsd_exporter_job,
-            $varnish_job, $cadvisor_job
+            $varnish_job, $cadvisor_job, $nutcracker_job
         ].flatten,
     }
 
