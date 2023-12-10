@@ -198,7 +198,7 @@ class phorge (
 
     file { '/srv/phorge/phorge/conf/local/local.json':
         ensure  => present,
-        content => to_json_pretty($phorge_settings),
+        content => stdlib::to_json_pretty($phorge_settings),
         notify  => Service['phd'],
         require => Git::Clone['phorge'],
     }
