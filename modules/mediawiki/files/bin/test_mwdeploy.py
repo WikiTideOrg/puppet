@@ -151,11 +151,11 @@ def test_check_up_no_debug_host() -> None:
 
 
 def test_check_up_debug() -> None:
-    assert mwdeploy.check_up(nolog=True, Debug='mw1')
+    assert mwdeploy.check_up(nolog=True, Debug='mw21')
 
 
 def test_check_up_debug_fail() -> None:
-    assert not mwdeploy.check_up(nolog=True, Debug='mw1', domain='httpstat.us/500', force=True)
+    assert not mwdeploy.check_up(nolog=True, Debug='mw21', domain='httpstat.us/500', force=True)
 
 
 def test_get_staging_path() -> None:
