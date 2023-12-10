@@ -17,12 +17,14 @@ class raid::megaraid {
     }
 
     monitoring::services { 'MegaRAID':
-        check_command  => 'check_raid_megacli',
+        check_command  => 'nrpe',
         check_interval => $raid::check_interval,
         retry_interval => $raid::retry_interval,
         event_command  => 'raid_handler',
         vars           => {
             raid_controller => 'megacli',
+            nrpe_command => "check_get_raid_status_megacli",
+            nrpe_timeout => '60',
         },
     }
 }
