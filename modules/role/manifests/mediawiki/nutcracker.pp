@@ -3,7 +3,7 @@ class role::mediawiki::nutcracker (
     Array[Variant[Stdlib::Host,String]] $memcached_servers = lookup('memcached_servers', {'default_value' => []}),
 ) {
 
-    include prometheus::exporter::nutcracker
+    #include prometheus::exporter::nutcracker
 
     $nutcracker_pools = {
         'memcached' => {

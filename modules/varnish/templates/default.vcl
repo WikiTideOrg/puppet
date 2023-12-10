@@ -361,23 +361,23 @@ sub vcl_recv {
 		req.http.Host == "ssl.wikitide.net" ||
 		req.http.Host == "acme.wikitide.net"
 	) {
-		set req.backend_hint = puppet1;
+		set req.backend_hint = puppet21;
 		return (pass);
 	}
 
-	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikitide\.org)") {
-		set req.backend_hint = test1;
+	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test21|test)\.(wikitide\.org)") {
+		set req.backend_hint = test21;
 		return (pass);
 	}
 
 	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-	#	set req.backend_hint = test1;
+	#	set req.backend_hint = test21;
 	#	return (pass);
 	#}
 
 	# Only cache js files from Matomo
 	if (req.http.Host == "analytics.wikitide.net") {
-		set req.backend_hint = matomo1;
+		set req.backend_hint = matomo21;
 
 		# Yes, we only care about this file
 		if (req.url ~ "^/matomo.js") {
@@ -389,7 +389,7 @@ sub vcl_recv {
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "monitoring.wikitide.net" || req.http.Host == "grafana.wikitide.net") {
-		# set req.backend_hint = mon1;
+		# set req.backend_hint = mon21;
 
 		if (req.http.upgrade ~ "(?i)websocket") {
 			return (pipe);
@@ -402,15 +402,15 @@ sub vcl_recv {
 	if (
 		req.http.Host == "issue-tracker.wikitide.org" ||
 		req.http.Host == "phorge-static.wikitide.org" ||
-		req.http.Host == "blog.wikitide.org"
+		req.http.Host == "tech.wikitide.org"
 	) {
-		set req.backend_hint = phorge1;
+		set req.backend_hint = phorge21;
 		return (pass);
 	}
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "webmail.wikitide.net") {
-		set req.backend_hint = mail1;
+		set req.backend_hint = mail21;
 		return (pass);
 	}
 
@@ -885,7 +885,7 @@ sub vcl_backend_error {
 		<div class="container" style="padding: 70px 0; text-align: center;">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
-				<img src="https://static.wikitide.net/commonswikitide/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
+				<img src="https://static.wikitide.net/commonswiki/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
 				<h1>Something went wrong</h1>
 				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikitide.org/docs/errors/503">Learn more</a>.</p>
 				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>

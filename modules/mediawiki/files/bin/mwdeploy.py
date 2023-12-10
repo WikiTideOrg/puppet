@@ -34,18 +34,18 @@ class EnvironmentList(TypedDict):
 
 
 prod: Environment = {
-    'wikidbname': 'metawikitide',
+    'wikidbname': 'metawiki',
     'wikiurl': 'meta.wikitide.org',
     'servers': [
-        'mw1',
-        'mw2',
-        'jobrunner1',
+        'mw21',
+        'mw22',
+        'jobrunner21',
     ],
 }
 test: Environment = {
     'wikidbname': 'testwikitide',
     'wikiurl': 'test.wikitide.org',
-    'servers': ['test1'],
+    'servers': ['test21'],
 }
 ENVIRONMENTS: EnvironmentList = {
     'prod': prod,

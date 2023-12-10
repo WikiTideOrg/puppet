@@ -57,4 +57,4 @@ prometheus::exporter::statsd_exporter::mappings:
   - match: swift.*.object-updater.unlinks
     name: swift_object_updater_unlinks_total
 
-puppetserver_hostname: 'puppet1.wikitide.net'
+puppetserver_hostname: 'puppet21.wikitide.net'
