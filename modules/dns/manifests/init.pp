@@ -51,7 +51,7 @@ class dns {
     monitoring::services { 'Auth DNS':
         check_command => 'check_dns_auth',
         vars          => {
-            host    => 'wikitide.net',
+            host => 'wikitide.net',
         },
     }
 
