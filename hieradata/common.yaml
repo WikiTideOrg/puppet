@@ -79,6 +79,8 @@ base::syslog::syslog_host: [ '10.0.2.16:10514' ]
 base::firewall::bastion_public_ips:
   - '23.95.103.18'
   - '23.95.103.19'
+  - '104.168.123.210'
+  - '198.23.193.74'
 
 # Swift
 # TODO: Add support for class based hiera
