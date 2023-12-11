@@ -47,7 +47,7 @@ backend <%= name %>_test {
 <%- end -%>
 <%- end -%>
 
-# Initialise vcl
+# Initialize vcl
 sub vcl_init {
 	new mediawiki = directors.random();
 <%- @backends.each_pair do | name, property | -%>
@@ -59,8 +59,14 @@ sub vcl_init {
 
 # Debug ACL: those exempt from requiring an access key
 acl debug {
-	# cloud1
-	"63.141.240.2";
+	# cloud2
+	"23.95.103.18";
+
+	# cloud3
+	"104.168.123.210";
+
+	# cloud4
+	"198.23.193.74";
 
 <%- @backends.each_pair.with_index do |(name, property), index| -%>
 	# <%= name %>

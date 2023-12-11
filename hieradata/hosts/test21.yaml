@@ -17,12 +17,12 @@ mediawiki::php::enable_request_profiling: true
 mediawiki::use_staging: true
 
 mediawiki::multiversion::versions:
-  '1.39':
-    branch: 'REL1_39'
   '1.40':
     branch: 'REL1_40'
     default: true
   '1.41':
+    branch: 'REL1_41'
+  '1.42':
     branch: 'master'
 
 php::php_version: '8.2'
@@ -51,4 +51,4 @@ role::memcached::port: 11211
 role::mediawiki::mcrouter::shards:
   wikitide:
     shard01:
-      host: 10.0.0.107
+      host: 10.0.2.9
