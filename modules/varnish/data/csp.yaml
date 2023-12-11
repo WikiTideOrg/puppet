@@ -2,6 +2,7 @@
 default-src: 
   - "'self'"
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - '*.your.wf'
 
@@ -11,8 +12,8 @@ script-src:
   - "'unsafe-inline'"
   - "'unsafe-eval'"
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
-  - 'analytics.wikitide.net'
   - '*.wikimedia.org'
   - '*.wikipedia.org'
   - '*.wikibooks.org'
@@ -38,6 +39,7 @@ style-src:
   - 'data:'
   - "'unsafe-inline'"
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - '*.wikimedia.org'
   - '*.wikipedia.org'
@@ -65,9 +67,8 @@ img-src:
   - 'blob:'
   - "'self'"
   - 'data:'
-  - 'static.your.wf'
   - 'static.wikiforge.net'
-  - 'static.wikitide.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - 'upload.wikimedia.org'
   - 'wikimedia.org'
@@ -92,6 +93,7 @@ font-src:
   - "'self'"
   - 'data:'
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - 'fonts.gstatic.com'
   - 'cdn.jsdelivr.net'
@@ -104,6 +106,7 @@ media-src:
   - "'self'"
   - 'blob:'
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - 'upload.wikimedia.org'
   - '*.youtube.com'
@@ -112,6 +115,7 @@ media-src:
 frame-src:
   - "'self'"
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
   - 'www.google.com'
   - 'docs.google.com'
@@ -132,8 +136,8 @@ frame-src:
 connect-src:
   - "'self'"
   - '*.wikiforge.net'
+  - '*.wikitide.net'
   - '*.wikitide.org'
-  - 'analytics.wikitide.net'
   - 'www.wikidata.org'
   - '*.wikipedia.org'
   - 'www.mediawiki.org'
