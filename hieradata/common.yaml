@@ -84,3 +84,11 @@ role::swift::stats_reporter_host: swiftproxy21.wikitide.net
 
 swift::storage::devices:
   - sda
+
+role::mediawiki::mcrouter::shards:
+  wikitide:
+    shard01:
+      host: 10.0.2.4
+
+prometheus::exporter::mcrouter::mcrouter_port: 11213
+prometheus::exporter::mcrouter::listen_port: 9151
