@@ -86,7 +86,7 @@ class mcrouter(
         'libboost-filesystem1.74.0',
         'libboost-program-options1.74.0',
         'libjemalloc2',
-        'libboost-regex1.74.0-icu72',
+        'libboost-regex1.74.0',
         'libfmt9',
         'libgflags2.2',
         'libgoogle-glog0v6'
@@ -100,7 +100,7 @@ class mcrouter(
             Package['libboost-filesystem1.74.0'],
             Package['libboost-program-options1.74.0'],
             Package['libjemalloc2'],
-            Package['libboost-regex1.74.0-icu72'],
+            Package['libboost-regex1.74.0'],
             Package['libfmt9'],
             Package['libgflags2.2'],
             Package['libgoogle-glog0v6']
