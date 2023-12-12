@@ -4,7 +4,7 @@ class role::mediawiki (
 ) {
     include prometheus::exporter::cadvisor
 
-    include role::mediawiki::mcrouter
+    include role::mediawiki::nutcracker
     include mediawiki
 
     if $strict_firewall {
