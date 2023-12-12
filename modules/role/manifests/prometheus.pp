@@ -280,6 +280,21 @@ class role::prometheus {
         port   => 9191,
     }
 
+    $mcrouter_job = [
+        {
+            'job_name'        => 'mcrouter',
+            'scheme'          => 'http',
+            'file_sd_configs' => [
+                { 'files' => [ 'targets/mcrouter.yaml' ] },
+            ],
+        },
+    ]
+    prometheus::class { 'mcrouter_exporter':
+        dest   => '/etc/prometheus/targets/mcrouter.yaml',
+        module => 'Prometheus::Exporter::Mcrouter',
+        port   => 9151,
+    }
+
     $global_extra = {}
 
     class { 'prometheus':
@@ -288,7 +303,7 @@ class role::prometheus {
             $blackbox_jobs, $fpm_job, $redis_job, $mariadb_job, $nginx_job,
             $puppetserver_job, $puppetdb_job, $memcached_job,
             $postfix_job, $openldap_job, $elasticsearch_job, $statsd_exporter_job,
-            $varnish_job, $cadvisor_job, $nutcracker_job
+            $varnish_job, $cadvisor_job, $nutcracker_job, $mcrouter_job
         ].flatten,
     }
 
