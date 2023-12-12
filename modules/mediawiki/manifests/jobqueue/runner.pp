@@ -83,27 +83,36 @@ class mediawiki::jobqueue::runner (
             }
         }
 
-            cron { 'purge_parsercache':
-                ensure  => present,
-                command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/maintenance/purgeParserCache.php --wiki metawiki --tag pc1 --age 604800 --msleep 200",
-                user    => 'www-data',
-                special => 'daily',
-            }
+        cron { 'purge_parsercache':
+            ensure  => present,
+            command => "/usr/bin/php ${runner}/srv/mediawiki/${version}/maintenance/purgeParserCache.php --wiki metawiki --tag pc1 --age 604800 --msleep 200",
+            user    => 'www-data',
+            special => 'daily',
+        }
 
-            # Backups
-            file { '/srv/backups':
-                ensure => directory,
-            }
+        cron { 'update_special_pages':
+            ensure   => present,
+            command  => "flock -n /var/lock/update-special-pages /usr/local/bin/foreachwikiindblist /srv/mediawiki/cache/databases.json ${runner}/srv/mediawiki/${version}/maintenance/updateSpecialPages.php > /var/log/mediawiki/cron/updateSpecialPages.log 2>&1",
+            user     => 'www-data',
+            monthday => '*/3',
+            hour     => 5,
+            minute   => 0,
+        }
 
-            cron { 'backups-mediawiki-xml':
-                ensure   => present,
-                command  => '/usr/local/bin/wikitide-backup backup mediawiki-xml > /var/log/mediawiki-xml-backup.log 2>&1',
-                user     => 'root',
-                minute   => '0',
-                hour     => '1',
-                monthday => ['27'],
-                month    => ['3', '6', '9', '12'],
-            }
+        # Backups
+        file { '/srv/backups':
+            ensure => directory,
+        }
+
+        cron { 'backups-mediawiki-xml':
+            ensure   => present,
+            command  => '/usr/local/bin/wikitide-backup backup mediawiki-xml > /var/log/mediawiki-xml-backup.log 2>&1',
+            user     => 'root',
+            minute   => '0',
+            hour     => '1',
+            monthday => ['27'],
+            month    => ['3', '6', '9', '12'],
+        }
 
         cron { 'update_statistics':
             ensure   => present,
