@@ -10,6 +10,7 @@
 define prometheus::exporter::mcrouter (
     $arguments = '',
 ) {
+    stdlib::ensure_packages('daemon')
     file { '/opt/prometheus-mcrouter-exporter_0.1.0_amd64.deb':
         ensure => present,
         source => 'puppet:///modules/prometheus/packages/prometheus-mcrouter-exporter_0.1.0_amd64.deb',
