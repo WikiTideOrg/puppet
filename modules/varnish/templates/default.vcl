@@ -207,10 +207,17 @@ sub recv_purge {
 	}
 }
 
+sub normalize_request_nonmisc {
+    // Sort query parameters to improve cache efficiency.
+    set req.url = std.querysort(req.url);
+}
+
 # Main MediaWiki Request Handling
 sub mw_request {
 	call rate_limit;
 	call mobile_detection;
+
+	call normalize_request_nonmisc;
 	
 	# Assigning a backend
 	if (req.http.X-WikiTide-Debug-Access-Key == "<%= @debug_access_key %>" || std.ip(req.http.X-Real-IP, "0.0.0.0") ~ debug) {
