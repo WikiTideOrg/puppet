@@ -1,0 +1,7 @@
+fixtures:
+  forge_modules:
+    stdlib:
+      repo: 'puppetlabs/stdlib'
+      ref: '6.0.0'
+  symlinks:
+    phpldapadmin: "#{source_dir}"
