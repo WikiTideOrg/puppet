@@ -59,7 +59,7 @@ varnish::backends:
     port: 8202
     probe: false
     pool: false
-    ip_address: 23.95.103.24
+    ip_address: 63.141.240.5
   matomo21:
     port: 8204
     probe: false
