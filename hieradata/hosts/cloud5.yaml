@@ -1,0 +1,2 @@
+base::monitoring::hardware_monitoring: "present"
+base::monitoring::raid_check: true
