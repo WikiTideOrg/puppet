@@ -333,7 +333,7 @@ ExternalData:
   path: extensions/ExternalData
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ExternalData
 Femiwiki:
-  branch: _branch_
+  branch: REL1_40
   path: skins/Femiwiki
   repo_url: https://github.com/femiwiki/FemiwikiSkin
   alpha_branch: main
