@@ -33,9 +33,4 @@ class mediawiki::cgroup {
     grub::bootparam { 'cgroup.memory':
         value => 'nokmem',
     }
-
-    # Force use of cgroups v1
-    grub::bootparam { 'systemd.unified_cgroup_hierarchy':
-        value => '0',
-    }
 }
