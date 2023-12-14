@@ -1,6 +1,9 @@
 # === Class mediawiki::cgroup
 class mediawiki::cgroup {
+
     stdlib::ensure_packages('cgroup-tools')
+
+    include base::memory_cgroup
 
     # The cgroup-mediawiki-clean script is used as the release_agent
     # script for the cgroup. When the last task in the cgroup exits,
@@ -19,14 +22,6 @@ class mediawiki::cgroup {
         ensure  => present,
         content => systemd_template('cgroup'),
         restart => false,
-    }
-
-    grub::bootparam { 'cgroup_enable':
-        value => 'memory',
-    }
-
-    grub::bootparam { 'swapaccount':
-        value => '1',
     }
 
     # Disable cgroup memory accounting
