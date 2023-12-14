@@ -64,7 +64,7 @@ node 'matomo21.wikitide.net' {
     include role::matomo
 }
 
-node 'mem21.wikitide.net' {
+node /^mem2[12]\.wikitide\.net$/ {
     include base
     include role::memcached
 }
@@ -141,6 +141,11 @@ node 'test21.wikitide.net' {
     include role::poolcounter
     include role::redis
     include mediawiki::jobqueue::chron
+}
+
+node 'thumbor31.wikitide.net' {
+    include base
+    include role::thumbor
 }
 
 # ensures all servers have basic class if puppet runs
