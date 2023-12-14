@@ -332,6 +332,11 @@ ExternalData:
   branch: master
   path: extensions/ExternalData
   repo_url: https://github.com/wikimedia/mediawiki-extensions-ExternalData
+Femiwiki:
+  branch: _branch_
+  path: skins/Femiwiki
+  repo_url: https://github.com/femiwiki/FemiwikiSkin
+  alpha_branch: main
 FlaggedRevs:
   branch: _branch_
   path: extensions/FlaggedRevs
