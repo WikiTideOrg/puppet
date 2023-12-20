@@ -132,6 +132,7 @@ frame-src:
   - 'www.bing.com'
   - 'hcaptcha.com'
   - '*.hcaptcha.com'
+  - 'open.spotify.com'
 
 connect-src:
   - "'self'"
