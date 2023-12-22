@@ -24,6 +24,7 @@
                 "webVideoTranscode",
                 "webVideoTranscodePrioritized",
                 "NamespaceMigrationJob",
+                "smw.update",
                 "smw.changePropagationClassUpdate",
                 "CreateWikiJob"
             ],
@@ -80,6 +81,7 @@
             "runners": 1,
             // Job types to include ("*" means "all")
             "include": [
+                "smw.update",
                 "smw.changePropagationClassUpdate"
             ]
         },
@@ -112,22 +114,14 @@
             "*": 3600,
             "DataDumpGenerateJob": 86400,
             "NamespaceMigrationJob": 9000,
-            "parsoidCachePrewarm": 9000,
-            "refreshLinks": 9000,
-            "refreshLinksDynamic": 9000,
-            "refreshLinksPrioritized": 9000,
             "webVideoTranscode": 86400,
             "webVideoTranscodePrioritized": 86400
         },
         // runJobs.php process time limits
         "real": {
             "*": 300,
-            "DataDumpGenerateJob": 21600,
+            "DataDumpGenerateJob": 86400,
             "NamespaceMigrationJob": 9000,
-            "parsoidCachePrewarm": 9000,
-            "refreshLinks": 9000,
-            "refreshLinksDynamic": 9000,
-            "refreshLinksPrioritized": 9000,
             "webVideoTranscode": 86400,
             "webVideoTranscodePrioritized": 86400
         },
@@ -139,7 +133,9 @@
             "refreshLinks": "1400M",
             "refreshLinksDynamic": "1400M",
             "refreshLinksPrioritized": "1400M",
-            "RequestWikiAIJob": "2000M"
+            "RequestWikiAIJob": "2000M",
+            "smw.update": "1400M",
+            "smw.changePropagationClassUpdate": "1400M"
         }
     },
 
