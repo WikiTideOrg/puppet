@@ -246,7 +246,7 @@ def _get_deployed_path(repo: str) -> str:
 
 
 def _construct_rsync_command(time: bool | str, dest: str, recursive: bool = True, local: bool = True, location: str | None = None, server: str | None = None, private: bool = False) -> str:
-    if private:
+    if server and private:
         server += '-private'
     if time:
         params = '--inplace'
