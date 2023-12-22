@@ -25,7 +25,7 @@ DEPLOYUSER = 'www-data'
 class Environment(TypedDict):
     wikidbname: str
     wikiurl: str
-    servers: list
+    servers: dict[str, bool]
 
 
 class EnvironmentList(TypedDict):
@@ -36,16 +36,18 @@ class EnvironmentList(TypedDict):
 prod: Environment = {
     'wikidbname': 'metawiki',
     'wikiurl': 'meta.wikitide.org',
-    'servers': [
-        'mw21',
-        'mw22',
-        'jobrunner21',
-    ],
+    'servers': {
+        'mw21': True,
+        'mw22': True,
+        'jobrunner21': False,
+    },
 }
 test: Environment = {
     'wikidbname': 'testwikitide',
     'wikiurl': 'test.wikitide.org',
-    'servers': ['test21'],
+    'servers': {
+        'test21': False,
+    },
 }
 ENVIRONMENTS: EnvironmentList = {
     'prod': prod,
@@ -221,8 +223,9 @@ def remote_sync_file(time: str, serverlist: list[str], path: str, envinfo: Envir
     print(f'Start {path} deploys.')
     for server in serverlist:
         if HOSTNAME != server.split('.')[0]:
+            private = envinfo['servers'].get(server, False)
             print(f'Deploying {path} to {server}.')
-            ec = run_command(_construct_rsync_command(time=time, local=False, dest=path, server=server, recursive=recursive))
+            ec = run_command(_construct_rsync_command(time=time, local=False, dest=path, server=server, recursive=recursive, private=private))
             check_up(Debug=server, force=force, domain=envinfo['wikiurl'], nolog=nolog)
             print(f'Deployed {path} to {server}.')
         else:
@@ -242,7 +245,9 @@ def _get_deployed_path(repo: str) -> str:
     return f'/srv/mediawiki/{repos[repo]}/'
 
 
-def _construct_rsync_command(time: bool | str, dest: str, recursive: bool = True, local: bool = True, location: str | None = None, server: str | None = None) -> str:
+def _construct_rsync_command(time: bool | str, dest: str, recursive: bool = True, local: bool = True, location: str | None = None, server: str | None = None, private: bool = False) -> str:
+    if private:
+        server += '-private'
     if time:
         params = '--inplace'
     else:
@@ -632,7 +637,7 @@ class VersionsAction(argparse.Action):
 class ServersAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):  # noqa: U100
         input_servers = values.split(',')
-        valid_servers = get_environment_info()['servers']
+        valid_servers = get_environment_info()['servers'].keys()
         if 'all' in input_servers:
             input_servers = valid_servers
         invalid_servers = set(input_servers) - set(valid_servers)
