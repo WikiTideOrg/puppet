@@ -23,7 +23,7 @@ mediawiki::use_shellbox: true
 mediawiki::jobqueue::wiki: 'metawiki'
 mediawiki::monitoring::host: 'meta.wikitide.org'
 memcached_servers:
-  - 10.0.1.106:11211:1
+  - 10.0.0.106:11211:1
 varnish::interval-check: '5s'
 varnish::interval-timeout: '5s'
 varnish::backends:
@@ -75,6 +75,8 @@ base::firewall::bastion_public_ips:
   - '23.95.103.19'
   - '104.168.123.210'
   - '198.23.193.74'
+  - '63.141.240.2'
+  - '63.141.240.3'
 
 # Swift
 # TODO: Add support for class based hiera
