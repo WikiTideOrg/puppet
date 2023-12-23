@@ -59,6 +59,8 @@ sub vcl_init {
 
 # Debug ACL: those exempt from requiring an access key
 acl debug {
+	# cloud1
+	"63.141.240.2";
 	# cloud2
 	"23.95.103.18";
 
@@ -374,23 +376,23 @@ sub vcl_recv {
 		req.http.Host == "ssl.wikitide.net" ||
 		req.http.Host == "acme.wikitide.net"
 	) {
-		set req.backend_hint = puppet21;
+		set req.backend_hint = puppet1;
 		return (pass);
 	}
 
-	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test21|test)\.(wikitide\.org)") {
-		set req.backend_hint = test21;
+	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikitide\.org)") {
+		set req.backend_hint = test1;
 		return (pass);
 	}
 
 	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-	#	set req.backend_hint = test21;
+	#	set req.backend_hint = test1;
 	#	return (pass);
 	#}
 
 	# Only cache js files from Matomo
 	if (req.http.Host == "analytics.wikitide.net") {
-		set req.backend_hint = matomo21;
+		set req.backend_hint = matomo1;
 
 		# Yes, we only care about this file
 		if (req.url ~ "^/matomo.js") {
@@ -402,7 +404,7 @@ sub vcl_recv {
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "monitoring.wikitide.net" || req.http.Host == "grafana.wikitide.net") {
-		# set req.backend_hint = mon21;
+		# set req.backend_hint = mon1;
 
 		if (req.http.upgrade ~ "(?i)websocket") {
 			return (pipe);
@@ -417,13 +419,13 @@ sub vcl_recv {
 		req.http.Host == "phorge-static.wikitide.org" ||
 		req.http.Host == "tech.wikitide.org"
 	) {
-		set req.backend_hint = phorge21;
+		set req.backend_hint = phorge1;
 		return (pass);
 	}
 
 	# Do not cache requests from this domain
 	if (req.http.Host == "webmail.wikitide.net") {
-		set req.backend_hint = mail21;
+		set req.backend_hint = mail1;
 		return (pass);
 	}
 

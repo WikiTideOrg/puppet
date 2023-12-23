@@ -1,2 +1,0 @@
-puppetserver_hostname: 'puppet21.wikitide.net'
-role::db::weekly_misc: ['wtglobal']

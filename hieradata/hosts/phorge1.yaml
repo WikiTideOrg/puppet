@@ -4,6 +4,6 @@ php::php_version: '8.2'
 
 nginx::use_graylog: true
 
-puppetserver_hostname: 'puppet21.wikitide.net'
+puppetserver_hostname: 'puppet1.wikitide.net'
 
 nginx::client_max_body_size: "10M"

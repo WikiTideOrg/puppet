@@ -1,7 +1,7 @@
 # class: matomo
 class matomo (
     String $ldap_password  = lookup('passwords::ldap_password'),
-    String $matomo_db_host = 'db21.wikitide.net',
+    String $matomo_db_host = 'db1.wikitide.net',
 ) {
     stdlib::ensure_packages('composer')
 
