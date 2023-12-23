@@ -51,4 +51,4 @@ role::memcached::port: 11211
 role::mediawiki::mcrouter::shards:
   wikitide:
     shard01:
-      host: 10.0.2.9
+      host: 10.0.0.107
