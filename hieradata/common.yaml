@@ -80,7 +80,7 @@ base::firewall::bastion_public_ips:
 # TODO: Add support for class based hiera
 swift::storage::object_server_default_workers: 100
 
-role::swift::stats_reporter_host: swiftproxy21.wikitide.net
+role::swift::stats_reporter_host: swiftproxy1.wikitide.net
 
 swift::storage::devices:
   - sda
