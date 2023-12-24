@@ -151,11 +151,11 @@ def test_check_up_no_debug_host() -> None:
 
 
 def test_check_up_debug() -> None:
-    assert mwdeploy.check_up(nolog=True, Debug='mw21')
+    assert mwdeploy.check_up(nolog=True, Debug='mw1')
 
 
 def test_check_up_debug_fail() -> None:
-    assert not mwdeploy.check_up(nolog=True, Debug='mw21', domain='httpstat.us/500', force=True)
+    assert not mwdeploy.check_up(nolog=True, Debug='mw1', domain='httpstat.us/500', force=True)
 
 
 def test_get_staging_path() -> None:
@@ -333,5 +333,5 @@ def test_ServersAction():
     parser.add_argument('--servers', action=ServersAction)
     with pytest.raises(SystemExit):
         parser.parse_args(['--servers', 'invalid_server'])
-    namespace = parser.parse_args(['--servers', 'mw21,mw22'])
-    assert namespace.servers == ['mw21', 'mw22']
+    namespace = parser.parse_args(['--servers', 'mw1,mw2'])
+    assert namespace.servers == ['mw1', 'mw2']
