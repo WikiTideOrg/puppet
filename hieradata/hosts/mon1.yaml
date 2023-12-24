@@ -1,5 +1,5 @@
-icinga_ido_db_host: 'db21.wikitide.net'
-icingaweb_db_host: 'db21.wikitide.net'
+icinga_ido_db_host: 'db1.wikitide.net'
+icingaweb_db_host: 'db1.wikitide.net'
 
 icinga2_api_bind_host: '::'
 
@@ -141,4 +141,4 @@ icinga2::globals::reserved:
 nginx::use_graylog: true
 base::syslog::rsyslog_udp_localhost: true
 
-puppetserver_hostname: 'puppet21.wikitide.net'
+puppetserver_hostname: 'puppet1.wikitide.net'

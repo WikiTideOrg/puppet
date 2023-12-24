@@ -101,6 +101,6 @@ class prometheus::exporter::node (
     ferm::service { 'prometheus node-exporter':
         proto  => 'tcp',
         port   => '9100',
-        srange => "(${firewall_rules_str} 23.95.103.18 104.168.123.210 198.23.193.74)",
+        srange => "(${firewall_rules_str} 63.141.240.2 104.168.123.210 198.23.193.74)",
     }
 }

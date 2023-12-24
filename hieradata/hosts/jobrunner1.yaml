@@ -6,7 +6,7 @@ mwservices: false
 
 jobrunner: true
 jobrunner::intensive: true
-mediawiki::jobqueue::runner::redis_ip: '10.0.2.7:6379'
+mediawiki::jobqueue::runner::redis_ip: '10.0.0.105:6379'
 mediawiki::jobqueue::runner::cron: true
 
 role::mediawiki::use_strict_firewall: true

@@ -37,16 +37,16 @@ prod: Environment = {
     'wikidbname': 'metawiki',
     'wikiurl': 'meta.wikitide.org',
     'servers': {
-        'mw21': True,
-        'mw22': True,
-        'jobrunner21': False,
+        'mw1': True,
+        'mw2': True,
+        'jobrunner1': False,
     },
 }
 test: Environment = {
-    'wikidbname': 'testwikitide',
+    'wikidbname': 'testwiki',
     'wikiurl': 'test.wikitide.org',
     'servers': {
-        'test21': False,
+        'test1': False,
     },
 }
 ENVIRONMENTS: EnvironmentList = {

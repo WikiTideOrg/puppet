@@ -1,2 +1,0 @@
-puppetserver_hostname: 'puppet21.wikitide.net'
-nginx::use_graylog: true
