@@ -61,6 +61,7 @@ sub vcl_init {
 acl debug {
 	# cloud1
 	"63.141.240.2";
+
 	# cloud2
 	"23.95.103.18";
 
