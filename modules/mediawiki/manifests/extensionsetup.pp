@@ -18,8 +18,7 @@ define mediawiki::extensionsetup (
             require => Exec["OAuth-${branch} composer"],
     }
 
-    $module_path = get_module_path($module_name)
-    $repos = loadyaml("${module_path}/data/mediawiki-repos.yaml")
+    $repos = loadyaml('/etc/puppetlabs/puppet/mediawiki-repos/mediawiki-repos.yaml')
 
     $repos.each |$name, $params| {
         $should_install = $params['versions'] ? {
