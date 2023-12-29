@@ -94,7 +94,7 @@ define mediawiki::extensionsetup (
         owner   => 'www-data',
         group   => 'www-data',
         mode    => '0664',
-        source  => 'puppet:///modules/mediawiki/composer.local.json',
+        source  => 'puppet:///mediawiki-repos/composer.local.json',
         require => Git::Clone["MediaWiki-${branch} core"],
     }
 }
