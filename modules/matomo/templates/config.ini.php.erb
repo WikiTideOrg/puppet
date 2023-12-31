@@ -22,10 +22,10 @@ proxy_ip_read_last_in_list = 0
 
 [mail]
 transport = "smtp"
-port = 25
-host = "mail.wikitide.net"
+port = 587
+host = "smtp-relay.gmail.com"
 type = "LOGIN"
-username = "noreply"
+username = "noreply@wikitide.org"
 password = "<%= @noreply_password %>"
 encryption = "tls"
 
