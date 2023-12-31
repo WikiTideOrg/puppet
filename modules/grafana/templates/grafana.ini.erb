@@ -23,8 +23,8 @@ allow_sign_up = true
 
 [smtp]
 enabled=true
-host = mail.wikitide.net:25
-user = noreply
+host = smtp-relay.gmail.com:587
+user = noreply@wikitide.org
 password = <%= @mail_password %>
 from_address = noreply@wikitide.org
 
