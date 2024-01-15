@@ -13,6 +13,7 @@ class base {
     include base::backup
     include ssh
     include users
+    include base::mail
 
     if !lookup('dns') {
         include base::dns
