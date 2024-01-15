@@ -11,9 +11,9 @@ class base {
     include base::firewall
     include base::monitoring
     include base::backup
+    include base::mail
     include ssh
     include users
-    include base::mail
 
     if !lookup('dns') {
         include base::dns
