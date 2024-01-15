@@ -48,12 +48,6 @@ node 'jobrunner1.wikitide.net' {
     include role::mediawiki
 }
 
-node 'mail1.wikitide.net' {
-    include base
-    include role::mail
-    include role::snappymail
-}
-
 node 'ldap1.wikitide.net' {
     include base
     include role::openldap
