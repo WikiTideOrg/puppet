@@ -3,8 +3,6 @@ varnish::thread_pool_max: 15000
 nginx::worker_processes: 4
 puppetserver_hostname: 'puppet1.wikitide.net'
 
-dns: true
-
 base::syslog::rsyslog_udp_localhost: true
 base::firewall::use_public_bastion: true
 nginx::logrotate_number: 2
