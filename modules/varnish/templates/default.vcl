@@ -424,12 +424,6 @@ sub vcl_recv {
 		return (pass);
 	}
 
-	# Do not cache requests from this domain
-	if (req.http.Host == "webmail.wikitide.net") {
-		set req.backend_hint = mail1;
-		return (pass);
-	}
-
 	# MediaWiki specific
 	call mw_request;
 
