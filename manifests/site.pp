@@ -22,7 +22,6 @@ node /^cp[12456]\.wikitide\.net$/ {
 
 node 'cp3.wikitide.net' {
     include base
-    include role::dns
     include role::varnish
 }
 
