@@ -184,11 +184,8 @@ class phorge (
                 'type'         => 'smtp',
                 'options'      => {
                     'host'     => 'smtp-relay.gmail.com',
-                    'port'     => 587,
-                    'user'     => 'noreply@wikitide.org',
-                    'password' => lookup('passwords::mail::noreply'),
-                    'protocol' => 'tls',
-                    'message-id' => true,
+                    'port'     => 465,
+                    'protocol' => 'ssl',
                 },
             },
         ],
