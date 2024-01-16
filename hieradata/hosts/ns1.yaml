@@ -1,3 +1,0 @@
-puppetserver_hostname: 'puppet1.wikitide.net'
-base::firewall::use_public_bastion: true
-dns: true
