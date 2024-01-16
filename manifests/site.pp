@@ -73,11 +73,6 @@ node /^mw[12]\.wikitide\.net$/ {
     include role::mediawiki
 }
 
-node 'ns1.wikitide.net' {
-    include base
-    include role::dns
-}
-
 node 'os1.wikitide.net' {
     include base
     include role::opensearch
