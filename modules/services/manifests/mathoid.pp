@@ -21,7 +21,7 @@ class services::mathoid {
     git::clone { 'mathoid':
         ensure             => latest,
         directory          => '/srv/mathoid',
-        origin             => 'https://github.com/WikiForge/mathoid-deploy',
+        origin             => 'https://github.com/miraheze/mathoid-deploy',
         branch             => 'master',
         owner              => 'mathoid',
         group              => 'mathoid',
