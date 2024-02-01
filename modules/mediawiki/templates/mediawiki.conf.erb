@@ -90,6 +90,9 @@ server {
 		send_timeout 140;
 	}
 
+	location / {
+		return 301 https://miraheze.org;
+	}
 	location /discord {
 		return 301 https://discord.gg/ND5Arhght2;
 	}
