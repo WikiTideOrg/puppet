@@ -49,7 +49,6 @@ varnish::backends:
 base::syslog::syslog_host: [ '10.0.0.117:10514' ]
 
 # Firewall
-base::firewall::use_public_bastion: true
 base::firewall::bastion_public_ips:
   - '38.46.223.203'
   - '2602:294:0:b13::101'
