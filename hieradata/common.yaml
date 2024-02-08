@@ -39,39 +39,22 @@ varnish::backends:
     pool: true
     xdebug: true
     ip_address: 2604:4300:a:24::102
-  test1:
-    port: 8180
-    probe: false
-    pool: false
-    xdebug: true
-    ip_address: 2604:4300:a:24::107
-  phorge1:
-    port: 8200
-    probe: false
-    pool: false
-    ip_address: 2604:4300:a:24::108
   puppet1:
     port: 8201
     probe: false
     pool: false
     ip_address: 2604:4300:a:24::100
-  matomo1:
-    port: 8204
-    probe: false
-    pool: false
-    ip_address: 2604:4300:a:24::119
 
 # Logging
 base::syslog::syslog_host: [ '10.0.0.117:10514' ]
 
 # Firewall
+base::firewall::use_public_bastion: true
 base::firewall::bastion_public_ips:
-  - '23.95.103.18'
-  - '23.95.103.19'
-  - '104.168.123.210'
-  - '198.23.193.74'
-  - '63.141.240.2'
-  - '63.141.240.3'
+  - '38.46.223.203'
+  - '2602:294:0:b13::101'
+  - '38.46.223.202'
+  - '2602:294:0:b12::102'
 
 # Swift
 # TODO: Add support for class based hiera
