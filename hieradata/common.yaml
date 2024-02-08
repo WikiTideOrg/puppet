@@ -55,6 +55,7 @@ base::firewall::bastion_public_ips:
   - '2602:294:0:b13::101'
   - '38.46.223.202'
   - '2602:294:0:b12::102'
+  - '63.141.240.2'
 
 # Swift
 # TODO: Add support for class based hiera
