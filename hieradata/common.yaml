@@ -46,7 +46,7 @@ varnish::backends:
     ip_address: 2604:4300:a:24::100
 
 # Logging
-base::syslog::syslog_host: [ '10.0.0.117:10514' ]
+base::syslog::syslog_host: []
 
 # Firewall
 base::firewall::use_public_bastion: true
