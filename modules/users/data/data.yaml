@@ -2,7 +2,7 @@ groups:
   sre:
     gid: 2000
     description: roots, sudo everywhere
-    members: [agent, paladox, reception, universalomega]
+    members: [agent, reception, universalomega]
     privileges: ['ALL = (ALL) NOPASSWD: ALL']
   mediawiki-roots:
     gid: 2001
@@ -69,8 +69,8 @@ users:
     realname: NotAracham
     ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNwBn4iuC8qQDC+hAhPBzoo7fRPF00qLw7WteBzeFCA]
   paladox:
-    ensure: present
+    ensure: absent
     uid: 1013
     name: paladox
     realname: Paladox
-    ssh_keys: [ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJNBnbJj/y6NuZwChpfJbBkg5Ausq11M8HuLKOBtTEpP paladox]
+    ssh_keys: []
