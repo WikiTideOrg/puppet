@@ -62,15 +62,6 @@ acl debug {
 	# cloud1
 	"63.141.240.2";
 
-	# cloud2
-	"23.95.103.18";
-
-	# cloud3
-	"104.168.123.210";
-
-	# cloud4
-	"198.23.193.74";
-
 <%- @backends.each_pair.with_index do |(name, property), index| -%>
 	# <%= name %>
 	"<%= property['ip_address'] %>";
@@ -167,14 +158,14 @@ sub vcl_synth {
 		// Homepage redirect to commons
 		if (resp.reason == "Commons Redirect") {
 			set resp.reason = "Moved Permanently";
-			set resp.http.Location = "https://commons.wikitide.org/";
+			set resp.http.Location = "https://commons.miraheze.org/";
 			set resp.http.Connection = "keep-alive";
 			set resp.http.Content-Length = "0";
 		}
 
 		if (resp.reason == "Main Page Redirect") {
 			set resp.reason = "Moved Permanently";
-			set resp.http.Location = "https://wikitide.org/";
+			set resp.http.Location = "https://miraheze.org/";
 			set resp.http.Connection = "keep-alive";
 			set resp.http.Content-Length = "0";
 		}
@@ -378,49 +369,6 @@ sub vcl_recv {
 		req.http.Host == "acme.wikitide.net"
 	) {
 		set req.backend_hint = puppet1;
-		return (pass);
-	}
-
-	if (req.http.Host ~ "^(alphatest|betatest|stabletest|test1|test)\.(wikitide\.org)") {
-		set req.backend_hint = test1;
-		return (pass);
-	}
-
-	#if (req.http.Host ~ "^(.*\.)?nexttide\.org") {
-	#	set req.backend_hint = test1;
-	#	return (pass);
-	#}
-
-	# Only cache js files from Matomo
-	if (req.http.Host == "analytics.wikitide.net") {
-		set req.backend_hint = matomo1;
-
-		# Yes, we only care about this file
-		if (req.url ~ "^/matomo.js") {
-			return (hash);
-		} else {
-			return (pass);
-		}
-	}
-
-	# Do not cache requests from this domain
-	if (req.http.Host == "monitoring.wikitide.net" || req.http.Host == "grafana.wikitide.net") {
-		# set req.backend_hint = mon1;
-
-		if (req.http.upgrade ~ "(?i)websocket") {
-			return (pipe);
-		}
-
-		return (pass);
-	}
-
-	# Do not cache requests from this domain
-	if (
-		req.http.Host == "issue-tracker.wikitide.org" ||
-		req.http.Host == "phorge-static.wikitide.org" ||
-		req.http.Host == "tech.wikitide.org"
-	) {
-		set req.backend_hint = phorge1;
 		return (pass);
 	}
 
