@@ -844,8 +844,8 @@ sub vcl_backend_error {
 			<!-- Jumbotron -->
 			<div class="jumbotron">
 				<img src="https://static.miraheze.org/commonswiki/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide" />
-				<h1>WikiTide (legacy edition) has sunset.</h1>
-				<p class="lead">WikiTide (legacy edition) is no longer available. Please use Miraheze for all your wiki needs. Thank you for your support!</p>
+				<h1>No longer available</h1>
+				<p class="lead">WikiTide (legacy edition) is no longer available. Please use Miraheze for all your wiki needs. If you need support, email sre [at] wikitide [dot] org. Thank you for your support!</p>
 				<a href="https://miraheze.org" class="btn btn-outline-primary" role="button">Go to Miraheze</a>
 			</div>
 		</div>
