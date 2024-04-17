@@ -1,16 +1,16 @@
 # Please be restrictive with sites that are added and to which list.
 default-src: 
   - "'self'"
-  - '*.wikiforge.net'
+  - 'static.miraheze.org'
   - '*.wikitide.net'
   - '*.wikitide.org'
-  - '*.your.wf'
 
 script-src:
   - 'blob:'
   - "'self'"
   - "'unsafe-inline'"
   - "'unsafe-eval'"
+  - 'static.miraheze.org'
   - '*.wikiforge.net'
   - '*.wikitide.net'
   - '*.wikitide.org'
@@ -67,6 +67,7 @@ img-src:
   - 'blob:'
   - "'self'"
   - 'data:'
+  - 'static.miraheze.org'
   - 'static.wikiforge.net'
   - '*.wikitide.net'
   - '*.wikitide.org'
@@ -105,7 +106,7 @@ font-src:
 media-src:
   - "'self'"
   - 'blob:'
-  - '*.wikiforge.net'
+  - 'static.miraheze.org'
   - '*.wikitide.net'
   - '*.wikitide.org'
   - 'upload.wikimedia.org'
