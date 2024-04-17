@@ -1,3 +1,6 @@
+# ARCHIVED
+See [miraheze/puppet](https://github.com/miraheze/puppet)
+
 # WikiTide's Puppet Configuration
 
 This repository contains our production Puppet configuration.
