@@ -795,7 +795,7 @@ sub vcl_backend_error {
 		<head>
 			<meta charset="utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<meta name="description" content="Something went wrong, try again in a few seconds." />
+			<meta name="description" content="WikiTide (legacy edition) has sunset" />
 			<title>Something went wrong</title>
 			<!-- Bootstrap core CSS -->
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -843,19 +843,10 @@ sub vcl_backend_error {
 		<div class="container" style="padding: 70px 0; text-align: center;">
 			<!-- Jumbotron -->
 			<div class="jumbotron">
-				<img src="https://static.wikitide.net/commonswiki/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide Logo" />
-				<h1>Something went wrong</h1>
-				<p class="lead">Give it a bit and try again. <a href="https://static-help.wikitide.org/docs/errors/503">Learn more</a>.</p>
-				<a href="javascript:document.location.reload(true);" class="btn btn-outline-primary" role="button">Try this action again</a>
-			</div>
-		</div>
-		<div class="footer" style="position: fixed; left:0px; bottom: 125px; height:30px; width:100%;">
-			<div class="text-center">
-				<p class="lead">When reporting this, please include the information below:</p>
-
-				Error "} + beresp.status + " " + beresp.reason + {", forwarded for "} + bereq.http.X-Forwarded-For + {" <br />
-				(Varnish XID "} + bereq.xid + {") via "} + server.identity + {" at "} + now + {".
-				<br /><br />
+				<img src="https://static.miraheze.org/commonswiki/2/22/WikiTide_icon.svg" width="130" height="130" alt="WikiTide" />
+				<h1>WikiTide (legacy edition) has sunset.</h1>
+				<p class="lead">WikiTide (legacy edition) is no longer available. Please use Miraheze for all your wiki needs. Thank you for your support!</p>
+				<a href="https://miraheze.org" class="btn btn-outline-primary" role="button">Go to Miraheze</a>
 			</div>
 		</div>
 	</html>
